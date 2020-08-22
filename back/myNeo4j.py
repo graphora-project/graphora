@@ -1,8 +1,8 @@
-#Import Neo4j driver 
+#Import Neo4j driver
 from neo4j import GraphDatabase
 import json
 
-#things to use: get, _id, _labels (list), _propierties 
+#things to use: get, _id, _labels (list), _propierties
 # {
 #   name: name of the node,
 #   status: PalabrasAsociadas/PalabraEstimulo,
@@ -12,7 +12,7 @@ import json
 
 #Functions
 def getData(word):
-    
+
     #Create the driver
     driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "12345"))
 
@@ -25,7 +25,8 @@ def getData(word):
 
     session.close()
     driver.close()
-    
+
+    #print(exportJSON)
     return json.dumps(exportJSON, ensure_ascii=False, indent=4)
 
 def generateJSON(session ,result):
@@ -36,15 +37,17 @@ def generateJSON(session ,result):
 
         if (records["r"].nodes[0]._properties["name"] == records["p"]._properties["name"]):
             direction = "Out"
-        else: 
+        else:
             direction = "In"
 
         nodes = []
         if ((status == "PalabraEstimulo") or (status == "Estimulo")):
             other_nodes = session.run("MATCH (n)-[r:ASOCIA_CON]-(p:Estimulo{name:$Estimulo}) RETURN n, r, p LIMIT 2", Estimulo=name)
-            node1, node2 = other_nodes.values() 
+            node1, node2 = other_nodes.values()
             nodes = [node1[0]._properties["name"], node2[0]._properties["name"]]
 
         temporalJSON = {"name": name, "status": status, "direction": direction, "nodes": nodes}
         Argus.append(temporalJSON)
     return Argus
+
+#getData("abeja")
