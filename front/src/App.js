@@ -6,7 +6,7 @@ function App() {
   const [word, setWord] = useState('')
 
   const fetchWord = (word) =>
-    fetch(`${Graphora}/${word}`).then((data) => data.json())
+    fetch(`${Graphora}/graph/${word}`).then((data) => data.json())
 
   const handleSearch = async (e) => {
     e.preventDefault()
