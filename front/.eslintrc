@@ -1,3 +1,11 @@
 {
-  "extends": "@imaginary-cloud/react"
+  "extends": "@imaginary-cloud/react",
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
+  }
 }
