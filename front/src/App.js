@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { Graphora } from "./config/Graphora";
+import React, { useState } from 'react'
+import { Graphora } from './config/Graphora'
 
 function App() {
-  const [words, setWords] = useState([]);
-  const [word, setWord] = useState("");
+  const [words, setWords] = useState([])
+  const [word, setWord] = useState('')
 
   const fetchWord = (word) =>
-    fetch(`${Graphora}/${word}`).then((data) => data.json());
+    fetch(`${Graphora}/graph/${word}`).then((data) => data.json())
 
   const handleSearch = async (e) => {
-    e.preventDefault();
-    const wordData = await fetchWord(word);
-    setWords(wordData);
-  };
+    e.preventDefault()
+    const wordData = await fetchWord(word)
+    setWords(wordData)
+  }
 
   const handleChange = (e) => {
-    e.preventDefault();
-    setWord(e.target.value);
-  };
+    e.preventDefault()
+    setWord(e.target.value)
+  }
 
   return (
     <div>
@@ -41,7 +41,7 @@ function App() {
         ))}
       </ul>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
