@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { GraphoraContext } from '../GraphoraContext'
 
-const Graph = () => {
+export const Graph = () => {
   const { wordRelations } = useContext(GraphoraContext)
 
   return (
@@ -21,5 +21,3 @@ const Graph = () => {
     </>
   )
 }
-
-export default Graph
