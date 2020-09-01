@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react'
+import PropTypes from 'prop-types'
 
 export const GraphoraContext = createContext()
 
@@ -59,5 +60,5 @@ export const GraphoraProvider = ({ children }) => {
 }
 
 GraphoraProvider.propTypes = {
-  children: React.Children.isRequired,
+  children: PropTypes.element.isRequired,
 }
