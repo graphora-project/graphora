@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import SearchBar from '../SearchBar'
+import { SearchBar } from '../SearchBar'
 import { GraphoraContext } from '../GraphoraContext'
 
 export const Search = () => {
-  const { handleSearch } = useContext(GraphoraContext)
+  const { searchWord } = useContext(GraphoraContext)
 
-  return <SearchBar onSearch={handleSearch} placeholder="type a word" />
+  return <SearchBar onSearch={searchWord} placeholder="type a word" />
 }
