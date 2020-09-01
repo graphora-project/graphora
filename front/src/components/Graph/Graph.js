@@ -1,23 +1,22 @@
 import React, { useContext } from 'react'
 import { GraphoraContext } from '../GraphoraContext'
+import { Card } from '../Card'
 
 export const Graph = () => {
-  const { relatedWords } = useContext(GraphoraContext)
+  const { relatedWords, searchWord } = useContext(GraphoraContext)
 
   return (
-    <>
-      <ul>
-        {relatedWords.map((word) => (
-          <div key={word.name}>
-            <h3>{word.name}</h3>
-            <ul>
-              <li>status: {word.status}</li>
-              <li>direction: {word.direction}</li>
-            </ul>
-            <hr />
-          </div>
-        ))}
-      </ul>
-    </>
+    <ul>
+      {relatedWords.map((word) => (
+        <div key={word.name}>
+          {word.status === 'PalabrasAsociadas' ? (
+            <Card word={word} />
+          ) : (
+            <Card word={word} handleSearch={searchWord} />
+          )}
+          <hr />
+        </div>
+      ))}
+    </ul>
   )
 }
