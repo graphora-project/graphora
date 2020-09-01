@@ -1,18 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { GraphoraProvider, GraphoraContext } from './components/GraphoraContext'
 
 function App() {
-  const [words, setWords] = useState([])
   const [word, setWord] = useState('')
-
-  const fetchWord = (word) =>
-    fetch(`${process.env.REAC_APP_GRAPHORA}/graph/${word}`).then((data) =>
-      data.json(),
-    )
+  const [wordRelations, searchWord] = useContext(GraphoraContext)
 
   const handleSearch = async (e) => {
     e.preventDefault()
-    const wordData = await fetchWord(word)
-    setWords(wordData)
+    searchWord(e.target.value)
   }
 
   const handleChange = (e) => {
@@ -21,7 +16,7 @@ function App() {
   }
 
   return (
-    <div>
+    <GraphoraProvider>
       <form onSubmit={handleSearch}>
         <label htmlFor="word">
           insert a word
@@ -30,18 +25,18 @@ function App() {
         <input type="submit" value="search" />
       </form>
       <ul>
-        {words.map((word, index) => (
-          <div key={index}>
-            <h3>{word.name}</h3>
+        {wordRelations.map((relation) => (
+          <div key={relation.name}>
+            <h3>{relation.name}</h3>
             <ul>
-              <li>status: {word.status}</li>
-              <li>direction: {word.direction}</li>
+              <li>status: {relation.status}</li>
+              <li>direction: {relation.direction}</li>
             </ul>
             <hr />
           </div>
         ))}
       </ul>
-    </div>
+    </GraphoraProvider>
   )
 }
 
