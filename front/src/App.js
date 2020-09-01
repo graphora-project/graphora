@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { Graphora } from './config/Graphora'
 
 function App() {
   const [words, setWords] = useState([])
   const [word, setWord] = useState('')
 
   const fetchWord = (word) =>
-    fetch(`${Graphora}/graph/${word}`).then((data) => data.json())
+    fetch(`${process.env.REAC_APP_GRAPHORA}/graph/${word}`).then((data) =>
+      data.json(),
+    )
 
   const handleSearch = async (e) => {
     e.preventDefault()
