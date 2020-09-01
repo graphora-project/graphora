@@ -32,23 +32,23 @@ const fetchFromSessionStorage = async (key, fetchFunction) => {
 }
 
 export const GraphoraProvider = ({ children }) => {
-  const [wordRelations, setWordRelations] = useSessionStorage([])
+  const [relatedWords, setRelatedWords] = useSessionStorage([])
   const [currentWord, setCurrentWord] = useState(undefined)
 
-  const fetchWordRelationships = (word) =>
+  const fetchRelatedWords = (word) =>
     fetch(`${process.env.REACT_APP_GRAPHORA}/graph/${word}`).then((data) =>
       data.json(),
     )
 
   const searchWord = async (word) => {
-    const data = await fetchFromSessionStorage(word, fetchWordRelationships)
-    setWordRelations(word, data)
+    const data = await fetchFromSessionStorage(word, fetchRelatedWords)
+    setRelatedWords(word, data)
     setCurrentWord(word)
   }
 
   const value = {
     currentWord,
-    wordRelations,
+    relatedWords,
     searchWord,
   }
 
