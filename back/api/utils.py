@@ -6,7 +6,7 @@ import os
 
 # Functions
 #   Graph
-def getData(word):
+def getGraph(word):
     # Create the driver
     db_url = os.environ.get("GRAPHENEDB_BOLT_URL")
     db_user = os.environ.get("GRAPHENEDB_BOLT_USER")
@@ -16,14 +16,14 @@ def getData(word):
     # Create the session
     session = driver.session()
     result = session.run("MATCH (n)-[r:ASOCIA_CON]-(p:Estimulo{name:$Estimulo}) RETURN n, r, p", Estimulo=word)
-    exportJSON = generateJSON(session, result)
+    JSON = getGraphInformation(session, result)
     session.close()
     driver.close()
 
-    return json.dumps(exportJSON, ensure_ascii=False, indent=4)
+    return json.dumps(JSON, ensure_ascii=False, indent=4)
 
 
-def generateJSON(session, result):
+def getGraphInformation(session, result):
     # {
     #   name: name of the node,
     #   status: PalabrasAsociadas/PalabraEstimulo,
@@ -66,7 +66,7 @@ def generateJSON(session, result):
 
 
 #   Table
-def generateTableJSON(word):
+def getTable(word):
     # Create the driver
     db_url = os.environ.get("GRAPHENEDB_BOLT_URL")
     db_user = os.environ.get("GRAPHENEDB_BOLT_USER")
@@ -116,7 +116,7 @@ def generateTableJSON(word):
 
 
 #   Search
-def allStimulus(word):
+def getStimulus(word):
     # Create the driver
     db_url = os.environ.get("GRAPHENEDB_BOLT_URL")
     db_user = os.environ.get("GRAPHENEDB_BOLT_USER")
@@ -125,7 +125,7 @@ def allStimulus(word):
 
     # Create the session
     session = driver.session()
-    #0 - 233
+    # 0 - 233
     result = session.run("MATCH (n:Estimulo) WHERE n.name =~$letters RETURN n LIMIT 6", letters=(word+'.*'))
     
     Argus = []
@@ -138,3 +138,10 @@ def allStimulus(word):
     driver.close()
 
     return json.dumps(Argus, ensure_ascii=False, indent=4)
+
+
+def validation(data):
+    if data != "[]":
+        return data
+    else:
+        return "<h1>Palabra invalida</h1>"
