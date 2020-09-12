@@ -1,23 +1,19 @@
 import React, { useContext } from 'react'
 import { GraphoraContext } from '../GraphoraContext'
-import { Card } from '../Card'
+import { WordCard } from '../molecules/WordCard'
 
 export const Graph = () => {
-  const { currentWord, relatedWords, searchWord } = useContext(GraphoraContext)
+  const { currentWord, relatedWords } = useContext(GraphoraContext)
 
   return (
     <>
-      {currentWord ? <h1>Results for {currentWord}</h1> : null}
+      {currentWord ? <h1>Results for: {currentWord}</h1> : null}
       <ul>
         {relatedWords.map((word) => (
-          <div key={word.name}>
-            {word.status === 'PalabrasAsociadas' ? (
-              <Card word={word} />
-            ) : (
-              <Card word={word} handleSearch={searchWord} />
-            )}
+          <li key={word.name}>
+            <WordCard word={word} />
             <hr />
-          </div>
+          </li>
         ))}
       </ul>
     </>
