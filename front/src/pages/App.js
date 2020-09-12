@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Search } from '../components/Search'
-import { Graph } from '../components/Graph'
+import { Search } from '../components/organisms/Search'
+import { Graph } from '../components/organisms/Graph'
 import { GraphoraProvider } from '../components/GraphoraContext'
 
 const App = () => (

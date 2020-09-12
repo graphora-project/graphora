@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import { GraphoraContext } from '../GraphoraContext'
-import { WordCard } from '../molecules/WordCard'
+import { GraphoraContext } from '../../GraphoraContext'
+import { WordCard } from '../../molecules/WordCard'
 
 export const Graph = () => {
   const { currentWord, relatedWords } = useContext(GraphoraContext)
