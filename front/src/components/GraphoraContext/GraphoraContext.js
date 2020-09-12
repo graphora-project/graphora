@@ -1,6 +1,8 @@
 import React, { createContext, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { fetchRelatedWords } from '../../services'
+
 export const GraphoraContext = createContext()
 
 const useSessionStorage = (initialState) => {
@@ -34,11 +36,6 @@ const fetchFromSessionStorage = async (key, fetchFunction) => {
 export const GraphoraProvider = ({ children }) => {
   const [relatedWords, setRelatedWords] = useSessionStorage([])
   const [currentWord, setCurrentWord] = useState(undefined)
-
-  const fetchRelatedWords = (word) =>
-    fetch(`${process.env.REACT_APP_GRAPHORA}/graph/${word}`).then((data) =>
-      data.json(),
-    )
 
   const searchWord = async (word) => {
     const data = await fetchFromSessionStorage(word, fetchRelatedWords)
