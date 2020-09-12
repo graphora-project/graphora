@@ -37,16 +37,20 @@ def getGraphInformation(session, result):
     for records in result:
         flag = False
         name = records["n"]._properties["name"]
-        status = list(records["n"]._labels)[0]
+
+        if (list(records["n"]._labels)[0] == "PalabrasAsociadas"):
+            status = "asociada"
+        else:
+            status = "estimulo"
 
         if records["r"].nodes[0]._properties["name"] != records["p"]._properties["name"]:
-            direction = "In"
+            direction = "in"
         else:
-            direction = "Out"
+            direction = "out"
         
         for result in Argus:
             if result["name"] == records["n"]._properties["name"]:
-                result["direction"] = ["In", "Out"]
+                result["direction"] = "in-out"
                 flag = True
                 break
 
@@ -54,7 +58,7 @@ def getGraphInformation(session, result):
             continue
         
         nodes = []
-        if (status == "PalabraEstimulo") or (status == "Estimulo"):
+        if status == "estimulo":
             other_nodes = session.run("MATCH (n)-[r:ASOCIA_CON]-(p:Estimulo{name:$Estimulo}) RETURN n, r, p LIMIT 2", Estimulo=name)
             node1, node2 = other_nodes.values()
             nodes = [node1[0]._properties["name"], node2[0]._properties["name"]]
