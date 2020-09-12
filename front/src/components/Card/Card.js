@@ -1,29 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export const Card = ({ word, handleSearch }) => {
-  const onSearch = () => {
-    handleSearch(word.name)
-  }
+export const Card = ({ title, description, action }) => {
 
   return (
     <>
-      {handleSearch ? (
-        <h3 onClick={onSearch} style={{ cursor: 'pointer' }}>
-          {word.name}
+      {action ? (
+        <h3 onClick={action} style={{ cursor: 'pointer' }}>
+          {title}
         </h3>
       ) : (
-        <h3>{word.name}</h3>
-      )}
-      <ul>
-        <li>status: {word.status}</li>
-        <li>direction: {word.direction}</li>
-      </ul>
+          <h3>{title}</h3>
+        )}
+      <p>{description}</p>
     </>
   )
 }
 
 Card.propTypes = {
-  word: PropTypes.object.isRequired,
-  handleSearch: PropTypes.func,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  action: PropTypes.func,
 }
