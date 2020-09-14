@@ -4,7 +4,9 @@ import { WordCard } from '../../molecules/WordCard'
 import { LabelButton } from '../../atoms/Button'
 
 export const Graph = () => {
-  const { currentWord, relatedWords, goBackinHistory } = useContext(GraphoraContext)
+  const { currentWord, relatedWords, goBackinHistory } = useContext(
+    GraphoraContext,
+  )
 
   return (
     <>
