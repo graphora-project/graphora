@@ -33,16 +33,18 @@ const fetchFromSessionStorage = async (key, fetchFunction) => {
   return JSON.parse(dataFromStorage)
 }
 
-const userSearchHistory = () => {
+const useSearchHistory = () => {
   const [history, setHistory] = useState([])
 
   const addToHistory = (word) => {
-    setHistory(history.push(word))
+    setHistory(history.concat([word]))
   }
 
   const goBackinHistory = () => {
     if (history.length > 0) {
-      setHistory(history.pop)
+      setHistory(
+        history.filter((element, index) => index !== history.length - 1),
+      )
     }
   }
 
@@ -52,18 +54,28 @@ const userSearchHistory = () => {
 export const GraphoraProvider = ({ children }) => {
   const [relatedWords, setRelatedWords] = useSessionStorage([])
   const [currentWord, setCurrentWord] = useState(undefined)
-  const [history, addToHistory, goBackinHistory] = userSearchHistory()
+  const [history, addToHistory, goBackinHistory] = useSearchHistory()
 
   useEffect(() => {
     if (history.length > 0) {
-      setCurrentWord(history.lastItem) //mucho OJO
+      setCurrentWord(history[history.length - 1])
+    } else {
+      setCurrentWord(undefined)
     }
   }, [history])
 
-  const searchWord = async (word) => {
+  const fetchWordData = async (word) => {
     const data = await fetchFromSessionStorage(word, fetchRelatedWords)
     setRelatedWords(word, data)
-    setCurrentWord(word)
+  }
+
+  useEffect(() => {
+    if (currentWord) {
+      fetchWordData(currentWord)
+    }
+  }, [currentWord])
+
+  const searchWord = async (word) => {
     addToHistory(word)
   }
 
@@ -72,7 +84,6 @@ export const GraphoraProvider = ({ children }) => {
     relatedWords,
     searchWord,
     history,
-    addToHistory,
     goBackinHistory,
   }
 
