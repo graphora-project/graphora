@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { fetchRelatedWords } from '../../services'
@@ -33,20 +33,50 @@ const fetchFromSessionStorage = async (key, fetchFunction) => {
   return JSON.parse(dataFromStorage)
 }
 
+const userSearchHistory = () => {
+  const [history, setHistory] = useState([])
+  
+  const addToHistory = (word) => {
+    setHistory(history.push(word))
+  }
+
+  const goBackinHistory = () => {
+    if(history.length>0){
+      setHistory(history.pop)
+
+    }
+  }
+
+
+  return [history, addToHistory, goBackinHistory]
+}
+
+
 export const GraphoraProvider = ({ children }) => {
   const [relatedWords, setRelatedWords] = useSessionStorage([])
   const [currentWord, setCurrentWord] = useState(undefined)
+  const [history, addToHistory, goBackinHistory] = userSearchHistory()
+
+  useEffect(() => {
+    if(history.length>0){
+      setCurrentWord(history.lastItem) //mucho OJO
+    }
+  }, [history])
 
   const searchWord = async (word) => {
     const data = await fetchFromSessionStorage(word, fetchRelatedWords)
     setRelatedWords(word, data)
     setCurrentWord(word)
+    addToHistory(word)
   }
 
   const value = {
     currentWord,
     relatedWords,
     searchWord,
+    history,
+    addToHistory,
+    goBackinHistory,
   }
 
   return (
