@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { fetchRelatedWords } from '../../services'
+import { GraphoraService } from '../../services'
 
 export const GraphoraContext = createContext()
 
@@ -55,6 +55,7 @@ export const GraphoraProvider = ({ children }) => {
   const [relatedWords, setRelatedWords] = useSessionStorage([])
   const [currentWord, setCurrentWord] = useState(undefined)
   const [history, addToHistory, goBackinHistory] = useSearchHistory()
+  const graphoraService = GraphoraService()
 
   useEffect(() => {
     if (history.length > 0) {
@@ -65,7 +66,10 @@ export const GraphoraProvider = ({ children }) => {
   }, [history])
 
   const fetchWordData = async (word) => {
-    const data = await fetchFromSessionStorage(word, fetchRelatedWords)
+    const data = await fetchFromSessionStorage(
+      word,
+      graphoraService.fetchRelatedWords,
+    )
     setRelatedWords(word, data)
   }
 
