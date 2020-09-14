@@ -8,9 +8,9 @@ export const Graph = () => {
     GraphoraContext,
   )
 
-  return (
+  return currentWord ? (
     <>
-      {currentWord ? <h1>Results for: {currentWord}</h1> : null}
+      <h1>Results for: {currentWord}</h1>
       <LabelButton action={goBackinHistory}> Go Back </LabelButton>
       <ul>
         {relatedWords.map((word) => (
@@ -21,5 +21,7 @@ export const Graph = () => {
         ))}
       </ul>
     </>
+  ) : (
+    <h4>Results will appear here.</h4>
   )
 }
