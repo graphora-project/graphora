@@ -1,5 +1,7 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+
+import { GraphoraService } from '../../services'
 
 export const GraphoraContext = createContext()
 
@@ -31,25 +33,62 @@ const fetchFromSessionStorage = async (key, fetchFunction) => {
   return JSON.parse(dataFromStorage)
 }
 
+const useSearchHistory = () => {
+  const [history, setHistory] = useState([])
+
+  const addToHistory = (word) => {
+    setHistory(history.concat([word]))
+  }
+
+  const goBackinHistory = () => {
+    if (history.length > 0) {
+      setHistory(
+        history.filter((element, index) => index !== history.length - 1),
+      )
+    }
+  }
+
+  return [history, addToHistory, goBackinHistory]
+}
+
 export const GraphoraProvider = ({ children }) => {
   const [relatedWords, setRelatedWords] = useSessionStorage([])
   const [currentWord, setCurrentWord] = useState(undefined)
+  const [history, addToHistory, goBackinHistory] = useSearchHistory()
+  const graphoraService = GraphoraService()
 
-  const fetchRelatedWords = (word) =>
-    fetch(`${process.env.REACT_APP_GRAPHORA}/graph/${word}`).then((data) =>
-      data.json(),
+  useEffect(() => {
+    if (history.length > 0) {
+      setCurrentWord(history[history.length - 1])
+    } else {
+      setCurrentWord(undefined)
+    }
+  }, [history])
+
+  const fetchWordData = async (word) => {
+    const data = await fetchFromSessionStorage(
+      word,
+      graphoraService.fetchRelatedWords,
     )
+    setRelatedWords(word, data)
+  }
+
+  useEffect(() => {
+    if (currentWord) {
+      fetchWordData(currentWord)
+    }
+  }, [currentWord])
 
   const searchWord = async (word) => {
-    const data = await fetchFromSessionStorage(word, fetchRelatedWords)
-    setRelatedWords(word, data)
-    setCurrentWord(word)
+    addToHistory(word)
   }
 
   const value = {
     currentWord,
     relatedWords,
     searchWord,
+    history,
+    goBackinHistory,
   }
 
   return (
@@ -60,5 +99,5 @@ export const GraphoraProvider = ({ children }) => {
 }
 
 GraphoraProvider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
 }

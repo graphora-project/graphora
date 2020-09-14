@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import { SearchBar } from '../SearchBar'
-import { GraphoraContext } from '../GraphoraContext'
+import { SearchBar } from '../../molecules/SearchBar'
+import { GraphoraContext } from '../../GraphoraContext'
 
 export const Search = () => {
   const { searchWord } = useContext(GraphoraContext)
