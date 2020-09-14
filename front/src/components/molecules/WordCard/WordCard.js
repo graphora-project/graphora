@@ -14,7 +14,7 @@ export const WordCard = ({ word }) => {
     searchWord(word.name)
   }
 
-  return word.status === 'PalabrasAsociadas' ? (
+  return word.status === 'asociada' ? (
     <Card title={word.name} description={description} />
   ) : (
     <Card title={word.name} description={description} action={handleClick} />
