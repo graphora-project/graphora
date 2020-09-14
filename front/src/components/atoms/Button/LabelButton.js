@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from './Button'
 
-export const LabelButton = ({ action, label }) => {
-  return <Button action={action}> {label} </Button>
-}
+export const LabelButton = ({ action, children }) => (
+  <Button action={action}>{children}</Button>
+)
 
-IconButton.propTypes = {
+LabelButton.propTypes = {
   action: PropTypes.func,
-  label: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired,
 }

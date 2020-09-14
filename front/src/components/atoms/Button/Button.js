@@ -1,11 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export const Button = ({ action, children }) => {
-  return <button onClick={action}> {children} </button>
-}
+export const Button = ({ action, children }) => (
+  <button onClick={action} type="button">
+    {children}
+  </button>
+)
 
 Button.propTypes = {
   action: PropTypes.func,
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.element.isRequired,
 }
