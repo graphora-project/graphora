@@ -4,7 +4,7 @@ from api import utils
 
 app = Flask(__name__)
 PORT = 5000
-DEBUG = True
+DEBUG = False
 CORS(app)
 
 
