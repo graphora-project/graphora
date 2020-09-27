@@ -4,10 +4,12 @@ import { Search } from '../components/organisms/Search'
 import { Graph } from '../components/organisms/Graph'
 import { GraphoraProvider } from '../components/GraphoraContext'
 
+import { graphSketch } from '../graphSketch'
+
 const App = () => (
   <GraphoraProvider>
     <Search />
-    <Graph />
+    <Graph sketch={graphSketch} />
   </GraphoraProvider>
 )
 
