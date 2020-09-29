@@ -5,9 +5,10 @@ export const ClickeableNode = ({
   xCoordinate,
   yCoordinate,
   label,
+  relations,
   onClick,
 }) => {
-  const [baseNodeDraw, relations] = Node({
+  const [baseNodeDraw] = Node({
     p5,
     xCoordinate,
     yCoordinate,

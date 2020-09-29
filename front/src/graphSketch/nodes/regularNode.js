@@ -12,7 +12,6 @@ export const RegularNode = ({
     xCoordinate,
     yCoordinate,
     label,
-    relations,
   })
   const color = '#FC7A1E'
   const ratio = 40

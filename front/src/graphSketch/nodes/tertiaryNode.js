@@ -1,18 +1,11 @@
 import Node from './node'
 
-export const TertiaryNode = ({
-  p5,
-  xCoordinate,
-  yCoordinate,
-  label,
-  relations,
-}) => {
+export const TertiaryNode = ({ p5, xCoordinate, yCoordinate, label }) => {
   const [baseNodeDraw] = Node({
     p5,
     xCoordinate,
     yCoordinate,
     label,
-    relations,
   })
   const color = '#FFBE67'
   const ratio = 30
@@ -23,6 +16,5 @@ export const TertiaryNode = ({
 
   return {
     draw,
-    relations,
   }
 }
