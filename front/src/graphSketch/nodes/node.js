@@ -6,7 +6,8 @@ const Node = ({ p5, xCoordinate, yCoordinate, label, relations }) => {
 
     p5.fill(0)
     p5.textSize(16)
-    p5.text(label, xCoordinate, yCoordinate + ratio + 20)
+    p5.textAlign(p5.CENTER, p5.CENTER)
+    p5.text(label, xCoordinate, yCoordinate + ratio)
   }
 
   return [draw, relations]
