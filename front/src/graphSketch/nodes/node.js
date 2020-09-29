@@ -1,4 +1,4 @@
-export const Node = ({ p5, xCoordinate, yCoordinate, label, relations }) => {
+const Node = ({ p5, xCoordinate, yCoordinate, label, relations }) => {
   const draw = ({ color, ratio }) => {
     p5.fill(color)
     p5.stroke(0)
@@ -11,3 +11,5 @@ export const Node = ({ p5, xCoordinate, yCoordinate, label, relations }) => {
 
   return [draw, relations]
 }
+
+export default Node
