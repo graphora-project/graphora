@@ -1,4 +1,4 @@
-import { ClickeableNode } from './nodes'
+import { ClickeableNode, RegularNode, TertiaryNode } from './nodes'
 
 export const graphSketch = (p5) => {
   const node1 = ClickeableNode({
@@ -7,6 +7,18 @@ export const graphSketch = (p5) => {
     yCoordinate: 100,
     label: 'estimulo',
     onClick: () => alert('searching...'),
+  })
+  const node2 = RegularNode({
+    p5,
+    xCoordinate: 200,
+    yCoordinate: 100,
+    label: 'relacionada',
+  })
+  const node3 = TertiaryNode({
+    p5,
+    xCoordinate: 300,
+    yCoordinate: 100,
+    label: 'tercer nivel',
   })
 
   p5.setup = () => {
@@ -20,6 +32,8 @@ export const graphSketch = (p5) => {
     p5.background(255)
     p5.cursor('default')
     node1.draw()
+    node2.draw()
+    node3.draw()
   }
 
   p5.mouseClicked = () => {
