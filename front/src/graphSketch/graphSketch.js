@@ -6,7 +6,7 @@ export const graphSketch = (p5) => {
     xCoordinate: 100,
     yCoordinate: 100,
     label: 'estimulo',
-    onClick: () => alert('searching...'),
+    onClick: (label) => alert(`searchin ${label}`),
   })
   const node2 = RegularNode({
     p5,

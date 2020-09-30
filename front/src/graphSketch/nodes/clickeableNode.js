@@ -62,8 +62,7 @@ export const ClickeableNode = ({
 
   const mouseClicked = () => {
     if (mouseIsInArea()) {
-      console.log('click')
-      onClick()
+      onClick(label)
     }
   }
 
