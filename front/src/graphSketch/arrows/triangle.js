@@ -1,0 +1,29 @@
+const Triangle = ({ p5 }) => {
+  const height = 10
+  const baseWidth = 10
+  let point1X, point1Y, point2X, point2Y, point3X, point3Y
+
+  const setPoints = ({
+    pointX,
+    pointY,
+    pointX2,
+    pointY2,
+    pointX3,
+    pointY3,
+  }) => {
+    point1X = pointX
+    point1Y = pointY
+    point2X = pointX2
+    point2Y = pointY2
+    point3X = pointX3
+    point3Y = pointY3
+  }
+  const draw = ({ color }) => {
+    p5.fill(color)
+    p5.triangle(point1X, point1Y, point2X, point2Y, point3X, point3Y)
+  }
+
+  return [draw, height, baseWidth, setPoints]
+}
+
+export default Triangle
