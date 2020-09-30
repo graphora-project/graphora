@@ -2,7 +2,8 @@ import RightTriangle from './rightTriangle'
 import Arrow from './arrow'
 
 export const OutArrow = ({ p5, initialX, initialY, finalX, finalY }) => {
-  const [arrowDraw, color, strokeWeight, baseVector, endVector] = Arrow({
+  // eslint-disable-next-line
+  const [arrowDraw, color, strokeWeight, _, endVector] = Arrow({
     p5,
     initialX,
     initialY,

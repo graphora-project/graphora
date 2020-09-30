@@ -77,6 +77,7 @@ export const GraphoraProvider = ({ children }) => {
     if (currentWord) {
       fetchWordData(currentWord)
     }
+    // eslint-disable-next-line
   }, [currentWord])
 
   const searchWord = async (word) => {
