@@ -18,8 +18,8 @@ const RightTriangle = ({ p5, pointerX, pointerY }) => {
     pointY3,
   })
 
-  const draw = ({ color }) => {
-    baseTriangleDraw({ color })
+  const draw = ({ color, strokeWeight }) => {
+    baseTriangleDraw({ color, strokeWeight })
   }
 
   return [draw]

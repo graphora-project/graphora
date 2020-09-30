@@ -18,8 +18,10 @@ const Triangle = ({ p5 }) => {
     point3X = pointX3
     point3Y = pointY3
   }
-  const draw = ({ color }) => {
+  const draw = ({ color, strokeWeight }) => {
     p5.fill(color)
+    p5.stroke(color)
+    p5.strokeWeight(strokeWeight)
     p5.triangle(point1X, point1Y, point2X, point2Y, point3X, point3Y)
   }
 

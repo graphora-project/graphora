@@ -26,21 +26,21 @@ export const graphSketch = (p5) => {
     initialX: 100,
     initialY: 300,
     finalX: 300,
-    finalY: 300,
+    finalY: 200,
   })
   const outArrow = OutArrow({
     p5,
     initialX: 100,
     initialY: 350,
     finalX: 300,
-    finalY: 350,
+    finalY: 320,
   })
   const inOutArrow = InOutArrow({
     p5,
-    initialX: 100,
+    initialX: 200,
     initialY: 400,
-    finalX: 300,
-    finalY: 450,
+    finalX: 200,
+    finalY: 300,
   })
 
   p5.setup = () => {
