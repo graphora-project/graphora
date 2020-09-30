@@ -14,10 +14,10 @@ export const RegularNode = ({
     label,
   })
   const color = '#FC7A1E'
-  const ratio = 40
+  const diameter = 40
 
   const draw = () => {
-    baseNodeDraw({ color, ratio })
+    baseNodeDraw({ color, diameter })
   }
 
   return {

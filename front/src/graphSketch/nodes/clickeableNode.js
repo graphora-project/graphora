@@ -15,27 +15,27 @@ export const ClickeableNode = ({
     label,
   })
   const color = '#F24C00'
-  const baseRatio = 50
-  const onHoverRatio = 60
-  let ratio = baseRatio
+  const baseDiameter = 50
+  const onHoverDiameter = 60
+  let diameter = baseDiameter
 
   const draw = () => {
     checkHover()
-    baseNodeDraw({ color, ratio })
+    baseNodeDraw({ color, diameter })
   }
 
   const checkHover = () => {
     if (isInXArea() && isInYArea()) {
-      ratio = onHoverRatio
+      diameter = onHoverDiameter
       p5.cursor('pointer')
     } else {
-      ratio = baseRatio
+      diameter = baseDiameter
     }
   }
 
   const isInXArea = () => {
-    if (p5.mouseX > xCoordinate - ratio) {
-      if (p5.mouseX < xCoordinate + ratio) {
+    if (p5.mouseX > xCoordinate - diameter / 2) {
+      if (p5.mouseX < xCoordinate + diameter / 2) {
         return true
       }
     }
@@ -44,8 +44,8 @@ export const ClickeableNode = ({
   }
 
   const isInYArea = () => {
-    if (p5.mouseY > yCoordinate - ratio) {
-      if (p5.mouseY < yCoordinate + ratio) {
+    if (p5.mouseY > yCoordinate - diameter / 2) {
+      if (p5.mouseY < yCoordinate + diameter / 2) {
         return true
       }
     }
