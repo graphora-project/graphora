@@ -1,4 +1,5 @@
 import { ClickeableNode, RegularNode, TertiaryNode } from './nodes'
+import { InArrow, InOutArrow, OutArrow } from './arrows'
 
 export const graphSketch = (p5) => {
   const node1 = ClickeableNode({
@@ -20,6 +21,27 @@ export const graphSketch = (p5) => {
     yCoordinate: 100,
     label: 'tercer nivel',
   })
+  const inArrow = InArrow({
+    p5,
+    initialX: 100,
+    initialY: 300,
+    finalX: 300,
+    finalY: 300,
+  })
+  const outArrow = OutArrow({
+    p5,
+    initialX: 100,
+    initialY: 350,
+    finalX: 300,
+    finalY: 350,
+  })
+  const inOutArrow = InOutArrow({
+    p5,
+    initialX: 100,
+    initialY: 400,
+    finalX: 300,
+    finalY: 450,
+  })
 
   p5.setup = () => {
     p5.createCanvas(
@@ -31,9 +53,14 @@ export const graphSketch = (p5) => {
   p5.draw = () => {
     p5.background(255)
     p5.cursor('default')
+
     node1.draw()
     node2.draw()
     node3.draw()
+
+    inArrow.draw()
+    outArrow.draw()
+    inOutArrow.draw()
   }
 
   p5.mouseClicked = () => {
