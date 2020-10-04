@@ -24,7 +24,9 @@ export const Graph = () => {
   }, [])
 
   useEffect(() => {
-    graph.setData(p5Instance, relatedWords, currentWord)
+    if (currentWord) {
+      graph.setData(p5Instance, relatedWords, currentWord)
+    }
   }, [relatedWords, currentWord])
 
   return currentWord ? (

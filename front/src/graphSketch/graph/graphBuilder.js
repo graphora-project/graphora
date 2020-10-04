@@ -10,7 +10,7 @@ export const GraphBuilder = ({ p5, data, currentWord, onClickFunction }) => {
 const fakeBuilder = ({ p5, data, currentWord, onClickFunction }) => {
   let g = new dagre.graphlib.Graph({ multigraph: true })
 
-  g.setGraph({})
+  g.setGraph({ ranker: 'tight-tree' })
 
   g.setDefaultEdgeLabel(() => {
     return {}
