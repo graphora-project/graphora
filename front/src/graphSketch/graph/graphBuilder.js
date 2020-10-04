@@ -1,36 +1,48 @@
 import dagre from 'dagre'
+import Graph from 'graphology'
+import { random, circlepack } from 'graphology-layout'
 import { ClickeableNode, RegularNode } from '../nodes'
 import { InArrow, OutArrow, InOutArrow } from '../arrows'
-import { Graph } from './graph'
+import { P5Graph } from './graph'
 
 export const GraphBuilder = ({ p5, data, currentWord, onClickFunction }) => {
   return fakeBuilder({ p5, data, currentWord, onClickFunction })
 }
 
 const fakeBuilder = ({ p5, data, currentWord, onClickFunction }) => {
-  let g = new dagre.graphlib.Graph({ multigraph: true })
+  const graph = new Graph()
 
-  g.setGraph({ ranker: 'tight-tree' })
-
-  g.setDefaultEdgeLabel(() => {
-    return {}
-  })
-
-  g.setNode(currentWord, { isStimulate: true, width: 60, height: 60 })
+  graph.addNode(currentWord)
   data.forEach((word) => {
-    if (word.status === 'estimulo') {
-      g.setNode(word.name, { isStimulate: true, width: 60, height: 60 })
-    } else {
-      g.setNode(word.name, { width: 40, height: 40 })
-    }
-    g.setEdge(currentWord, word.name)
+    graph.addNode(word.name)
+    graph.addEdge(currentWord, word.name)
   })
 
-  dagre.layout(g)
+  const layout = random(graph, { scale: 2000 })
+  console.log(layout)
 
   const nodes = []
   const edges = []
 
+  nodes.push(
+    RegularNode({
+      p5,
+      xCoordinate: 0,
+      yCoordinate: 0,
+      label: currentWord,
+    }),
+  )
+  data.forEach((node) => {
+    nodes.push(
+      RegularNode({
+        p5,
+        xCoordinate: layout[node.name].x - layout[currentWord].x,
+        yCoordinate: layout[node.name].y - layout[currentWord].y,
+        label: node.name,
+      }),
+    )
+  })
+  /*
   g.nodes().forEach((nodeName) => {
     const node = g.node(nodeName)
 
@@ -55,7 +67,9 @@ const fakeBuilder = ({ p5, data, currentWord, onClickFunction }) => {
       )
     }
   })
+  */
 
+  /*
   g.edges().forEach((edgeName) => {
     const edge = g.edge(edgeName)
     edges.push(
@@ -69,8 +83,11 @@ const fakeBuilder = ({ p5, data, currentWord, onClickFunction }) => {
     )
   })
 
-  return Graph({
+  */
+  return P5Graph({
     nodes,
     edges,
+    centerX: layout[currentWord].x,
+    centerY: layout[currentWord].y,
   })
 }

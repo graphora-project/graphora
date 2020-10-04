@@ -31,6 +31,7 @@ export const graphSketch = () => {
       p5.cursor('default')
 
       if (graph) {
+        p5.translate(graph.centerX, graph.centerY)
         graph.draw()
       }
     }
