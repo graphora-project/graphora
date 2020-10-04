@@ -4,16 +4,26 @@ import PropTypes from 'prop-types'
 import { GraphoraContext } from '../../GraphoraContext'
 import { WordCard } from '../../molecules/WordCard'
 import { LabelButton } from '../../atoms/Button'
+import { graphSketch } from '../../../graphSketch'
 
-export const Graph = ({ sketch }) => {
-  const { currentWord, relatedWords, goBackinHistory } = useContext(
+const graph = graphSketch(p5)
+
+export const Graph = () => {
+  const { currentWord, relatedWords, goBackinHistory, searchWord } = useContext(
     GraphoraContext,
   )
   const ref = useRef()
+  graph.setOnClickFunction((label) => {
+    searchWord(label)
+  })
+
+  useEffect(() => {
+    graph.setData(relatedWords)
+  }, [relatedWords])
 
   useEffect(() => {
     // eslint-disable-next-line
-    new p5(sketch, ref.current)
+    new p5(graph.draw, ref.current)
     // eslint-disable-next-line
   }, [])
 
