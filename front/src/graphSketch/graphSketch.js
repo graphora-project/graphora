@@ -1,7 +1,9 @@
 import { ClickeableNode, RegularNode, TertiaryNode } from './nodes'
 import { InArrow, InOutArrow, OutArrow } from './arrows'
+import { GraphBuilder } from './graph/graphBuilder'
 
 export const graphSketch = (p5) => {
+  GraphBuilder({ p5 })
   const node1 = ClickeableNode({
     p5,
     xCoordinate: 100,
@@ -43,6 +45,7 @@ export const graphSketch = (p5) => {
     finalY: 300,
   })
 
+  // eslint-disable-next-line
   p5.setup = () => {
     p5.createCanvas(
       (window.innerWidth / 100) * 90,
@@ -50,6 +53,7 @@ export const graphSketch = (p5) => {
     )
   }
 
+  // eslint-disable-next-line
   p5.draw = () => {
     p5.background(255)
     p5.cursor('default')
@@ -63,6 +67,7 @@ export const graphSketch = (p5) => {
     inOutArrow.draw()
   }
 
+  // eslint-disable-next-line
   p5.mouseClicked = () => {
     node1.mouseClicked()
   }
