@@ -8,7 +8,16 @@ export const Graph = ({ nodes, edges }) => {
     })
   }
 
+  const clickListener = () => {
+    nodes.forEach((node) => {
+      if (node.mouseClicked) {
+        node.mouseClicked()
+      }
+    })
+  }
+
   return {
     draw,
+    clickListener,
   }
 }

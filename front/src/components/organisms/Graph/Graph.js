@@ -6,6 +6,7 @@ import { LabelButton } from '../../atoms/Button'
 import { graphSketch } from '../../../graphSketch'
 
 const graph = graphSketch(p5)
+let p5Instance
 
 export const Graph = () => {
   const { currentWord, relatedWords, goBackinHistory, searchWord } = useContext(
@@ -17,28 +18,19 @@ export const Graph = () => {
   })
 
   useEffect(() => {
-    graph.setData(relatedWords)
-  }, [relatedWords])
-
-  useEffect(() => {
     // eslint-disable-next-line
-    new p5(graph.sketch, ref.current)
+    p5Instance = new p5(graph.sketch, ref.current)
     // eslint-disable-next-line
   }, [])
 
+  useEffect(() => {
+    graph.setData(p5Instance, relatedWords, currentWord)
+  }, [relatedWords, currentWord])
+
   return currentWord ? (
     <>
-      <div ref={ref} />
       <h1>Results for: {currentWord}</h1>
-      <LabelButton action={goBackinHistory}> Go Back </LabelButton>
-      <ul>
-        {relatedWords.map((word) => (
-          <li key={word.name}>
-            <WordCard word={word} />
-            <hr />
-          </li>
-        ))}
-      </ul>
+      <div ref={ref} />
     </>
   ) : (
     <h4>Results will appear here.</h4>
