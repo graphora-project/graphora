@@ -15,8 +15,8 @@ export const ClickeableNode = ({
     label,
   })
   const color = '#F24C00'
-  const baseDiameter = 50
-  const onHoverDiameter = 60
+  const baseDiameter = 30
+  const onHoverDiameter = 40
   let diameter = baseDiameter
 
   const draw = () => {

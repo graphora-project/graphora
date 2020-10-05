@@ -14,7 +14,7 @@ export const RegularNode = ({
     label,
   })
   const color = '#FC7A1E'
-  const diameter = 40
+  const diameter = 20
 
   const draw = () => {
     baseNodeDraw({ color, diameter })

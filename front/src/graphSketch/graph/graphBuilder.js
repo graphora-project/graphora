@@ -1,6 +1,8 @@
 import dagre from 'dagre'
 import Graph from 'graphology'
 import { random, circlepack } from 'graphology-layout'
+import noverlap from 'graphology-layout-noverlap'
+import forceAtlas2 from 'graphology-layout-forceatlas2'
 import { ClickeableNode, RegularNode } from '../nodes'
 import { InArrow, OutArrow, InOutArrow } from '../arrows'
 import { P5Graph } from './graph'
@@ -18,29 +20,47 @@ const fakeBuilder = ({ p5, data, currentWord, onClickFunction }) => {
     graph.addEdge(currentWord, word.name)
   })
 
-  const layout = random(graph, { scale: 2000 })
-  console.log(layout)
+  const layout = random(graph, { scale: 500 })
+
+  /*
+  const layout = noverlap(graph, {
+    maxIterations: 500,
+  })
+  */
 
   const nodes = []
   const edges = []
 
   nodes.push(
-    RegularNode({
+    ClickeableNode({
       p5,
-      xCoordinate: 0,
-      yCoordinate: 0,
+      xCoordinate: layout[currentWord].x,
+      yCoordinate: layout[currentWord].y,
       label: currentWord,
+      onClick: onClickFunction,
     }),
   )
   data.forEach((node) => {
-    nodes.push(
-      RegularNode({
-        p5,
-        xCoordinate: layout[node.name].x - layout[currentWord].x,
-        yCoordinate: layout[node.name].y - layout[currentWord].y,
-        label: node.name,
-      }),
-    )
+    if (node.status === 'estimulo') {
+      nodes.push(
+        ClickeableNode({
+          p5,
+          xCoordinate: layout[node.name].x,
+          yCoordinate: layout[node.name].y,
+          label: node.name,
+          onClick: onClickFunction,
+        }),
+      )
+    } else {
+      nodes.push(
+        RegularNode({
+          p5,
+          xCoordinate: layout[node.name].x,
+          yCoordinate: layout[node.name].y,
+          label: node.name,
+        }),
+      )
+    }
   })
   /*
   g.nodes().forEach((nodeName) => {
