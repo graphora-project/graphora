@@ -12,6 +12,8 @@ export const TertiaryNode = ({ p5, xCoordinate, yCoordinate, label }) => {
     color,
   })
   baseNode.setRadius(radius)
+  baseNode.setXCoordinate(xCoordinate)
+  baseNode.setYCoordinate(yCoordinate)
 
   const draw = () => {
     baseNode.draw()
@@ -19,5 +21,7 @@ export const TertiaryNode = ({ p5, xCoordinate, yCoordinate, label }) => {
 
   return {
     draw,
+    setXCoordinate: baseNode.setXCoordinate,
+    setYCoordinate: baseNode.setYCoordinate,
   }
 }

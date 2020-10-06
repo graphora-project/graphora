@@ -1,4 +1,6 @@
-const Node = ({ p5, xCoordinate, yCoordinate, label, color }) => {
+const Node = ({ p5, label, color }) => {
+  let xCoordinate = 0
+  let yCoordinate = 0
   let radius = 0
 
   const draw = () => {
@@ -16,7 +18,15 @@ const Node = ({ p5, xCoordinate, yCoordinate, label, color }) => {
     radius = _radius
   }
 
-  return { draw, setRadius }
+  const setXCoordinate = (_xCoordinate) => {
+    xCoordinate = _xCoordinate
+  }
+
+  const setYCoordinate = (_yCoordinate) => {
+    yCoordinate = _yCoordinate
+  }
+
+  return { draw, setRadius, setXCoordinate, setYCoordinate }
 }
 
 export default Node

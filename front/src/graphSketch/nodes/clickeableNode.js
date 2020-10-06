@@ -14,12 +14,12 @@ export const ClickeableNode = ({
 
   const baseNode = Node({
     p5,
-    xCoordinate,
-    yCoordinate,
     label,
     color,
   })
   baseNode.setRadius(baseRadius)
+  baseNode.setXCoordinate(xCoordinate)
+  baseNode.setYCoordinate(yCoordinate)
 
   const draw = () => {
     checkHover()
@@ -73,5 +73,10 @@ export const ClickeableNode = ({
     }
   }
 
-  return { draw, mouseClicked }
+  return {
+    draw,
+    mouseClicked,
+    setXCoordinate: baseNode.setXCoordinate,
+    setYCoordinate: baseNode.setYCoordinate,
+  }
 }
