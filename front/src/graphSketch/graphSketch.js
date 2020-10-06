@@ -38,19 +38,10 @@ export const graphSketch = () => {
       p5.cursor('default')
 
       if (graph) {
+        p5.scale(0.5)
         const { nodes } = graph
-        for (let i = 1; i < nodes.length; i += 1) {
-          p5.stroke(150)
-          p5.strokeWeight(0.5)
-          p5.line(
-            nodes[0].getXCoordinate(),
-            nodes[0].getYCoordinate(),
-            nodes[i].getXCoordinate(),
-            nodes[i].getYCoordinate(),
-          )
-        }
         graph.draw()
-        collisionsManager.checkCollisions(graph.nodes)
+        collisionsManager.checkCollisions(nodes)
       }
     }
 
