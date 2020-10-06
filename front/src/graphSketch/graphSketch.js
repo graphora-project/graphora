@@ -8,6 +8,9 @@ export const graphSketch = () => {
   let graph
   let collisionsManager
 
+  const canvasWidth = (window.innerWidth / 100) * 90
+  const canvasHeight = (window.innerHeight / 100) * 90
+
   const setData = (p5, _data, _currentWord) => {
     // as setState function in React is asynchronus, when a new word is searched
     // react sends the new currentWord but the data is the same as before, creating and error on the graph
@@ -26,10 +29,7 @@ export const graphSketch = () => {
   const sketch = (p5) => {
     // eslint-disable-next-line
     p5.setup = () => {
-      p5.createCanvas(
-        (window.innerWidth / 100) * 90,
-        (window.innerHeight / 100) * 90,
-      )
+      p5.createCanvas(canvasWidth, canvasHeight)
     }
 
     // eslint-disable-next-line
@@ -38,6 +38,17 @@ export const graphSketch = () => {
       p5.cursor('default')
 
       if (graph) {
+        const { nodes } = graph
+        for (let i = 1; i < nodes.length; i += 1) {
+          p5.stroke(150)
+          p5.strokeWeight(0.5)
+          p5.line(
+            nodes[0].getXCoordinate(),
+            nodes[0].getYCoordinate(),
+            nodes[i].getXCoordinate(),
+            nodes[i].getYCoordinate(),
+          )
+        }
         graph.draw()
         collisionsManager.checkCollisions(graph.nodes)
       }
