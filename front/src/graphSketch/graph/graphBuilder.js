@@ -2,6 +2,7 @@ import Graph from 'graphology'
 import { random } from 'graphology-layout'
 import { ClickeableNode, RegularNode } from '../nodes'
 import { P5Graph } from './graph'
+import { InArrow, OutArrow, InOutArrow } from '../arrows'
 
 export const GraphBuilder = ({ p5, data, currentWord, onClickFunction }) =>
   fakeBuilder({ p5, data, currentWord, onClickFunction })
@@ -50,32 +51,37 @@ const fakeBuilder = ({ p5, data, currentWord, onClickFunction }) => {
         }),
       )
     }
+
+    if (node.direction === 'in') {
+      edges.push(
+        InArrow({
+          p5,
+          initialNode: nodes[0],
+          finalNode: nodes[nodes.length - 1],
+        }),
+      )
+    }
+
+    if (node.direction === 'out') {
+      edges.push(
+        OutArrow({
+          p5,
+          initialNode: nodes[0],
+          finalNode: nodes[nodes.length - 1],
+        }),
+      )
+    }
+
+    if (node.direction === 'in-out') {
+      edges.push(
+        InOutArrow({
+          p5,
+          initialNode: nodes[0],
+          finalNode: nodes[nodes.length - 1],
+        }),
+      )
+    }
   })
-
-  /*
-  const nodes = []
-  const edges = []
-
-  nodes.push(
-    ClickeableNode({
-      p5,
-      xCoordinate: 300,
-      yCoordinate: 100,
-      label: 'abeja',
-      onClick: onClickFunction,
-    }),
-  )
-
-  nodes.push(
-    ClickeableNode({
-      p5,
-      xCoordinate: 300,
-      yCoordinate: 100,
-      label: 'zapato',
-      onClick: onClickFunction,
-    }),
-  )
-  */
 
   return P5Graph({
     nodes,
