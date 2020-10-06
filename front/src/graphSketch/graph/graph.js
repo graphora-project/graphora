@@ -1,10 +1,11 @@
 export const P5Graph = ({ nodes, edges, centerX, centerY }) => {
   const draw = () => {
-    nodes.forEach((node) => {
-      node.draw()
-    })
     edges.forEach((edge) => {
       edge.draw()
+    })
+
+    nodes.forEach((node) => {
+      node.draw()
     })
   }
 
