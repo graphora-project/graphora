@@ -1,11 +1,18 @@
-const Line = ({ p5, initialX, initialY, finalX, finalY }) => {
-  const draw = ({ color, strokeWeight }) => {
+const Line = ({ p5 }) => {
+  const draw = ({
+    color,
+    strokeWeight,
+    initialX,
+    initialY,
+    finalX,
+    finalY,
+  }) => {
     p5.stroke(color)
     p5.strokeWeight(strokeWeight)
     p5.line(initialX, initialY, finalX, finalY)
   }
 
-  return [draw]
+  return { draw }
 }
 
 export default Line

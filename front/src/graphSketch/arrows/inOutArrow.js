@@ -2,39 +2,44 @@ import RightTriangle from './rightTriangle'
 import LeftTriangle from './leftTriangle'
 import Arrow from './arrow'
 
-export const InOutArrow = ({ p5, initialX, initialY, finalX, finalY }) => {
-  const [arrowDraw, color, strokeWeight, baseVector, endVector] = Arrow({
+export const InOutArrow = ({ p5, initialNode, finalNode }) => {
+  const arrow = Arrow({
     p5,
-    initialX,
-    initialY,
-    finalX,
-    finalY,
+    initialNode,
+    finalNode,
   })
 
-  const [rightTriangleDraw] = RightTriangle({
+  const rightTriangle = RightTriangle({
     p5,
-    pointerX: 0,
-    pointerY: 0,
   })
 
-  const [leftTriangleDraw] = LeftTriangle({
+  const leftTriangle = LeftTriangle({
     p5,
-    pointerX: baseVector.x,
-    pointerY: baseVector.y,
   })
 
   const draw = () => {
+    const initialX = initialNode.getXCoordinate()
+    const initialY = initialNode.getYCoordinate()
+
+    const { color, strokeWeight } = arrow
+
     p5.push()
-    arrowDraw()
+    const { baseVector, endVector } = arrow.draw()
+
+    leftTriangle.setPointerX(baseVector.x)
+    leftTriangle.setPointerY(baseVector.y)
+
     p5.rotate(endVector.heading())
-    leftTriangleDraw({ color, strokeWeight })
+    leftTriangle.draw({ color, strokeWeight })
     p5.pop()
 
     p5.push()
     p5.translate(initialX, initialY)
     p5.translate(endVector.x, endVector.y)
+    rightTriangle.setPointerX(0)
+    rightTriangle.setPointerY(0)
     p5.rotate(endVector.heading())
-    rightTriangleDraw({ color, strokeWeight })
+    rightTriangle.draw({ color, strokeWeight })
     p5.pop()
   }
 

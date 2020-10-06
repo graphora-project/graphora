@@ -1,26 +1,26 @@
 import LeftTriangle from './leftTriangle'
 import Arrow from './arrow'
 
-export const InArrow = ({ p5, initialX, initialY, finalX, finalY }) => {
-  const [arrowDraw, color, strokeWeight, baseVector, endVector] = Arrow({
+export const InArrow = ({ p5, initialNode, finalNode }) => {
+  const arrow = Arrow({
     p5,
-    initialX,
-    initialY,
-    finalX,
-    finalY,
+    initialNode,
+    finalNode,
   })
 
-  const [triangleDraw] = LeftTriangle({
+  const triangle = LeftTriangle({
     p5,
-    pointerX: baseVector.x,
-    pointerY: baseVector.y,
   })
 
   const draw = () => {
     p5.push()
-    arrowDraw()
+    const { color, strokeWeight } = arrow
+    const { baseVector, endVector } = arrow.draw()
+
+    triangle.setPointerX(baseVector.x)
+    triangle.setPointerY(baseVector.y)
     p5.rotate(endVector.heading())
-    triangleDraw({ color, strokeWeight })
+    triangle.draw({ color, strokeWeight })
     p5.pop()
   }
 

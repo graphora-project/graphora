@@ -1,28 +1,27 @@
 import RightTriangle from './rightTriangle'
 import Arrow from './arrow'
 
-export const OutArrow = ({ p5, initialX, initialY, finalX, finalY }) => {
+export const OutArrow = ({ p5, initialNode, finalNode }) => {
   // eslint-disable-next-line
-  const [arrowDraw, color, strokeWeight, _, endVector] = Arrow({
+  const arrow = Arrow({
     p5,
-    initialX,
-    initialY,
-    finalX,
-    finalY,
+    initialNode,
+    finalNode,
   })
 
-  const [triangleDraw] = RightTriangle({
+  const triangle = RightTriangle({
     p5,
-    pointerX: 0,
-    pointerY: 0,
   })
 
   const draw = () => {
+    const { color, strokeWeight } = arrow
     p5.push()
-    arrowDraw()
+    const { endVector } = arrow.draw()
+    triangle.setPointerX(0)
+    triangle.setPointerY(0)
     p5.translate(endVector.x, endVector.y)
     p5.rotate(endVector.heading())
-    triangleDraw({ color, strokeWeight })
+    triangle.draw({ color, strokeWeight })
     p5.pop()
   }
 
