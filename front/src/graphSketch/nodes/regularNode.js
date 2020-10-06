@@ -1,27 +1,23 @@
 import Node from './node'
 
-export const RegularNode = ({
-  p5,
-  xCoordinate,
-  yCoordinate,
-  label,
-  relations,
-}) => {
-  const [baseNodeDraw] = Node({
+export const RegularNode = ({ p5, xCoordinate, yCoordinate, label }) => {
+  const color = '#FC7A1E'
+  const radius = 10
+
+  const baseNode = Node({
     p5,
     xCoordinate,
     yCoordinate,
     label,
+    color,
   })
-  const color = '#FC7A1E'
-  const diameter = 20
+  baseNode.setRadius(radius)
 
   const draw = () => {
-    baseNodeDraw({ color, diameter })
+    baseNode.draw()
   }
 
   return {
     draw,
-    relations,
   }
 }

@@ -5,37 +5,44 @@ export const ClickeableNode = ({
   xCoordinate,
   yCoordinate,
   label,
-  relations,
   onClick,
 }) => {
-  const [baseNodeDraw] = Node({
+  const color = '#F24C00'
+  const baseRadius = 15
+  const onHoverRadius = 20
+  let radius = baseRadius
+
+  const baseNode = Node({
     p5,
     xCoordinate,
     yCoordinate,
     label,
+    color,
   })
-  const color = '#F24C00'
-  const baseDiameter = 30
-  const onHoverDiameter = 40
-  let diameter = baseDiameter
+  baseNode.setRadius(baseRadius)
 
   const draw = () => {
     checkHover()
-    baseNodeDraw({ color, diameter })
+    baseNode.draw()
+  }
+
+  const setRadius = (_radius) => {
+    radius = _radius
+    baseNode.setRadius(_radius)
   }
 
   const checkHover = () => {
     if (isInXArea() && isInYArea()) {
-      diameter = onHoverDiameter
+      setRadius(onHoverRadius)
       p5.cursor('pointer')
     } else {
-      diameter = baseDiameter
+      setRadius(baseRadius)
     }
   }
 
   const isInXArea = () => {
-    if (p5.mouseX > xCoordinate - diameter / 2) {
-      if (p5.mouseX < xCoordinate + diameter / 2) {
+    if (p5.mouseX > xCoordinate - radius / 2) {
+      if (p5.mouseX < xCoordinate + radius / 2) {
         return true
       }
     }
@@ -44,8 +51,8 @@ export const ClickeableNode = ({
   }
 
   const isInYArea = () => {
-    if (p5.mouseY > yCoordinate - diameter / 2) {
-      if (p5.mouseY < yCoordinate + diameter / 2) {
+    if (p5.mouseY > yCoordinate - radius / 2) {
+      if (p5.mouseY < yCoordinate + radius / 2) {
         return true
       }
     }
@@ -66,5 +73,5 @@ export const ClickeableNode = ({
     }
   }
 
-  return { draw, relations, mouseClicked }
+  return { draw, mouseClicked }
 }

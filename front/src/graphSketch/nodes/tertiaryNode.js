@@ -1,17 +1,20 @@
 import Node from './node'
 
 export const TertiaryNode = ({ p5, xCoordinate, yCoordinate, label }) => {
-  const [baseNodeDraw] = Node({
+  const color = '#FFBE67'
+  const radius = 15
+
+  const baseNode = Node({
     p5,
     xCoordinate,
     yCoordinate,
     label,
+    color,
   })
-  const color = '#FFBE67'
-  const diameter = 30
+  baseNode.setRadius(radius)
 
   const draw = () => {
-    baseNodeDraw({ color, diameter })
+    baseNode.draw()
   }
 
   return {
