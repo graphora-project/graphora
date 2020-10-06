@@ -24,8 +24,8 @@ const fakeBuilder = ({ p5, data, currentWord, onClickFunction }) => {
   nodes.push(
     ClickeableNode({
       p5,
-      xCoordinate: layout[currentWord].x,
-      yCoordinate: layout[currentWord].y,
+      xCoordinate: 0,
+      yCoordinate: 0,
       label: currentWord,
       onClick: onClickFunction,
     }),
@@ -35,8 +35,8 @@ const fakeBuilder = ({ p5, data, currentWord, onClickFunction }) => {
       nodes.push(
         ClickeableNode({
           p5,
-          xCoordinate: layout[node.name].x,
-          yCoordinate: layout[node.name].y,
+          xCoordinate: layout[node.name].x - layout[currentWord].x,
+          yCoordinate: layout[node.name].y - layout[currentWord].y,
           label: node.name,
           onClick: onClickFunction,
         }),
@@ -45,8 +45,8 @@ const fakeBuilder = ({ p5, data, currentWord, onClickFunction }) => {
       nodes.push(
         RegularNode({
           p5,
-          xCoordinate: layout[node.name].x,
-          yCoordinate: layout[node.name].y,
+          xCoordinate: layout[node.name].x - layout[currentWord].x,
+          yCoordinate: layout[node.name].y - layout[currentWord].y,
           label: node.name,
         }),
       )

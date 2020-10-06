@@ -7,6 +7,7 @@ export const graphSketch = () => {
   let onClickFunction
   let graph
   let collisionsManager
+  let scale = 1
 
   const canvasWidth = (window.innerWidth / 100) * 90
   const canvasHeight = (window.innerHeight / 100) * 90
@@ -38,10 +39,11 @@ export const graphSketch = () => {
       p5.cursor('default')
 
       if (graph) {
-        p5.scale(0.5)
-        const { nodes } = graph
-        graph.draw()
-        collisionsManager.checkCollisions(nodes)
+        p5.scale(scale)
+        p5.translate(canvasWidth / 2, canvasHeight / 2)
+        p5.translate(graph.centerX, graph.centerY)
+        graph.draw({ scale })
+        collisionsManager.checkCollisions(graph.nodes)
       }
     }
 
