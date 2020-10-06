@@ -23,5 +23,7 @@ export const TertiaryNode = ({ p5, xCoordinate, yCoordinate, label }) => {
     draw,
     setXCoordinate: baseNode.setXCoordinate,
     setYCoordinate: baseNode.setYCoordinate,
+    xCoordinate: baseNode.xCoordinate,
+    yCoordinate: baseNode.yCoordinate,
   }
 }

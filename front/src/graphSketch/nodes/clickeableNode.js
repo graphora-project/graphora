@@ -78,5 +78,7 @@ export const ClickeableNode = ({
     mouseClicked,
     setXCoordinate: baseNode.setXCoordinate,
     setYCoordinate: baseNode.setYCoordinate,
+    xCoordinate: baseNode.xCoordinate,
+    yCoordinate: baseNode.yCoordinate,
   }
 }

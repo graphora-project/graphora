@@ -26,7 +26,14 @@ const Node = ({ p5, label, color }) => {
     yCoordinate = _yCoordinate
   }
 
-  return { draw, setRadius, setXCoordinate, setYCoordinate }
+  return {
+    draw,
+    setRadius,
+    setXCoordinate,
+    setYCoordinate,
+    xCoordinate,
+    yCoordinate,
+  }
 }
 
 export default Node
