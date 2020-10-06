@@ -41,8 +41,8 @@ export const ClickeableNode = ({
   }
 
   const isInXArea = () => {
-    if (p5.mouseX > xCoordinate - radius / 2) {
-      if (p5.mouseX < xCoordinate + radius / 2) {
+    if (p5.mouseX > xCoordinate - radius) {
+      if (p5.mouseX < xCoordinate + radius) {
         return true
       }
     }
@@ -51,8 +51,8 @@ export const ClickeableNode = ({
   }
 
   const isInYArea = () => {
-    if (p5.mouseY > yCoordinate - radius / 2) {
-      if (p5.mouseY < yCoordinate + radius / 2) {
+    if (p5.mouseY > yCoordinate - radius) {
+      if (p5.mouseY < yCoordinate + radius) {
         return true
       }
     }
