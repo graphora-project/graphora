@@ -26,13 +26,18 @@ const Node = ({ p5, label, color }) => {
     yCoordinate = _yCoordinate
   }
 
+  const getRadius = () => radius
+  const getXCoordinate = () => xCoordinate
+  const getYCoordinate = () => yCoordinate
+
   return {
     draw,
     setRadius,
+    getRadius,
     setXCoordinate,
     setYCoordinate,
-    xCoordinate,
-    yCoordinate,
+    getXCoordinate,
+    getYCoordinate,
   }
 }
 

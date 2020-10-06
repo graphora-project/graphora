@@ -41,8 +41,8 @@ export const ClickeableNode = ({
   }
 
   const isInXArea = () => {
-    if (p5.mouseX > xCoordinate - radius) {
-      if (p5.mouseX < xCoordinate + radius) {
+    if (p5.mouseX > baseNode.getXCoordinate() - radius) {
+      if (p5.mouseX < baseNode.getXCoordinate() + radius) {
         return true
       }
     }
@@ -51,8 +51,8 @@ export const ClickeableNode = ({
   }
 
   const isInYArea = () => {
-    if (p5.mouseY > yCoordinate - radius) {
-      if (p5.mouseY < yCoordinate + radius) {
+    if (p5.mouseY > baseNode.getYCoordinate() - radius) {
+      if (p5.mouseY < baseNode.getYCoordinate() + radius) {
         return true
       }
     }
@@ -76,9 +76,10 @@ export const ClickeableNode = ({
   return {
     draw,
     mouseClicked,
+    getRadius: baseNode.getRadius,
     setXCoordinate: baseNode.setXCoordinate,
     setYCoordinate: baseNode.setYCoordinate,
-    xCoordinate: baseNode.xCoordinate,
-    yCoordinate: baseNode.yCoordinate,
+    getXCoordinate: baseNode.getXCoordinate,
+    getYCoordinate: baseNode.getYCoordinate,
   }
 }

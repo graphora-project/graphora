@@ -21,9 +21,10 @@ export const TertiaryNode = ({ p5, xCoordinate, yCoordinate, label }) => {
 
   return {
     draw,
+    getRadius: baseNode.getRadius,
     setXCoordinate: baseNode.setXCoordinate,
     setYCoordinate: baseNode.setYCoordinate,
-    xCoordinate: baseNode.xCoordinate,
-    yCoordinate: baseNode.yCoordinate,
+    getXCoordinate: baseNode.getXCoordinate,
+    getYCoordinate: baseNode.getYCoordinate,
   }
 }
