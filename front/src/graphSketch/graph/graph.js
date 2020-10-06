@@ -1,4 +1,4 @@
-export const Graph = ({ nodes, edges }) => {
+export const P5Graph = ({ nodes, edges, centerX, centerY }) => {
   const draw = () => {
     nodes.forEach((node) => {
       node.draw()
@@ -8,7 +8,18 @@ export const Graph = ({ nodes, edges }) => {
     })
   }
 
+  const clickListener = () => {
+    nodes.forEach((node) => {
+      if (node.mouseClicked) {
+        node.mouseClicked()
+      }
+    })
+  }
+
   return {
     draw,
+    clickListener,
+    centerX,
+    centerY,
   }
 }

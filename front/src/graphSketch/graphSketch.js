@@ -1,12 +1,19 @@
-import { ClickeableNode, RegularNode, TertiaryNode } from './nodes'
-import { InArrow, InOutArrow, OutArrow } from './arrows'
+import { GraphBuilder } from './graph/graphBuilder'
 
 export const graphSketch = () => {
   let data = []
+  let currentWord = ''
   let onClickFunction
+  let graph
 
-  const setData = (_data) => {
-    data = _data
+  const setData = (p5, _data, _currentWord) => {
+    // as setState function in React is asynchronus, when a new word is searched
+    // react sends the new currentWord but the data is the same as before, creating and error on the graph
+    if (data !== _data) {
+      data = _data
+      currentWord = _currentWord
+      graph = GraphBuilder({ p5, data, currentWord, onClickFunction })
+    }
   }
 
   const setOnClickFunction = (_onClickFunction) => {
@@ -14,47 +21,6 @@ export const graphSketch = () => {
   }
 
   const sketch = (p5) => {
-    const node1 = ClickeableNode({
-      p5,
-      xCoordinate: 100,
-      yCoordinate: 100,
-      label: 'estimulo',
-      onClick: () => onClickFunction('abeja'),
-    })
-    const node2 = RegularNode({
-      p5,
-      xCoordinate: 200,
-      yCoordinate: 100,
-      label: 'relacionada',
-    })
-    const node3 = TertiaryNode({
-      p5,
-      xCoordinate: 300,
-      yCoordinate: 100,
-      label: 'tercer nivel',
-    })
-    const inArrow = InArrow({
-      p5,
-      initialX: 100,
-      initialY: 300,
-      finalX: 300,
-      finalY: 200,
-    })
-    const outArrow = OutArrow({
-      p5,
-      initialX: 100,
-      initialY: 350,
-      finalX: 300,
-      finalY: 320,
-    })
-    const inOutArrow = InOutArrow({
-      p5,
-      initialX: 200,
-      initialY: 400,
-      finalX: 200,
-      finalY: 300,
-    })
-
     // eslint-disable-next-line
     p5.setup = () => {
       p5.createCanvas(
@@ -68,18 +34,16 @@ export const graphSketch = () => {
       p5.background(255)
       p5.cursor('default')
 
-      node1.draw()
-      node2.draw()
-      node3.draw()
-
-      inArrow.draw()
-      outArrow.draw()
-      inOutArrow.draw()
+      if (graph) {
+        graph.draw()
+      }
     }
 
     // eslint-disable-next-line
     p5.mouseClicked = () => {
-      node1.mouseClicked()
+      if (graph) {
+        graph.clickListener()
+      }
     }
   }
 

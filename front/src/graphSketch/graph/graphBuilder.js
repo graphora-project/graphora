@@ -1,31 +1,59 @@
-import dagre from 'dagre'
+import Graph from 'graphology'
+import { random } from 'graphology-layout'
 import { ClickeableNode, RegularNode } from '../nodes'
-import { InArrow, OutArrow, InOutArrow } from '../arrows'
+import { P5Graph } from './graph'
 
-export const GraphBuilder = ({ p5, data }) => {
-  fakeBuilder()
-}
+export const GraphBuilder = ({ p5, data, currentWord, onClickFunction }) =>
+  fakeBuilder({ p5, data, currentWord, onClickFunction })
 
-const fakeBuilder = () => {
-  let g = new dagre.graphlib.Graph()
+const fakeBuilder = ({ p5, data, currentWord, onClickFunction }) => {
+  const graph = new Graph()
 
-  g.setGraph({})
-
-  g.setDefaultEdgeLabel(() => {
-    return {}
+  graph.addNode(currentWord)
+  data.forEach((word) => {
+    graph.addNode(word.name)
+    graph.addEdge(currentWord, word.name)
   })
 
-  g.setNode('abeja', { width: 50, height: 50 })
-  g.setNode('flor', { width: 50, height: 50 })
-  g.setNode('miel', { width: 40, height: 40 })
-  g.setNode('aguijón', { width: 40, height: 40 })
-  g.setNode('insecto', { width: 40, height: 40 })
+  const layout = random(graph, { scale: 500 })
 
-  g.setEdge('abeja', 'flor')
-  g.setEdge('abeja', 'miel')
-  g.setEdge('abeja', 'aguijón')
-  g.setEdge('abeja', 'insecto')
+  const nodes = []
+  const edges = []
 
-  dagre.layout(g)
-  console.log(g)
+  nodes.push(
+    ClickeableNode({
+      p5,
+      xCoordinate: layout[currentWord].x,
+      yCoordinate: layout[currentWord].y,
+      label: currentWord,
+      onClick: onClickFunction,
+    }),
+  )
+  data.forEach((node) => {
+    if (node.status === 'estimulo') {
+      nodes.push(
+        ClickeableNode({
+          p5,
+          xCoordinate: layout[node.name].x,
+          yCoordinate: layout[node.name].y,
+          label: node.name,
+          onClick: onClickFunction,
+        }),
+      )
+    } else {
+      nodes.push(
+        RegularNode({
+          p5,
+          xCoordinate: layout[node.name].x,
+          yCoordinate: layout[node.name].y,
+          label: node.name,
+        }),
+      )
+    }
+  })
+
+  return P5Graph({
+    nodes,
+    edges,
+  })
 }
