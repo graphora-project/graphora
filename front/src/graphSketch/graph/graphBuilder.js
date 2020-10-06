@@ -52,6 +52,31 @@ const fakeBuilder = ({ p5, data, currentWord, onClickFunction }) => {
     }
   })
 
+  /*
+  const nodes = []
+  const edges = []
+
+  nodes.push(
+    ClickeableNode({
+      p5,
+      xCoordinate: 300,
+      yCoordinate: 100,
+      label: 'abeja',
+      onClick: onClickFunction,
+    }),
+  )
+
+  nodes.push(
+    ClickeableNode({
+      p5,
+      xCoordinate: 300,
+      yCoordinate: 100,
+      label: 'zapato',
+      onClick: onClickFunction,
+    }),
+  )
+  */
+
   return P5Graph({
     nodes,
     edges,

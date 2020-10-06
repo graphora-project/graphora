@@ -1,10 +1,12 @@
 import { GraphBuilder } from './graph/graphBuilder'
+import { CollisionsManager } from './collisionsManager'
 
 export const graphSketch = () => {
   let data = []
   let currentWord = ''
   let onClickFunction
   let graph
+  let collisionsManager
 
   const setData = (p5, _data, _currentWord) => {
     // as setState function in React is asynchronus, when a new word is searched
@@ -13,6 +15,7 @@ export const graphSketch = () => {
       data = _data
       currentWord = _currentWord
       graph = GraphBuilder({ p5, data, currentWord, onClickFunction })
+      collisionsManager = CollisionsManager({ p5 })
     }
   }
 
@@ -36,6 +39,7 @@ export const graphSketch = () => {
 
       if (graph) {
         graph.draw()
+        collisionsManager.checkCollisions(graph.nodes)
       }
     }
 

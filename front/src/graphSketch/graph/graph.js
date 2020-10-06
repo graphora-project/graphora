@@ -21,5 +21,6 @@ export const P5Graph = ({ nodes, edges, centerX, centerY }) => {
     clickListener,
     centerX,
     centerY,
+    nodes,
   }
 }
