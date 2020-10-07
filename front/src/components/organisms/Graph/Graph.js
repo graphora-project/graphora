@@ -5,11 +5,12 @@ import { GraphoraContext } from '../../GraphoraContext'
 import { WordCard } from '../../molecules/WordCard'
 import { LabelButton } from '../../atoms/Button'
 import { graphSketch } from '../../../graphSketch'
+import { HistoryBar } from '../../molecules/HistoryBar'
 
 const graph = graphSketch(p5)
 
 export const Graph = () => {
-  const { currentWord, relatedWords, goBackinHistory, searchWord } = useContext(
+  const { currentWord, relatedWords, goBackinHistory, searchWord, history } = useContext(
     GraphoraContext,
   )
   const ref = useRef()
@@ -30,6 +31,7 @@ export const Graph = () => {
   return currentWord ? (
     <>
       <div ref={ref} />
+      <HistoryBar history={history} />
       <h1>Results for: {currentWord}</h1>
       <LabelButton action={goBackinHistory}> Go Back </LabelButton>
       <ul>
