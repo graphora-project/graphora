@@ -12,6 +12,8 @@ export const ClickeableNode = ({
   const onHoverRadius = 20
   let radius = baseRadius
   let scale = 1
+  let relativeXCenter = 0
+  let relativeYCenter = 0
 
   const baseNode = Node({
     p5,
@@ -42,8 +44,14 @@ export const ClickeableNode = ({
   }
 
   const isInXArea = () => {
-    if (p5.mouseX > (baseNode.getXCoordinate() - radius) * scale) {
-      if (p5.mouseX < (baseNode.getXCoordinate() + radius) * scale) {
+    if (
+      p5.mouseX >
+      (baseNode.getXCoordinate() - radius) * scale + relativeXCenter
+    ) {
+      if (
+        p5.mouseX <
+        (baseNode.getXCoordinate() + radius) * scale + relativeXCenter
+      ) {
         return true
       }
     }
@@ -52,8 +60,14 @@ export const ClickeableNode = ({
   }
 
   const isInYArea = () => {
-    if (p5.mouseY > (baseNode.getYCoordinate() - radius) * scale) {
-      if (p5.mouseY < (baseNode.getYCoordinate() + radius) * scale) {
+    if (
+      p5.mouseY >
+      (baseNode.getYCoordinate() - radius) * scale + relativeYCenter
+    ) {
+      if (
+        p5.mouseY <
+        (baseNode.getYCoordinate() + radius) * scale + relativeYCenter
+      ) {
         return true
       }
     }
@@ -78,6 +92,11 @@ export const ClickeableNode = ({
     scale = _scale
   }
 
+  const setRelativeCenterCoordinates = (x, y) => {
+    relativeXCenter = x
+    relativeYCenter = y
+  }
+
   return {
     draw,
     mouseClicked,
@@ -87,5 +106,7 @@ export const ClickeableNode = ({
     getXCoordinate: baseNode.getXCoordinate,
     getYCoordinate: baseNode.getYCoordinate,
     setScale,
+    setRelativeCenterCoordinates,
+    isClickeable: true,
   }
 }

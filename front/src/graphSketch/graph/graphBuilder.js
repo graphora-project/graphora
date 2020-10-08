@@ -36,7 +36,7 @@ const fakeBuilder = ({ p5, data, currentWord, onClickFunction }) => {
         ClickeableNode({
           p5,
           xCoordinate: layout[node.name].x - layout[currentWord].x,
-          yCoordinate: layout[node.name].y - layout[currentWord].y,
+          yCoordinate: layout[node.name].y,
           label: node.name,
           onClick: onClickFunction,
         }),

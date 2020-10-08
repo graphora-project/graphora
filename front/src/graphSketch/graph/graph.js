@@ -1,18 +1,13 @@
 export const P5Graph = ({ nodes, edges }) => {
-  let centerX = 0
-  let centerY = 0
-
-  const draw = ({ scale }) => {
-    centerX = nodes[0].getXCoordinate()
-    centerY = nodes[0].getYCoordinate()
-
+  const draw = ({ scale, centerX, centerY }) => {
     edges.forEach((edge) => {
       edge.draw()
     })
 
     nodes.forEach((node) => {
-      if (node.setScale) {
+      if (node.isClickeable) {
         node.setScale(scale)
+        node.setRelativeCenterCoordinates(centerX, centerY)
       }
       node.draw()
     })
@@ -29,8 +24,6 @@ export const P5Graph = ({ nodes, edges }) => {
   return {
     draw,
     clickListener,
-    centerX,
-    centerY,
     nodes,
   }
 }

@@ -39,10 +39,14 @@ export const graphSketch = () => {
       p5.cursor('default')
 
       if (graph) {
+        const centerX = canvasWidth / 2
+        const centerY = canvasHeight / 2
+
         p5.scale(scale)
-        p5.translate(canvasWidth / 2, canvasHeight / 2)
-        p5.translate(graph.centerX, graph.centerY)
-        graph.draw({ scale })
+        p5.translate(centerX, centerY)
+
+        // p5.translate(graph.centerX, graph.centerY)
+        graph.draw({ scale, centerX, centerY })
         collisionsManager.checkCollisions(graph.nodes)
       }
     }
