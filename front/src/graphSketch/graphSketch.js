@@ -56,7 +56,7 @@ export const graphSketch = () => {
     }
 
     const movedCanvas = () => {
-      if (p5.mouseIsPressed) {
+      if (p5.mouseIsPressed && mouseIsInCanvas()) {
         fixXPosition += p5.movedX
         fixYPosition += p5.movedY
       }
@@ -64,7 +64,7 @@ export const graphSketch = () => {
 
     // eslint-disable-next-line
     p5.mouseWheel = (event) => {
-      if (graph) {
+      if (graph && mouseIsInCanvas()) {
         scale += event.delta / 500
 
         if (scale < 0.5) {
@@ -82,6 +82,33 @@ export const graphSketch = () => {
       if (graph) {
         graph.clickListener()
       }
+    }
+
+    const mouseIsInCanvas = () => {
+      if (mouseXInCanvas() && mouseYInCanvas()) {
+        return true
+      }
+      return false
+    }
+
+    const mouseXInCanvas = () => {
+      if (p5.mouseX >= 0) {
+        if (p5.mouseX <= canvasWidth) {
+          return true
+        }
+      }
+
+      return false
+    }
+
+    const mouseYInCanvas = () => {
+      if (p5.mouseY >= 0) {
+        if (p5.mouseY <= canvasHeight) {
+          return true
+        }
+      }
+
+      return false
     }
   }
 
