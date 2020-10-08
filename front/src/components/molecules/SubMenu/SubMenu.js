@@ -1,5 +1,5 @@
 import React from 'react'
 
-export const SubMenu = () => {
+export const SubMenu = ({subHistoryBar}) => {
 
 }
