@@ -10,9 +10,7 @@ import { HistoryBar } from '../../molecules/HistoryBar'
 const graph = graphSketch(p5)
 
 export const Graph = () => {
-  const { currentWord, relatedWords, goBackinHistory, searchWord, history } = useContext(
-    GraphoraContext,
-  )
+  const { currentWord, relatedWords, goBackinHistory, searchWord } = useContext(GraphoraContext)
   const ref = useRef()
   graph.setOnClickFunction((label) => {
     searchWord(label)
@@ -31,7 +29,7 @@ export const Graph = () => {
   return currentWord ? (
     <>
       <div ref={ref} />
-      <HistoryBar history={history} action={goBackinHistory} />
+      <HistoryBar />
       <h1>Results for: {currentWord}</h1>
       <LabelButton action={goBackinHistory}> Go Back </LabelButton>
       <ul>
