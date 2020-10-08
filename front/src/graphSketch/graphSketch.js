@@ -4,11 +4,15 @@ export const graphSketch = () => {
   let data = []
   let currentWord = ''
   let onClickFunction
-  const scale = 1
+  const scale = 1.5
   let graph
 
   const canvasWidth = (window.innerWidth / 100) * 90
   const canvasHeight = (window.innerHeight / 100) * 90
+  const centerX = canvasWidth / 2
+  const centerY = canvasHeight / 2
+  let fixXPosition = 0
+  let fixYPosition = 0
 
   const setData = (p5, _data, _currentWord) => {
     // as setState function in React is asynchronus, when a new word is searched
@@ -17,6 +21,8 @@ export const graphSketch = () => {
       data = _data
       currentWord = _currentWord
       graph = GraphBuilder({ p5, data, currentWord, onClickFunction })
+      fixXPosition = 0
+      fixYPosition = 0
     }
   }
 
@@ -33,16 +39,24 @@ export const graphSketch = () => {
     // eslint-disable-next-line
     p5.draw = () => {
       p5.background(255)
-      p5.cursor('default')
+      const translateX = (centerX + fixXPosition) / scale
+      const translateY = (centerY + fixYPosition) / scale
 
       if (graph) {
-        const centerX = canvasWidth / 2
-        const centerY = canvasHeight / 2
+        p5.cursor('grab')
+        movedCanvas()
 
         p5.scale(scale)
-        p5.translate(centerX, centerY)
+        p5.translate(translateX, translateY)
 
-        graph.draw({ scale, centerX, centerY })
+        graph.draw({ scale, centerX: translateX, centerY: translateY })
+      }
+    }
+
+    const movedCanvas = () => {
+      if (p5.mouseIsPressed) {
+        fixXPosition += p5.movedX
+        fixYPosition += p5.movedY
       }
     }
 
