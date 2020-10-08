@@ -4,7 +4,7 @@ export const graphSketch = () => {
   let data = []
   let currentWord = ''
   let onClickFunction
-  const scale = 1.5
+  let scale = 1.5
   let graph
 
   const canvasWidth = (window.innerWidth / 100) * 90
@@ -39,11 +39,13 @@ export const graphSketch = () => {
     // eslint-disable-next-line
     p5.draw = () => {
       p5.background(255)
-      const translateX = (centerX + fixXPosition) / scale
-      const translateY = (centerY + fixYPosition) / scale
 
       if (graph) {
         p5.cursor('grab')
+
+        const translateX = (centerX + fixXPosition) / scale
+        const translateY = (centerY + fixYPosition) / scale
+
         movedCanvas()
 
         p5.scale(scale)
@@ -57,6 +59,21 @@ export const graphSketch = () => {
       if (p5.mouseIsPressed) {
         fixXPosition += p5.movedX
         fixYPosition += p5.movedY
+      }
+    }
+
+    // eslint-disable-next-line
+    p5.mouseWheel = (event) => {
+      if (graph) {
+        scale += event.delta / 500
+
+        if (scale < 0.5) {
+          scale = 0.5
+        }
+
+        if (scale > 5) {
+          scale = 5
+        }
       }
     }
 
