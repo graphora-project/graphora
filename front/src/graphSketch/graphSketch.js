@@ -1,13 +1,11 @@
 import { GraphBuilder } from './graph/graphBuilder'
-import { CollisionsManager } from './collisionsManager'
 
 export const graphSketch = () => {
   let data = []
   let currentWord = ''
   let onClickFunction
+  const scale = 1
   let graph
-  let collisionsManager
-  let scale = 1
 
   const canvasWidth = (window.innerWidth / 100) * 90
   const canvasHeight = (window.innerHeight / 100) * 90
@@ -19,7 +17,6 @@ export const graphSketch = () => {
       data = _data
       currentWord = _currentWord
       graph = GraphBuilder({ p5, data, currentWord, onClickFunction })
-      collisionsManager = CollisionsManager({ p5 })
     }
   }
 
@@ -45,9 +42,7 @@ export const graphSketch = () => {
         p5.scale(scale)
         p5.translate(centerX, centerY)
 
-        // p5.translate(graph.centerX, graph.centerY)
         graph.draw({ scale, centerX, centerY })
-        collisionsManager.checkCollisions(graph.nodes)
       }
     }
 

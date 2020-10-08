@@ -2,22 +2,20 @@ export const CollisionsManager = ({ p5 }) => {
   let graphIsStable = false
 
   const checkCollisions = (nodes) => {
-    if (graphIsStable) {
-      return
-    }
+    while (!graphIsStable) {
+      let areCollisions = false
 
-    let areCollisions = false
+      nodes.forEach((node) => {
+        const areCollisionsInNode = checkNodeCollisionsIn(node, nodes)
 
-    nodes.forEach((node) => {
-      const areCollisionsInNode = checkNodeCollisionsIn(node, nodes)
+        if (areCollisionsInNode) {
+          areCollisions = true
+        }
+      })
 
-      if (areCollisionsInNode) {
-        areCollisions = true
+      if (!areCollisions) {
+        graphIsStable = true
       }
-    })
-
-    if (!areCollisions) {
-      graphIsStable = true
     }
   }
 

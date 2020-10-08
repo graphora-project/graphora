@@ -3,6 +3,7 @@ import { random } from 'graphology-layout'
 import { ClickeableNode, RegularNode } from '../nodes'
 import { P5Graph } from './graph'
 import { InArrow, OutArrow, InOutArrow } from '../arrows'
+import { CollisionsManager } from '../collisionsManager'
 
 export const GraphBuilder = ({ p5, data, currentWord, onClickFunction }) =>
   fakeBuilder({ p5, data, currentWord, onClickFunction })
@@ -82,6 +83,8 @@ const fakeBuilder = ({ p5, data, currentWord, onClickFunction }) => {
       )
     }
   })
+
+  CollisionsManager({ p5 }).checkCollisions(nodes)
 
   return P5Graph({
     nodes,
