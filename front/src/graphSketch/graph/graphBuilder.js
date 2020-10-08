@@ -9,8 +9,10 @@ export const GraphBuilder = ({ p5, data, currentWord, onClickFunction }) => {
 
   graph.addNode(currentWord)
   data.forEach((word) => {
-    graph.addNode(word.name)
-    graph.addEdge(currentWord, word.name)
+    if (!graph.nodes().includes(word.name)) {
+      graph.addNode(word.name)
+      graph.addEdge(currentWord, word.name)
+    }
   })
 
   const layout = layoutGraph(graph, { scale: 400 })
