@@ -1,27 +1,32 @@
-import React from "react";
-import { Breadcrumbs, Button, Fade } from "@material-ui/core";
+import React from 'react'
+import { Breadcrumbs, Link } from '@material-ui/core'
 
-export const HistoryBar = ({history}) => {
-    console.log("Dentro de HistoryBar con el historial ->", history)
-    console.log("La longitud del array es ->", history.length)
-    let historybar
-    if (history.length < 5) {
-        historybar = <Breadcrumbs>
-            {history.map((word) => (
-                <Button variant="outlined">{word}</Button>
-            ))}
-        </Breadcrumbs>
-    } else {
-        let position = 0
-        let correctPosition = history.length - 4
-        history.map((word) => {
-            if (position > correctPosition) {
+export const HistoryBar = ({ history, action }) => {
 
-            }
-            }
-        )
+    const goBackinHistoryNTimes = () => {
+
     }
 
-    return historybar
-}
 
+  let historybar
+  if (history.length < 5) {
+    historybar = (
+      <Breadcrumbs separator={'>'} style={{ color: 'black' }}>
+        {history.map((word) => (
+          <Link key={word}>{word}</Link>
+        ))}
+      </Breadcrumbs>
+    )
+  } else {
+    let position = 0
+    const correctPosition = history.length - 4
+    history.map((word) => {
+      if (position < correctPosition) {
+        console.log(correctPosition)(<Breadcrumbs></Breadcrumbs>)
+      }
+      position++
+    })
+  }
+
+  return historybar
+}

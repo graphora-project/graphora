@@ -31,7 +31,7 @@ export const Graph = () => {
   return currentWord ? (
     <>
       <div ref={ref} />
-      <HistoryBar history={history} />
+      <HistoryBar history={history} action={goBackinHistory} />
       <h1>Results for: {currentWord}</h1>
       <LabelButton action={goBackinHistory}> Go Back </LabelButton>
       <ul>
