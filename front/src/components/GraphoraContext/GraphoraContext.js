@@ -40,10 +40,10 @@ const useSearchHistory = () => {
     setHistory(history.concat([word]))
   }
 
-  const goBackinHistory = () => {
+  const goBackinHistory = (n = 1) => {
     if (history.length > 0) {
       setHistory(
-        history.filter((element, index) => index !== history.length - 1),
+        history.filter((element, index) => index <= history.length - n),
       )
     }
   }
