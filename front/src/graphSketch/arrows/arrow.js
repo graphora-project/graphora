@@ -8,7 +8,7 @@ const Arrow = ({ p5, initialNode, finalNode }) => {
     p5,
   })
 
-  const draw = () => {
+  const draw = ({ display = true } = {}) => {
     const initialX = initialNode.getXCoordinate()
     const initialY = initialNode.getYCoordinate()
     const finalX = finalNode.getXCoordinate()
@@ -18,14 +18,17 @@ const Arrow = ({ p5, initialNode, finalNode }) => {
     const baseVector = p5.createVector(0, 0)
 
     p5.translate(initialX, initialY)
-    line.draw({
-      color,
-      strokeWeight,
-      initialX: baseVector.x,
-      initialY: baseVector.y,
-      finalX: endVector.x,
-      finalY: endVector.y,
-    })
+
+    if (display) {
+      line.draw({
+        color,
+        strokeWeight,
+        initialX: baseVector.x,
+        initialY: baseVector.y,
+        finalX: endVector.x,
+        finalY: endVector.y,
+      })
+    }
 
     return {
       baseVector,

@@ -19,6 +19,10 @@ export const OutArrow = ({ p5, initialNode, finalNode }) => {
     const { endVector } = arrow.draw()
     triangle.setPointerX(0)
     triangle.setPointerY(0)
+
+    const magnitud = endVector.mag()
+    endVector.setMag(magnitud - finalNode.getRadius())
+
     p5.translate(endVector.x, endVector.y)
     p5.rotate(endVector.heading())
     triangle.draw({ color, strokeWeight })

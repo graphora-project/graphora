@@ -1,6 +1,6 @@
 const Triangle = ({ p5 }) => {
-  const height = 10
-  const baseWidth = 10
+  const height = 5
+  const baseWidth = 3
   let point1X
   let point1Y
   let point2X

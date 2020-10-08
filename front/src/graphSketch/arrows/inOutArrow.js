@@ -1,19 +1,24 @@
 import RightTriangle from './rightTriangle'
-import LeftTriangle from './leftTriangle'
 import Arrow from './arrow'
 
 export const InOutArrow = ({ p5, initialNode, finalNode }) => {
-  const arrow = Arrow({
+  const rightArrow = Arrow({
     p5,
     initialNode,
     finalNode,
+  })
+
+  const leftArrow = Arrow({
+    p5,
+    initialNode: finalNode,
+    finalNode: initialNode,
   })
 
   const rightTriangle = RightTriangle({
     p5,
   })
 
-  const leftTriangle = LeftTriangle({
+  const leftTriangle = RightTriangle({
     p5,
   })
 
@@ -21,20 +26,15 @@ export const InOutArrow = ({ p5, initialNode, finalNode }) => {
     const initialX = initialNode.getXCoordinate()
     const initialY = initialNode.getYCoordinate()
 
-    const { color, strokeWeight } = arrow
+    const { color, strokeWeight } = rightArrow
+    const { endVector } = rightArrow.draw()
 
-    p5.push()
-    const { baseVector, endVector } = arrow.draw()
-
-    leftTriangle.setPointerX(baseVector.x)
-    leftTriangle.setPointerY(baseVector.y)
-
-    p5.rotate(endVector.heading())
-    leftTriangle.draw({ color, strokeWeight })
-    p5.pop()
+    drawLeftTriangle()
 
     p5.push()
     p5.translate(initialX, initialY)
+    const magnitud = endVector.mag()
+    endVector.setMag(magnitud - finalNode.getRadius())
     p5.translate(endVector.x, endVector.y)
     rightTriangle.setPointerX(0)
     rightTriangle.setPointerY(0)
@@ -43,6 +43,22 @@ export const InOutArrow = ({ p5, initialNode, finalNode }) => {
     p5.pop()
   }
 
+  const drawLeftTriangle = () => {
+    p5.push()
+    const { color, strokeWeight } = leftArrow
+    const { endVector } = leftArrow.draw({ display: false })
+
+    leftTriangle.setPointerX(0)
+    leftTriangle.setPointerY(0)
+
+    const magnitud = endVector.mag()
+    endVector.setMag(magnitud - initialNode.getRadius())
+
+    p5.translate(endVector.x, endVector.y)
+    p5.rotate(endVector.heading())
+    leftTriangle.draw({ color, strokeWeight })
+    p5.pop()
+  }
   return {
     draw,
   }
