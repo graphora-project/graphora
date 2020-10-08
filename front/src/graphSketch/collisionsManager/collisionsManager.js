@@ -17,6 +17,22 @@ export const CollisionsManager = ({ p5 }) => {
         graphIsStable = true
       }
     }
+
+    fixeCoordinatesToOrigin(nodes)
+  }
+
+  const fixeCoordinatesToOrigin = (nodes) => {
+    const mainNode = nodes[0]
+
+    for (let i = 1; i < nodes.length; i += 1) {
+      const x = nodes[i].getXCoordinate()
+      const y = nodes[i].getYCoordinate()
+      nodes[i].setXCoordinate(x - mainNode.getXCoordinate())
+      nodes[i].setYCoordinate(y - mainNode.getYCoordinate())
+    }
+
+    mainNode.setXCoordinate(0)
+    mainNode.setYCoordinate(0)
   }
 
   const checkNodeCollisionsIn = (node, nodes) => {
