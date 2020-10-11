@@ -1,38 +1,66 @@
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import { Breadcrumbs, Button } from '@material-ui/core'
 import { GraphoraContext } from '../../GraphoraContext'
-import { SubMenu } from '../SubMenu'
+import { DropDown } from '../DropDown'
 
 export const HistoryBar = () => {
-  const { history, goBackInNHistory } = useContext(GraphoraContext)
+  const { history, goBackinNHistory } = useContext(GraphoraContext)
 
-  let historybar
-  if (history.length < 5) {
-    historybar = <div style={{backgroundColor: "lightblue"}} >
-      <Breadcrumbs>
-        {history.map((word, index) =>(
-            <Button onClick={() => {goBackInNHistory(history.length - index)}} key={index} variant={"outlined"}>{word}</Button>
-        ))}
-      </Breadcrumbs>
-    </div>
-  } else {
-    const correctPosition = history.length - 3
-    const subHistoryBar = []
+  function dropDownData() {
+    const correctPosition = length - 2
+    // [[subMenuDropDown],[subMenuWords]] -> [a,b,c,d,e,f,g,h,i,j] -> 10 - 2 = {8} [[a,b,c,d,e,f,g,h],i,j]
+    const subMenuDropDown = []
+    const subMenuWords = []
 
-    //[a,b,c,d,e,f,g,h,i,j] -> 10 - 3 = {7} [[a,b,c,d,e,f,g],h,i,j]
-
-    for (let i = 0; i < correctPosition; i+=1) {
-      subHistoryBar.push(history[i])
+    for (let i = 0; i < history.length; i += 1) {
+      if (i < correctPosition) {
+        subMenuDropDown.push([i, history[i]])
+      } else {
+        subMenuWords.push([i, history[i]])
+      }
     }
 
-    //<SubMenu subHistoryBar={subHistoryBar}/>
-    historybar = (<Breadcrumbs>
-
-      {history.map((word, index) =>(
-          <Button onClick={() => {goBackInNHistory(history.length - index)}} key={index} variant={"outlined"}>{word}</Button>
-      ))}
-    </Breadcrumbs>)
+    const data = {
+      correctPosition: correctPosition,
+      subMenuDropDown: subMenuDropDown,
+      subMenuWords: subMenuWords,
+    }
+    return data
   }
 
-  return historybar
+  const { length } = history
+  return length < 3 ? (
+    <>
+      <Breadcrumbs separator="›">
+        {history.map((word, index) => (
+          <Button
+            key={{ index }}
+            onClick={() => goBackinNHistory(length - index)}
+            style={{ textTransform: 'capitalize' }}
+          >
+            {word}
+          </Button>
+        ))}
+      </Breadcrumbs>
+    </>
+  ) : (
+    <>
+      <div style={{ display: 'inline-block' }}>
+        <Breadcrumbs separator="›">
+          <div style={{ display: 'inline-block' }}>
+            <DropDown props={dropDownData()} />
+          </div>
+          {dropDownData().subMenuWords.map((word) => (
+            <Button
+              key={word[0]}
+              onClick={() => goBackinNHistory(length - word[0])}
+              style={{ textTransform: 'capitalize' }}
+            >
+              {word[1]}
+            </Button>
+          ))}
+        </Breadcrumbs>
+      </div>
+    </>
+  )
 }
