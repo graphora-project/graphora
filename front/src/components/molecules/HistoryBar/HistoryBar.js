@@ -5,8 +5,10 @@ import { DropDown } from '../DropDown'
 
 export const HistoryBar = () => {
   const { history, goBackinNHistory } = useContext(GraphoraContext)
+  const { length } = history
+  let dropDownData
 
-  function dropDownData() {
+  if (length > 3 /* 2 */) {
     const correctPosition = length - 2
     // [[subMenuDropDown],[subMenuWords]] -> [a,b,c,d,e,f,g,h,i,j] -> 10 - 2 = {8} [[a,b,c,d,e,f,g,h],i,j]
     const subMenuDropDown = []
@@ -20,17 +22,16 @@ export const HistoryBar = () => {
       }
     }
 
-    const data = {
-      correctPosition: correctPosition,
-      subMenuDropDown: subMenuDropDown,
-      subMenuWords: subMenuWords,
+    dropDownData = {
+      correctPosition,
+      subMenuDropDown,
+      subMenuWords,
     }
-    return data
   }
 
-  const { length } = history
-  return length < 3 ? (
-    <>
+  // style={{ display: 'inline-block' }}
+  return length < 4 ? ( // n + 1 -> 2 + 1 = 3 tons 10 < 2
+    <div>
       <Breadcrumbs separator="›">
         {history.map((word, index) => (
           <Button
@@ -42,25 +43,32 @@ export const HistoryBar = () => {
           </Button>
         ))}
       </Breadcrumbs>
-    </>
+    </div>
   ) : (
-    <>
+    <div>
       <div style={{ display: 'inline-block' }}>
-        <Breadcrumbs separator="›">
-          <div style={{ display: 'inline-block' }}>
-            <DropDown props={dropDownData()} />
-          </div>
-          {dropDownData().subMenuWords.map((word) => (
-            <Button
-              key={word[0]}
-              onClick={() => goBackinNHistory(length - word[0])}
-              style={{ textTransform: 'capitalize' }}
-            >
-              {word[1]}
-            </Button>
-          ))}
-        </Breadcrumbs>
+        <div style={{ display: 'inline-block' }}>
+          <DropDown
+            subMenuDropDown={dropDownData.subMenuDropDown}
+            subMenuWords={dropDownData.subMenuWords}
+          />
+        </div>
+        <div style={{ display: 'inline-block' }}>
+          <Breadcrumbs separator="›" maxItems={10}>
+            {dropDownData.subMenuWords.map((word) => (
+              <Button
+                key={word[0]}
+                onClick={() => {
+                  goBackinNHistory(length - word[0])
+                }}
+                style={{ textTransform: 'capitalize' }}
+              >
+                {word[1]}
+              </Button>
+            ))}
+          </Breadcrumbs>
+        </div>
       </div>
-    </>
+    </div>
   )
 }
