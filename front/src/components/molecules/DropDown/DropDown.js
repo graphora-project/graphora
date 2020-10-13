@@ -1,13 +1,12 @@
 import React, { useState, useContext } from 'react'
-import { IconButton, Menu, MenuItem } from '@material-ui/core'
+import { Menu, MenuItem, Button } from '@material-ui/core'
+import PropTypes from 'prop-types'
 import { GraphoraContext } from '../../GraphoraContext'
-//  import { ArrowForwardIosRounded } from '@material-ui/icons'
+import { ReactComponent as Dots } from '../../../icons/three-dots.svg'
 
-export const DropDown = (props) => {
+export const DropDown = ({ subMenuDropDown, subMenuWords }) => {
   const { goBackinNHistory } = useContext(GraphoraContext)
-
-  const ITEM_HEIGHT =
-    props.props.subMenuDropDown.length + props.props.subMenuWords.length
+  const ITEM_HEIGHT = subMenuDropDown.length + subMenuWords.length
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
 
@@ -19,16 +18,11 @@ export const DropDown = (props) => {
     setAnchorEl(null)
   }
 
-  const dropdown = (
-    <div>
-      <IconButton
-        aria-label="more"
-        aria-controls="long-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        ...
-      </IconButton>
+  return (
+    <>
+      <Button onClick={handleClick}>
+        <Dots width="10" height="27" />
+      </Button>
       <Menu
         id="long-menu"
         anchorEl={anchorEl}
@@ -42,7 +36,7 @@ export const DropDown = (props) => {
           },
         }}
       >
-        {props.props.subMenuDropDown.map((word) => (
+        {subMenuDropDown.map((word) => (
           <MenuItem
             key={word[0]}
             onClick={() => {
@@ -55,8 +49,11 @@ export const DropDown = (props) => {
           </MenuItem>
         ))}
       </Menu>
-    </div>
+    </>
   )
+}
 
-  return dropdown
+DropDown.propTypes = {
+  subMenuDropDown: PropTypes.array.isRequired,
+  subMenuWords: PropTypes.array.isRequired,
 }
