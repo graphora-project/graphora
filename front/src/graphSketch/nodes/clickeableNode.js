@@ -6,10 +6,10 @@ export const ClickeableNode = ({
   yCoordinate,
   label,
   onClick,
+  color,
+  baseRadius,
+  onHoverRadius,
 }) => {
-  const color = '#F24C00'
-  const baseRadius = 15
-  const onHoverRadius = 20
   let radius = baseRadius
   let scale = 1
   let relativeXCenter = 0

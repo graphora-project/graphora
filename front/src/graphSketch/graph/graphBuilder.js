@@ -1,5 +1,5 @@
 import Graph from 'graphology'
-import { ClickeableNode, RegularNode } from '../nodes'
+import { StimulateNode, RegularNode } from '../nodes'
 import { P5Graph } from './graph'
 import { InArrow, OutArrow, InOutArrow } from '../arrows'
 import { CollisionsManager } from '../collisionsManager'
@@ -140,7 +140,7 @@ const generateNodes = (p5, data, currentWord, onClickFunction, layout) => {
   const nodes = []
 
   nodes.push(
-    ClickeableNode({
+    StimulateNode({
       p5,
       xCoordinate: 0,
       yCoordinate: 0,
@@ -151,7 +151,7 @@ const generateNodes = (p5, data, currentWord, onClickFunction, layout) => {
   data.forEach((node) => {
     if (node.status === 'estimulo') {
       nodes.push(
-        ClickeableNode({
+        StimulateNode({
           p5,
           xCoordinate: layout[node.name].x - layout[currentWord].x,
           yCoordinate: layout[node.name].y,
