@@ -1,4 +1,7 @@
-export const P5Graph = ({ nodes, edges }) => {
+export const P5Graph = () => {
+  let nodes = []
+  let edges = []
+
   const draw = ({ scale, centerX, centerY }) => {
     edges.forEach((edge) => {
       edge.draw()
@@ -21,9 +24,19 @@ export const P5Graph = ({ nodes, edges }) => {
     })
   }
 
+  const setNodes = (_nodes) => {
+    nodes = _nodes
+  }
+
+  const setEdges = (_edges) => {
+    edges = _edges
+  }
+
   return {
     draw,
     clickListener,
     nodes,
+    setNodes,
+    setEdges,
   }
 }
