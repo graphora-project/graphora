@@ -1,31 +1,169 @@
 import Graph from 'graphology'
-import { StimulateNode, RegularNode } from '../nodes'
+import { StimulateNode, RegularNode, ClusterNode } from '../nodes'
 import { P5Graph } from './graph'
 import { InArrow, OutArrow, InOutArrow } from '../arrows'
 import { CollisionsManager } from '../collisionsManager'
 
+let p5Graph
+let clusters
+
+const generalView = {
+  nodes: [],
+  edges: [],
+}
+
 export const GraphBuilder = ({ p5, data, currentWord, onClickFunction }) => {
+  p5Graph = undefined
+  displayGeneralView(p5, data, currentWord, onClickFunction)
+  return p5Graph
+}
+
+const displayGeneralView = (p5, data, currentWord, onClickFunction) => {
+  if (!p5Graph) {
+    const graph = new Graph()
+    clusters = createClusters(data)
+
+    graph.addNode(currentWord)
+    clusters.forEach((cluster) => {
+      if (!graph.nodes().includes(cluster.name)) {
+        graph.addNode(cluster.name)
+        graph.addEdge(currentWord, cluster.name)
+      }
+    })
+
+    const layout = layoutGraph(graph, { scale: 500 })
+
+    const { nodes, edges } = generateEdgesAndNodesForClusters(
+      p5,
+      clusters,
+      currentWord,
+      (clusterName) =>
+        displayCluster(p5, onClickFunction, clusterName, currentWord),
+      layout,
+    )
+
+    CollisionsManager({ p5 }).checkCollisions(nodes)
+
+    p5Graph = P5Graph()
+    generalView.nodes = nodes
+    generalView.edges = edges
+  }
+
+  p5Graph.setNodes(generalView.nodes)
+  p5Graph.setEdges(generalView.edges)
+}
+
+const displayCluster = (p5, onClickFunction, clusterName, currentWord) => {
   const graph = new Graph()
+  const filterCluster = clusters.filter(
+    (cluster) => cluster.name === clusterName,
+  )
+
+  const clusterData = filterCluster[0]
 
   graph.addNode(currentWord)
-  data.forEach((word) => {
-    if (!graph.nodes().includes(word.name)) {
-      graph.addNode(word.name)
-      graph.addEdge(currentWord, word.name)
+  clusterData.nodes.forEach((node) => {
+    if (!graph.nodes().includes(node.name)) {
+      graph.addNode(node.name)
+      graph.addEdge(currentWord, node.name)
     }
   })
 
   const layout = layoutGraph(graph, { scale: 400 })
 
-  const nodes = generateNodes(p5, data, currentWord, onClickFunction, layout)
-  const edges = generateEdges(p5, data, nodes)
+  const nodes = generateNodes(
+    p5,
+    clusterData.nodes,
+    currentWord,
+    onClickFunction,
+    layout,
+  )
+  const edges = generateEdges(p5, clusterData.nodes, nodes)
 
   CollisionsManager({ p5 }).checkCollisions(nodes)
 
-  return P5Graph({
+  p5Graph.setEdges(edges)
+  p5Graph.setNodes(nodes)
+}
+
+const createClusters = (data) => {
+  const createdClusters = []
+  const maxNodesInCluster = 10
+  const numberOfClusters = Math.round(data.length / maxNodesInCluster)
+
+  const nodes = [...data]
+
+  for (let i = 0; i < numberOfClusters; i += 1) {
+    const newCluster = {
+      name: `cluster ${i}`,
+      nodes: [],
+    }
+
+    for (let j = 0; j < maxNodesInCluster; j += 1) {
+      const node = nodes.pop()
+
+      if (node) {
+        newCluster.nodes.push(node)
+      } else {
+        // there are no more nodes
+        // avoid put an undefined node in the cluster
+        break
+      }
+    }
+
+    createdClusters.push(newCluster)
+  }
+
+  return createdClusters
+}
+
+const generateEdgesAndNodesForClusters = (
+  p5,
+  clustersData,
+  currentWord,
+  onClickFunction,
+  layout,
+) => {
+  const nodes = []
+
+  nodes.push(
+    StimulateNode({
+      p5,
+      xCoordinate: layout[currentWord].x,
+      yCoordinate: layout[currentWord].y,
+      label: currentWord,
+      onClick: () => {},
+    }),
+  )
+
+  for (let i = 0; i < clustersData.length; i += 1) {
+    nodes.push(
+      ClusterNode({
+        p5,
+        xCoordinate: layout[clustersData[i].name].x,
+        yCoordinate: layout[clustersData[i].name].y,
+        label: clustersData[i].name,
+        onClick: onClickFunction,
+      }),
+    )
+  }
+
+  const edges = []
+
+  for (let i = 1; i < nodes.length; i += 1) {
+    edges.push(
+      InArrow({
+        p5,
+        initialNode: nodes[0],
+        finalNode: nodes[i],
+      }),
+    )
+  }
+
+  return {
     nodes,
     edges,
-  })
+  }
 }
 
 const layoutGraph = (graph, { scale = 1 } = {}) => {
@@ -145,7 +283,8 @@ const generateNodes = (p5, data, currentWord, onClickFunction, layout) => {
       xCoordinate: 0,
       yCoordinate: 0,
       label: currentWord,
-      onClick: onClickFunction,
+      // displays general view when central node is clicked
+      onClick: displayGeneralView,
     }),
   )
   data.forEach((node) => {
