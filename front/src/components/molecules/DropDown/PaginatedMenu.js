@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Menu, MenuItem, Button } from '@material-ui/core'
+import { When } from '../../utils/When'
 
 export const PaginatedMenu = ({
   showedPerPage,
@@ -29,7 +30,6 @@ export const PaginatedMenu = ({
   }
 
   const handlePageChange = () => {
-    console.log('the ugly one')
     setDataInPage(() => ({
       firstIndex: showedPerPage * currentPage,
       lastIndex: showedPerPage * currentPage + showedPerPage,
@@ -53,8 +53,8 @@ export const PaginatedMenu = ({
           },
         }}
       >
-        {!dropdownData.isEmpty &&
-          dropdownData
+        <When predicate={!dropdownData.isEmpty}>
+          {dropdownData
             .slice(dataInPage.firstIndex, dataInPage.lastIndex)
             .map((word, index, arr) => {
               return (
@@ -69,32 +69,29 @@ export const PaginatedMenu = ({
                   >
                     {word[1]}
                   </MenuItem>
-                  <MenuItem>
-                    <>
-                      {index + 1 === arr.length && (
-                        <button
-                          disabled={currentPage <= 0}
-                          onClick={changeToLast}
-                        >
-                          back
-                        </button>
-                      )}
-                      {index + 1 === arr.length && (
-                        <button
-                          disabled={
-                            currentPage >=
-                            Math.ceil(dropdownData.length / showedPerPage) - 1
-                          }
-                          onClick={changeToNext}
-                        >
-                          forward
-                        </button>
-                      )}
-                    </>
-                  </MenuItem>
+                  <When predicate={index + 1 === arr.length}>
+                    <MenuItem>
+                      <button
+                        disabled={currentPage <= 0}
+                        onClick={changeToLast}
+                      >
+                        back
+                      </button>
+                      <button
+                        disabled={
+                          currentPage >=
+                          Math.ceil(dropdownData.length / showedPerPage) - 1
+                        }
+                        onClick={changeToNext}
+                      >
+                        forward
+                      </button>
+                    </MenuItem>
+                  </When>
                 </div>
               )
             })}
+        </When>
       </Menu>
     </>
   )

@@ -33,32 +33,6 @@ export const DropDown = ({ subMenuDropDown, subMenuWords }) => {
         historyContext={goBackinNHistory}
         anchorData={anchorEl}
       />
-      {/*<Menu
-        id="long-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            maxHeight: '137px',
-            width: '240px',
-          },
-        }}
-      >
-        {subMenuDropDown.map((word) => (
-          <MenuItem
-            key={word[0]}
-            onClick={() => {
-              goBackinNHistory(ITEM_HEIGHT - word[0])
-              handleClose()
-            }}
-            style={{ textTransform: 'capitalize' }}
-          >
-            {word[1]}
-          </MenuItem>
-        ))}
-        </Menu>*/}
     </>
   )
 }
