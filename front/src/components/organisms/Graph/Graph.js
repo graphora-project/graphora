@@ -6,11 +6,15 @@ import { WordCard } from '../../molecules/WordCard'
 import { LabelButton } from '../../atoms/Button'
 import { graphSketch } from '../../../graphSketch'
 import { HistoryBar } from '../../molecules/HistoryBar'
+import { TableInOut } from '../../molecules/TableInOut'
+import { TableMinMaxProm } from '../../molecules/TableMinMaxProm'
 
 const graph = graphSketch(p5)
 
 export const Graph = () => {
-  const { currentWord, relatedWords, goBackinHistory, searchWord } = useContext(GraphoraContext)
+  const { currentWord, relatedWords, goBackinHistory, searchWord } = useContext(
+    GraphoraContext,
+  )
   const ref = useRef()
   graph.setOnClickFunction((label) => {
     searchWord(label)
@@ -30,6 +34,9 @@ export const Graph = () => {
     <>
       <div ref={ref} />
       <HistoryBar />
+      <TableInOut direction="Out" />
+      <TableInOut direction="In" />
+      <TableMinMaxProm />
       <h1>Results for: {currentWord}</h1>
       <LabelButton action={goBackinHistory}> Go Back </LabelButton>
       <ul>
