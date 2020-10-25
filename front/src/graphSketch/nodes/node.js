@@ -15,7 +15,7 @@ const Node = ({ p5, label, color }) => {
     p5.fill(0)
     p5.textSize(12)
     p5.textAlign(p5.CENTER, p5.CENTER)
-    p5.text(label, vector.x, vector.y + radius + 20)
+    p5.text(label, vector.x, vector.y - radius - 15)
   }
 
   const setRadius = (_radius) => {
