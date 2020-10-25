@@ -2,7 +2,7 @@ import Line from './line'
 
 const Arrow = ({ p5, initialNode, finalNode }) => {
   const strokeWeight = 0.5
-  const color = 150
+  const color = '#C7D8F0'
 
   const line = Line({
     p5,
