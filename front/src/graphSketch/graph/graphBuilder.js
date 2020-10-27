@@ -1,12 +1,10 @@
 import Graph from 'graphology'
-import { ClickeableNode, RegularNode, MainNode } from '../nodes'
+import { StimulusNode, AssociateNode, MainNode } from '../nodes'
 import { P5Graph } from './graph'
 import { InArrow, OutArrow, InOutArrow } from '../arrows'
 import { CollisionsManager } from '../collisionsManager'
-import P5 from '../p5/P5'
 
 export const GraphBuilder = ({ data, currentWord, onClickFunction }) => {
-  const p5 = P5.getInstance()
   const graph = new Graph()
 
   graph.addNode(currentWord)
@@ -19,10 +17,10 @@ export const GraphBuilder = ({ data, currentWord, onClickFunction }) => {
 
   const layout = layoutGraph(graph, { scale: 400 })
 
-  const nodes = generateNodes(p5, data, currentWord, onClickFunction, layout)
-  const edges = generateEdges(p5, data, nodes)
+  const nodes = generateNodes(data, currentWord, onClickFunction, layout)
+  const edges = generateEdges(data, nodes)
 
-  CollisionsManager({ p5 }).checkCollisions(nodes)
+  CollisionsManager().checkCollisions(nodes)
 
   return P5Graph({
     nodes,
@@ -102,7 +100,7 @@ const layoutGraph = (graph, { scale = 1 } = {}) => {
   return layout
 }
 
-const generateEdges = (p5, data, nodes) => {
+const generateEdges = (data, nodes) => {
   const edges = []
 
   for (let i = 0; i < data.length; i += 1) {
@@ -110,7 +108,6 @@ const generateEdges = (p5, data, nodes) => {
     if (node.direction === 'in')
       edges.push(
         InArrow({
-          p5,
           initialNode: nodes[0],
           finalNode: nodes[i + 1],
         }),
@@ -119,7 +116,6 @@ const generateEdges = (p5, data, nodes) => {
     if (node.direction === 'out')
       edges.push(
         OutArrow({
-          p5,
           initialNode: nodes[0],
           finalNode: nodes[i + 1],
         }),
@@ -128,7 +124,6 @@ const generateEdges = (p5, data, nodes) => {
     if (node.direction === 'in-out')
       edges.push(
         InOutArrow({
-          p5,
           initialNode: nodes[0],
           finalNode: nodes[i + 1],
         }),
@@ -138,23 +133,20 @@ const generateEdges = (p5, data, nodes) => {
   return edges
 }
 
-const generateNodes = (p5, data, currentWord, onClickFunction, layout) => {
+const generateNodes = (data, currentWord, onClickFunction, layout) => {
   const nodes = []
 
   nodes.push(
     MainNode({
-      p5,
       xCoordinate: layout[currentWord].x,
       yCoordinate: layout[currentWord].y,
       label: currentWord,
-      onClick: onClickFunction,
     }),
   )
   data.forEach((node) => {
     if (node.status === 'estimulo') {
       nodes.push(
-        ClickeableNode({
-          p5,
+        StimulusNode({
           xCoordinate: layout[node.name].x,
           yCoordinate: layout[node.name].y,
           label: node.name,
@@ -165,8 +157,7 @@ const generateNodes = (p5, data, currentWord, onClickFunction, layout) => {
 
     if (node.status === 'asociada') {
       nodes.push(
-        RegularNode({
-          p5,
+        AssociateNode({
           xCoordinate: layout[node.name].x,
           yCoordinate: layout[node.name].y,
           label: node.name,
