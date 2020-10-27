@@ -1,12 +1,8 @@
+import P5 from '../p5/P5'
 import Node from './node'
 
-export const ClickeableNode = ({
-  p5,
-  xCoordinate,
-  yCoordinate,
-  label,
-  onClick,
-}) => {
+export const StimulusNode = ({ xCoordinate, yCoordinate, label, onClick }) => {
+  const p5 = P5.getInstance()
   const color = '#F24C00'
   const baseRadius = 15
   const onHoverRadius = 20
@@ -16,7 +12,6 @@ export const ClickeableNode = ({
   let relativeYCenter = 0
 
   const baseNode = Node({
-    p5,
     label,
     color,
   })

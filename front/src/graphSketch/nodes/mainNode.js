@@ -1,11 +1,10 @@
 import Node from './node'
 
-export const MainNode = ({ p5, xCoordinate, yCoordinate, label }) => {
+export const MainNode = ({ xCoordinate, yCoordinate, label }) => {
   const color = '#485696'
   const radius = 15
 
   const baseNode = Node({
-    p5,
     xCoordinate,
     yCoordinate,
     label,

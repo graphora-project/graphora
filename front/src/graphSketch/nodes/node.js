@@ -1,15 +1,16 @@
-const Node = ({ p5, label, color }) => {
-  let xCoordinate = 0
-  let yCoordinate = 0
+import P5 from '../p5/P5'
+
+const Node = ({ label, color }) => {
+  const p5 = P5.getInstance()
+  const initialXCoordinate = 0
+  const initialYCoordinate = 0
   let radius = 0
 
-  let vector = p5.createVector(xCoordinate, yCoordinate)
+  const vector = p5.createVector(initialXCoordinate, initialYCoordinate)
 
   const draw = () => {
-    // vector = p5.createVector(xCoordinate, yCoordinate)
     p5.noStroke()
     p5.fill(color)
-    // p5.circle(xCoordinate, yCoordinate, radius * 2)
     p5.circle(vector.x, vector.y, radius * 2)
 
     p5.fill(0)
@@ -23,12 +24,10 @@ const Node = ({ p5, label, color }) => {
   }
 
   const setXCoordinate = (_xCoordinate) => {
-    // xCoordinate = _xCoordinate
     vector.set(_xCoordinate, vector.y)
   }
 
   const setYCoordinate = (_yCoordinate) => {
-    // yCoordinate = _yCoordinate
     vector.set(vector.x, _yCoordinate)
   }
 
