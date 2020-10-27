@@ -4,18 +4,12 @@ import { GraphVisualizer } from '../../../graphSketch'
 
 let graphVisualizer
 
-const createGraphVisualizerInstance = (containerReference) => {
-  if (!graphVisualizer) {
-    graphVisualizer = GraphVisualizer({ containerReference })
-  }
-}
-
 export const Graph = () => {
   const { currentWord, relatedWords, searchWord } = useContext(GraphoraContext)
   const ref = useRef()
 
   useEffect(() => {
-    createGraphVisualizerInstance(ref.current)
+    graphVisualizer = GraphVisualizer({ containerReference: ref.current })
     graphVisualizer.setOnNodeClickedFunction((label) => {
       searchWord(label)
     })

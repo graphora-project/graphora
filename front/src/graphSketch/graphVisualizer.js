@@ -7,7 +7,6 @@ export const GraphVisualizer = ({ containerReference }) => {
   let onNodeClickedFunction
 
   const sketch = graphSketch()
-  console.log(containerReference)
   P5.createInstance({ p5Sketch: sketch.sketch, containerReference })
 
   const visualizeGraphWithData = (_centralNodeName, _relatedNodesData) => {
@@ -28,9 +27,9 @@ export const GraphVisualizer = ({ containerReference }) => {
 
   const dataIsUpdated = (_relatedNodesData) => {
     if (relatedNodesData !== _relatedNodesData) {
-      return false
+      return true
     }
-    return true
+    return false
   }
 
   const setOnNodeClickedFunction = (_onNodeClickedFunction) => {
