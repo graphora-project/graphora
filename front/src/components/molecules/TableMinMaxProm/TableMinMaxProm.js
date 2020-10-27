@@ -42,9 +42,7 @@ const calculateMin = (data, type) => {
   } else {
     const association = []
     data.map((dataAssociation) =>
-      association.push(
-        parseFloat(dataAssociation.association.replace(',', '.')),
-      ),
+      association.push(parseFloat(dataAssociation.association)),
     )
     const associationMin = Math.min(...association)
     return associationMin
@@ -62,9 +60,7 @@ const calculateMax = (data, type) => {
     const association = []
     // eslint-disable-next-line array-callback-return
     data.map((dataAssociation) => {
-      association.push(
-        parseFloat(dataAssociation.association.replace(',', '.')),
-      )
+      association.push(parseFloat(dataAssociation.association))
     })
     const associationMax = Math.max(...association)
     return associationMax
@@ -84,7 +80,7 @@ const calculateProm = (data, type) => {
     let association = null
     // eslint-disable-next-line array-callback-return
     data.map((dataAssociation) => {
-      association += parseFloat(dataAssociation.association.replace(',', '.'))
+      association += parseFloat(dataAssociation.association)
     })
     return (association / data.length).toFixed(5)
   }

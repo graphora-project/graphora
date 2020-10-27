@@ -61,10 +61,10 @@ export const TableInOut = ({ direction }) => {
                   {result.frecuency}
                 </TableCell>
                 <TableCell className={classes.tablecell} align="center">
-                  {result.time.replace(',', '.')}
+                  {result.time}
                 </TableCell>
                 <TableCell className={classes.tablecell} align="center">
-                  {result.association.replace(',', '.')}
+                  {result.association}
                 </TableCell>
               </TableRow>
             ) : null,
