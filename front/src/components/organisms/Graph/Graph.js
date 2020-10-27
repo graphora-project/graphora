@@ -1,27 +1,30 @@
 import React, { useContext, useEffect, useRef } from 'react'
-import p5 from 'p5'
 import { GraphoraContext } from '../../GraphoraContext'
-import { graphSketch } from '../../../graphSketch'
+import { GraphVisualizer } from '../../../graphSketch'
 
-const graph = graphSketch(p5)
-let p5Instance
+let graphVisualizer
+
+const createGraphVisualizerInstance = (containerReference) => {
+  if (!graphVisualizer) {
+    graphVisualizer = GraphVisualizer({ containerReference })
+  }
+}
 
 export const Graph = () => {
   const { currentWord, relatedWords, searchWord } = useContext(GraphoraContext)
   const ref = useRef()
-  graph.setOnClickFunction((label) => {
-    searchWord(label)
-  })
 
   useEffect(() => {
-    // eslint-disable-next-line
-    p5Instance = new p5(graph.sketch, ref.current)
+    createGraphVisualizerInstance(ref.current)
+    graphVisualizer.setOnNodeClickedFunction((label) => {
+      searchWord(label)
+    })
     // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
     if (currentWord) {
-      graph.setData(p5Instance, relatedWords, currentWord)
+      graphVisualizer.visualizeGraphWithData(currentWord, relatedWords)
     }
   }, [relatedWords, currentWord])
 

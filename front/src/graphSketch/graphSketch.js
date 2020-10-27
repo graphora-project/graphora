@@ -1,9 +1,4 @@
-import { GraphBuilder } from './graph/graphBuilder'
-
 export const graphSketch = () => {
-  let data = []
-  let currentWord = ''
-  let onClickFunction
   let scale = 1.5
   let graph
 
@@ -14,6 +9,7 @@ export const graphSketch = () => {
   let fixXPosition = 0
   let fixYPosition = 0
 
+  /*
   const setData = (p5, _data, _currentWord) => {
     // as setState function in React is asynchronus, when a new word is searched
     // react sends the new currentWord but the data is the same as before, creating and error on the graph
@@ -21,13 +17,14 @@ export const graphSketch = () => {
       data = _data
       currentWord = _currentWord
       graph = GraphBuilder({ p5, data, currentWord, onClickFunction })
-      fixXPosition = 0
-      fixYPosition = 0
     }
   }
+  */
 
-  const setOnClickFunction = (_onClickFunction) => {
-    onClickFunction = _onClickFunction
+  const setGraph = (_graph) => {
+    fixXPosition = 0
+    fixYPosition = 0
+    graph = _graph
   }
 
   const sketch = (p5) => {
@@ -112,5 +109,5 @@ export const graphSketch = () => {
     }
   }
 
-  return { sketch, setData, setOnClickFunction }
+  return { sketch, setGraph }
 }

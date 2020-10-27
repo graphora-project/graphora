@@ -3,8 +3,10 @@ import { ClickeableNode, RegularNode, MainNode } from '../nodes'
 import { P5Graph } from './graph'
 import { InArrow, OutArrow, InOutArrow } from '../arrows'
 import { CollisionsManager } from '../collisionsManager'
+import P5 from '../p5/P5'
 
-export const GraphBuilder = ({ p5, data, currentWord, onClickFunction }) => {
+export const GraphBuilder = ({ data, currentWord, onClickFunction }) => {
+  const p5 = P5.getInstance()
   const graph = new Graph()
 
   graph.addNode(currentWord)
