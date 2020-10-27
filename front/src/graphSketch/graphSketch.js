@@ -9,18 +9,6 @@ export const graphSketch = () => {
   let fixXPosition = 0
   let fixYPosition = 0
 
-  /*
-  const setData = (p5, _data, _currentWord) => {
-    // as setState function in React is asynchronus, when a new word is searched
-    // react sends the new currentWord but the data is the same as before, creating and error on the graph
-    if (data !== _data) {
-      data = _data
-      currentWord = _currentWord
-      graph = GraphBuilder({ p5, data, currentWord, onClickFunction })
-    }
-  }
-  */
-
   const setGraph = (_graph) => {
     fixXPosition = 0
     fixYPosition = 0
