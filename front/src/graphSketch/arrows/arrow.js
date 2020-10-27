@@ -1,12 +1,12 @@
+import P5 from '../p5/P5'
 import Line from './line'
 
-const Arrow = ({ p5, initialNode, finalNode }) => {
+const Arrow = ({ initialNode, finalNode }) => {
+  const p5 = P5.getInstance()
   const strokeWeight = 0.5
   const color = '#C7D8F0'
 
-  const line = Line({
-    p5,
-  })
+  const line = Line()
 
   const draw = ({ display = true } = {}) => {
     const initialX = initialNode.getXCoordinate()

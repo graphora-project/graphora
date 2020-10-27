@@ -1,26 +1,23 @@
+import P5 from '../p5/P5'
 import RightTriangle from './rightTriangle'
 import Arrow from './arrow'
 
-export const InOutArrow = ({ p5, initialNode, finalNode }) => {
+export const InOutArrow = ({ initialNode, finalNode }) => {
+  const p5 = P5.getInstance()
+
   const rightArrow = Arrow({
-    p5,
     initialNode,
     finalNode,
   })
 
   const leftArrow = Arrow({
-    p5,
     initialNode: finalNode,
     finalNode: initialNode,
   })
 
-  const rightTriangle = RightTriangle({
-    p5,
-  })
+  const rightTriangle = RightTriangle()
 
-  const leftTriangle = RightTriangle({
-    p5,
-  })
+  const leftTriangle = RightTriangle()
 
   const draw = () => {
     const initialX = initialNode.getXCoordinate()

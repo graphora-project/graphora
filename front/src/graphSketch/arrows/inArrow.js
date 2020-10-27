@@ -1,16 +1,16 @@
+import P5 from '../p5/P5'
 import RightTriangle from './rightTriangle'
 import Arrow from './arrow'
 
-export const InArrow = ({ p5, initialNode, finalNode }) => {
+export const InArrow = ({ initialNode, finalNode }) => {
+  const p5 = P5.getInstance()
+
   const arrow = Arrow({
-    p5,
     initialNode: finalNode,
     finalNode: initialNode,
   })
 
-  const triangle = RightTriangle({
-    p5,
-  })
+  const triangle = RightTriangle()
 
   const draw = () => {
     const { color, strokeWeight } = arrow
