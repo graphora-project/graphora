@@ -1,10 +1,10 @@
 import Triangle from './triangle'
 
-const LeftTriangle = ({ p5 }) => {
+const LeftTriangle = () => {
   let pointerX
   let pointerY
 
-  const baseTriangle = Triangle({ p5 })
+  const baseTriangle = Triangle()
 
   const setPointerX = (_pointerX) => {
     pointerX = _pointerX

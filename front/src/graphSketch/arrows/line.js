@@ -1,4 +1,8 @@
-const Line = ({ p5 }) => {
+import P5 from '../p5/P5'
+
+const Line = () => {
+  const p5 = P5.getInstance()
+
   const draw = ({
     color,
     strokeWeight,

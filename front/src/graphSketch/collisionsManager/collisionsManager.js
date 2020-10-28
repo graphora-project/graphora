@@ -1,4 +1,7 @@
-export const CollisionsManager = ({ p5 }) => {
+import P5 from '../p5/P5'
+
+export const CollisionsManager = () => {
+  const p5 = P5.getInstance()
   let graphIsStable = false
 
   const checkCollisions = (nodes) => {

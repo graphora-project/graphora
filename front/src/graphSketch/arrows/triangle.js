@@ -1,4 +1,7 @@
-const Triangle = ({ p5 }) => {
+import P5 from '../p5/P5'
+
+const Triangle = () => {
+  const p5 = P5.getInstance()
   const height = 5
   const baseWidth = 3
   let point1X
