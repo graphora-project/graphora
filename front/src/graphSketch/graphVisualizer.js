@@ -21,11 +21,9 @@ export const GraphVisualizer = ({ containerReference }) => {
         relatedNodesData,
       })
 
-      console.log(graphRepresentation)
-      const graph = GraphBuilder({
-        data: relatedNodesData,
-        currentWord: _centralNodeName,
-        onClickFunction: onNodeClickedFunction,
+      const graph = GraphBuilder().build({
+        graphRepresentation,
+        onNodeClickedFunction,
       })
 
       sketch.setGraph(graph)
