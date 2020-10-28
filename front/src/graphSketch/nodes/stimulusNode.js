@@ -1,7 +1,7 @@
 import P5 from '../p5/P5'
 import Node from './node'
 
-export const StimulusNode = ({ xCoordinate, yCoordinate, label, onClick }) => {
+export const StimulusNode = ({ xCoordinate, yCoordinate, label }) => {
   const p5 = P5.getInstance()
   const color = '#F24C00'
   const baseRadius = 15
@@ -10,6 +10,7 @@ export const StimulusNode = ({ xCoordinate, yCoordinate, label, onClick }) => {
   let scale = 1
   let relativeXCenter = 0
   let relativeYCenter = 0
+  let onClickFunction = () => {}
 
   const baseNode = Node({
     label,
@@ -79,7 +80,7 @@ export const StimulusNode = ({ xCoordinate, yCoordinate, label, onClick }) => {
 
   const mouseClicked = () => {
     if (mouseIsInArea()) {
-      onClick(label)
+      onClickFunction(label)
     }
   }
 
@@ -92,6 +93,10 @@ export const StimulusNode = ({ xCoordinate, yCoordinate, label, onClick }) => {
     relativeYCenter = y
   }
 
+  const setOnClickFunction = (_onClickFunction) => {
+    onClickFunction = _onClickFunction
+  }
+
   return {
     draw,
     mouseClicked,
@@ -102,6 +107,7 @@ export const StimulusNode = ({ xCoordinate, yCoordinate, label, onClick }) => {
     getYCoordinate: baseNode.getYCoordinate,
     setScale,
     setRelativeCenterCoordinates,
+    setOnClickFunction,
     isClickeable: true,
   }
 }
