@@ -25,17 +25,17 @@ const GraphRepresentation = () => {
   }
 
   const generateEdgesRepresentation = (centralNodeName, relatedNodesData) => {
-    const edgesRepresentation = relatedNodesData.map((nodeData) => {
+    const edgesRepresentation = relatedNodesData.map((nodeData, index) => {
       if (nodeData.name !== centralNodeName) {
         return {
-          initialNode: centralNodeName,
-          finalNode: nodeData.name,
+          initialNodeIndex: 0,
+          finalNodeIndex: index,
           type: nodeData.direction,
         }
       }
       return {
-        initialNode: centralNodeName,
-        finalNode: centralNodeName,
+        initialNode: 0,
+        finalNode: 0,
         type: 'self-in',
       }
     })
