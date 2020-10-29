@@ -1,11 +1,9 @@
-export const graphSketch = () => {
+export const graphSketch = ({ initialCanvasWidth, initialCanvasHeight }) => {
   let scale = 1.5
   let graph
 
-  const canvasWidth = (window.innerWidth / 100) * 90
-  const canvasHeight = (window.innerHeight / 100) * 90
-  const centerX = canvasWidth / 2
-  const centerY = canvasHeight / 2
+  let canvasWidth = initialCanvasWidth
+  let canvasHeight = initialCanvasHeight
   let fixXPosition = 0
   let fixYPosition = 0
 
@@ -13,6 +11,11 @@ export const graphSketch = () => {
     fixXPosition = 0
     fixYPosition = 0
     graph = _graph
+  }
+
+  const setCanvasDimensions = (width, height) => {
+    canvasWidth = width
+    canvasHeight = height
   }
 
   const sketch = (p5) => {
@@ -27,6 +30,8 @@ export const graphSketch = () => {
 
       if (graph) {
         p5.cursor('grab')
+        const centerX = canvasWidth / 2
+        const centerY = canvasHeight / 2
 
         const translateX = (centerX + fixXPosition) / scale
         const translateY = (centerY + fixYPosition) / scale
@@ -97,5 +102,5 @@ export const graphSketch = () => {
     }
   }
 
-  return { sketch, setGraph }
+  return { sketch, setGraph, setCanvasDimensions }
 }

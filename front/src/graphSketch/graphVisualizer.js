@@ -3,11 +3,18 @@ import GraphRepresentation from './graph/graphRepresentation'
 import { graphSketch } from './graphSketch'
 import { GraphBuilder } from './graph/graphBuilder'
 
-export const GraphVisualizer = ({ containerReference }) => {
+export const GraphVisualizer = ({
+  containerReference,
+  initialGraphCanvasWidth,
+  initialGraphCanvasHeight,
+}) => {
   let relatedNodesData = []
   let onNodeClickedFunction
 
-  const sketch = graphSketch()
+  const sketch = graphSketch({
+    initialCanvasWidth: initialGraphCanvasWidth,
+    initialCanvasHeight: initialGraphCanvasHeight,
+  })
   P5.createInstance({ p5Sketch: sketch.sketch, containerReference })
 
   const visualizeGraphWithData = (_centralNodeName, _relatedNodesData) => {
@@ -30,6 +37,12 @@ export const GraphVisualizer = ({ containerReference }) => {
     }
   }
 
+  const resizeAndRedrawGraphCanvas = (width, height) => {
+    const p5 = P5.getInstance()
+    p5.resizeCanvas(width, height)
+    sketch.setCanvasDimensions(width, height)
+  }
+
   const dataIsUpdated = (_relatedNodesData) => {
     if (
       relatedNodesData !== _relatedNodesData &&
@@ -47,5 +60,6 @@ export const GraphVisualizer = ({ containerReference }) => {
   return {
     visualizeGraphWithData,
     setOnNodeClickedFunction,
+    resizeAndRedrawGraphCanvas,
   }
 }
