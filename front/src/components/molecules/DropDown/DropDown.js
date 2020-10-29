@@ -3,6 +3,7 @@ import { Menu, MenuItem, Button } from '@material-ui/core'
 import PropTypes from 'prop-types'
 import { GraphoraContext } from '../../GraphoraContext'
 import { ReactComponent as Dots } from '../../../icons/three-dots.svg'
+import { PaginatedMenu } from './PaginatedMenu'
 
 export const DropDown = ({ subMenuDropDown, subMenuWords }) => {
   const { goBackinNHistory } = useContext(GraphoraContext)
@@ -14,7 +15,7 @@ export const DropDown = ({ subMenuDropDown, subMenuWords }) => {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleClose = () => {
+  const handleDropdownClose = () => {
     setAnchorEl(null)
   }
 
@@ -23,32 +24,15 @@ export const DropDown = ({ subMenuDropDown, subMenuWords }) => {
       <Button onClick={handleClick}>
         <Dots width="10" height="27" />
       </Button>
-      <Menu
-        id="long-menu"
-        anchorEl={anchorEl}
-        keepMounted
+      <PaginatedMenu
         open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            maxHeight: '137px',
-            width: '240px',
-          },
-        }}
-      >
-        {subMenuDropDown.map((word) => (
-          <MenuItem
-            key={word[0]}
-            onClick={() => {
-              goBackinNHistory(ITEM_HEIGHT - word[0])
-              handleClose()
-            }}
-            style={{ textTransform: 'capitalize' }}
-          >
-            {word[1]}
-          </MenuItem>
-        ))}
-      </Menu>
+        handleClose={handleDropdownClose}
+        dropdownData={subMenuDropDown}
+        itemHeight={ITEM_HEIGHT}
+        showedPerPage={4}
+        historyContext={goBackinNHistory}
+        anchorData={anchorEl}
+      />
     </>
   )
 }

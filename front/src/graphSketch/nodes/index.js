@@ -1,3 +1,3 @@
-export * from './clickeableNode'
-export * from './regularNode'
-export * from './tertiaryNode'
+export * from './stimulusNode'
+export * from './associateNode'
+export * from './mainNode'
