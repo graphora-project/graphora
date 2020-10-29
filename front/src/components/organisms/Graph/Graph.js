@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import { GraphoraContext } from '../../GraphoraContext'
 import { HistoryBar } from '../../molecules/HistoryBar'
+import { TableInOut } from '../../molecules/TableInOut'
+import { TableMinMaxProm } from '../../molecules/TableMinMaxProm'
 import { GraphVisualizer } from '../../../graphSketch'
 
 let graphVisualizer
@@ -52,6 +54,9 @@ export const Graph = () => {
   return currentWord ? (
     <>
       <HistoryBar />
+      <TableInOut direction="Out" />
+      <TableInOut direction="In" />
+      <TableMinMaxProm />
       <h1>Results for: {currentWord}</h1>
       <div ref={ref} />
     </>

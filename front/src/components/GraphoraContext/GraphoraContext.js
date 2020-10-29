@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-
 import { GraphoraService } from '../../services'
 
 export const GraphoraContext = createContext()
@@ -22,14 +21,13 @@ const useSessionStorage = (initialState) => {
   return [value, setter]
 }
 
-const fetchFromSessionStorage = async (key, fetchFunction) => {
+const fetchFromSessionStorage = async (key, keyApi, fetchFunction) => {
   const dataFromStorage = sessionStorage.getItem(key)
 
   if (!dataFromStorage) {
-    const data = await fetchFunction(key)
+    const data = await fetchFunction(keyApi)
     return data
   }
-
   return JSON.parse(dataFromStorage)
 }
 
@@ -42,9 +40,7 @@ const useSearchHistory = () => {
 
   const goBackinHistory = () => {
     if (history.length > 0) {
-      setHistory(
-        history.filter((element, index) => index < history.length - 1),
-      )
+      setHistory(history.filter((element, index) => index < history.length - 1))
     }
   }
 
@@ -61,8 +57,16 @@ const useSearchHistory = () => {
 
 export const GraphoraProvider = ({ children }) => {
   const [relatedWords, setRelatedWords] = useSessionStorage([])
+  const [relatedWordsTableData, setRelatedWordsTableData] = useSessionStorage(
+    [],
+  )
   const [currentWord, setCurrentWord] = useState(undefined)
-  const [history, addToHistory, goBackinHistory, goBackinNHistory] = useSearchHistory()
+  const [
+    history,
+    addToHistory,
+    goBackinHistory,
+    goBackinNHistory,
+  ] = useSearchHistory()
   const graphoraService = GraphoraService()
 
   useEffect(() => {
@@ -76,14 +80,25 @@ export const GraphoraProvider = ({ children }) => {
   const fetchWordData = async (word) => {
     const data = await fetchFromSessionStorage(
       word,
+      word,
       graphoraService.fetchRelatedWords,
     )
     setRelatedWords(word, data)
   }
 
+  const fetchTableData = async (word) => {
+    const data = await fetchFromSessionStorage(
+      `${word}-table`,
+      word,
+      graphoraService.fetchRelatedTable,
+    )
+    setRelatedWordsTableData(`${word}-table`, data)
+  }
+
   useEffect(() => {
     if (currentWord) {
       fetchWordData(currentWord)
+      fetchTableData(currentWord)
     }
     // eslint-disable-next-line
   }, [currentWord])
@@ -95,6 +110,7 @@ export const GraphoraProvider = ({ children }) => {
   const value = {
     currentWord,
     relatedWords,
+    relatedWordsTableData,
     searchWord,
     history,
     goBackinHistory,

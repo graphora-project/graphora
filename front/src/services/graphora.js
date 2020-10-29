@@ -4,7 +4,13 @@ export const GraphoraService = () => {
       data.json(),
     )
 
+  const fetchRelatedTable = (word) =>
+    fetch(`${process.env.REACT_APP_GRAPHORA}/table/${word}`).then((data) =>
+      data.json(),
+    )
+
   return {
     fetchRelatedWords,
+    fetchRelatedTable,
   }
 }
