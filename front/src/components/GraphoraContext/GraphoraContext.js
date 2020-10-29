@@ -43,18 +43,26 @@ const useSearchHistory = () => {
   const goBackinHistory = () => {
     if (history.length > 0) {
       setHistory(
-        history.filter((element, index) => index !== history.length - 1),
+        history.filter((element, index) => index < history.length - 1),
       )
     }
   }
 
-  return [history, addToHistory, goBackinHistory]
+  const goBackinNHistory = (n) => {
+    if (history.length > 0) {
+      setHistory(
+        history.filter((element, index) => index <= history.length - n),
+      )
+    }
+  }
+
+  return [history, addToHistory, goBackinHistory, goBackinNHistory]
 }
 
 export const GraphoraProvider = ({ children }) => {
   const [relatedWords, setRelatedWords] = useSessionStorage([])
   const [currentWord, setCurrentWord] = useState(undefined)
-  const [history, addToHistory, goBackinHistory] = useSearchHistory()
+  const [history, addToHistory, goBackinHistory, goBackinNHistory] = useSearchHistory()
   const graphoraService = GraphoraService()
 
   useEffect(() => {
@@ -90,6 +98,7 @@ export const GraphoraProvider = ({ children }) => {
     searchWord,
     history,
     goBackinHistory,
+    goBackinNHistory,
   }
 
   return (

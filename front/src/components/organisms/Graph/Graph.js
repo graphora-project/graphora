@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import { GraphoraContext } from '../../GraphoraContext'
+import { HistoryBar } from '../../molecules/HistoryBar'
 import { GraphVisualizer } from '../../../graphSketch'
 
 let graphVisualizer
@@ -50,6 +51,7 @@ export const Graph = () => {
 
   return currentWord ? (
     <>
+      <HistoryBar />
       <h1>Results for: {currentWord}</h1>
       <div ref={ref} />
     </>
