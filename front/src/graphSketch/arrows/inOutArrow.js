@@ -1,43 +1,61 @@
+import P5 from '../p5/P5'
 import RightTriangle from './rightTriangle'
-import LeftTriangle from './leftTriangle'
 import Arrow from './arrow'
 
-export const InOutArrow = ({ p5, initialX, initialY, finalX, finalY }) => {
-  const [arrowDraw, color, strokeWeight, baseVector, endVector] = Arrow({
-    p5,
-    initialX,
-    initialY,
-    finalX,
-    finalY,
+export const InOutArrow = ({ initialNode, finalNode }) => {
+  const p5 = P5.getInstance()
+
+  const rightArrow = Arrow({
+    initialNode,
+    finalNode,
   })
 
-  const [rightTriangleDraw] = RightTriangle({
-    p5,
-    pointerX: 0,
-    pointerY: 0,
+  const leftArrow = Arrow({
+    initialNode: finalNode,
+    finalNode: initialNode,
   })
 
-  const [leftTriangleDraw] = LeftTriangle({
-    p5,
-    pointerX: baseVector.x,
-    pointerY: baseVector.y,
-  })
+  const rightTriangle = RightTriangle()
+
+  const leftTriangle = RightTriangle()
 
   const draw = () => {
-    p5.push()
-    arrowDraw()
-    p5.rotate(endVector.heading())
-    leftTriangleDraw({ color, strokeWeight })
-    p5.pop()
+    const initialX = initialNode.getXCoordinate()
+    const initialY = initialNode.getYCoordinate()
+
+    const { color, strokeWeight } = rightArrow
+    const { endVector } = rightArrow.draw()
+
+    drawLeftTriangle()
 
     p5.push()
     p5.translate(initialX, initialY)
+    const magnitud = endVector.mag()
+    endVector.setMag(magnitud - finalNode.getRadius())
     p5.translate(endVector.x, endVector.y)
+    rightTriangle.setPointerX(0)
+    rightTriangle.setPointerY(0)
     p5.rotate(endVector.heading())
-    rightTriangleDraw({ color, strokeWeight })
+    rightTriangle.draw({ color, strokeWeight })
     p5.pop()
   }
 
+  const drawLeftTriangle = () => {
+    p5.push()
+    const { color, strokeWeight } = leftArrow
+    const { endVector } = leftArrow.draw({ display: false })
+
+    leftTriangle.setPointerX(0)
+    leftTriangle.setPointerY(0)
+
+    const magnitud = endVector.mag()
+    endVector.setMag(magnitud - initialNode.getRadius())
+
+    p5.translate(endVector.x, endVector.y)
+    p5.rotate(endVector.heading())
+    leftTriangle.draw({ color, strokeWeight })
+    p5.pop()
+  }
   return {
     draw,
   }

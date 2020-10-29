@@ -1,51 +1,61 @@
 import React, { useContext, useEffect, useRef } from 'react'
-import p5 from 'p5'
-import PropTypes from 'prop-types'
 import { GraphoraContext } from '../../GraphoraContext'
-import { WordCard } from '../../molecules/WordCard'
-import { LabelButton } from '../../atoms/Button'
-import { graphSketch } from '../../../graphSketch'
 import { HistoryBar } from '../../molecules/HistoryBar'
+import { GraphVisualizer } from '../../../graphSketch'
 
-const graph = graphSketch(p5)
+let graphVisualizer
+
+const calculateGraphDimensions = () => {
+  const graphWidth = (window.innerWidth / 100) * 90
+  const graphHeight = (window.innerHeight / 100) * 90
+
+  return {
+    graphWidth,
+    graphHeight,
+  }
+}
 
 export const Graph = () => {
-  const { currentWord, relatedWords, goBackinHistory, searchWord } = useContext(GraphoraContext)
+  const { currentWord, relatedWords, searchWord } = useContext(GraphoraContext)
   const ref = useRef()
-  graph.setOnClickFunction((label) => {
-    searchWord(label)
-  })
 
   useEffect(() => {
-    graph.setData(relatedWords)
-  }, [relatedWords])
+    const { graphWidth, graphHeight } = calculateGraphDimensions()
+    graphVisualizer = GraphVisualizer({
+      containerReference: ref.current,
+      initialGraphCanvasWidth: graphWidth,
+      initialGraphCanvasHeight: graphHeight,
+    })
+    graphVisualizer.setOnNodeClickedFunction((label) => {
+      searchWord(label)
+    })
 
-  useEffect(() => {
-    // eslint-disable-next-line
-    new p5(graph.draw, ref.current)
+    const resizeGraphCanvas = () => {
+      // eslint-disable-next-line
+      const { graphWidth, graphHeight } = calculateGraphDimensions()
+      graphVisualizer.resizeAndRedrawGraphCanvas(graphWidth, graphHeight)
+    }
+    window.addEventListener('resize', resizeGraphCanvas)
+
+    return () => {
+      window.removeEventListener('resize', resizeGraphCanvas)
+    }
     // eslint-disable-next-line
   }, [])
 
+  useEffect(() => {
+    if (currentWord) {
+      graphVisualizer.visualizeGraphWithData(currentWord, relatedWords)
+    }
+  }, [relatedWords, currentWord])
+
   return currentWord ? (
     <>
-      <div ref={ref} />
       <HistoryBar />
       <h1>Results for: {currentWord}</h1>
-      <LabelButton action={goBackinHistory}> Go Back </LabelButton>
-      <ul>
-        {relatedWords.map((word) => (
-          <li key={word.name}>
-            <WordCard word={word} />
-            <hr />
-          </li>
-        ))}
-      </ul>
+      <div ref={ref} />
     </>
   ) : (
     <h4>Results will appear here.</h4>
   )
-}
-
-Graph.propTypes = {
-  sketch: PropTypes.any,
 }

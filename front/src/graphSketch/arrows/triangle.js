@@ -1,7 +1,15 @@
-const Triangle = ({ p5 }) => {
-  const height = 10
-  const baseWidth = 10
-  let point1X, point1Y, point2X, point2Y, point3X, point3Y
+import P5 from '../p5/P5'
+
+const Triangle = () => {
+  const p5 = P5.getInstance()
+  const height = 5
+  const baseWidth = 3
+  let point1X
+  let point1Y
+  let point2X
+  let point2Y
+  let point3X
+  let point3Y
 
   const setPoints = ({
     pointX,
@@ -25,7 +33,7 @@ const Triangle = ({ p5 }) => {
     p5.triangle(point1X, point1Y, point2X, point2Y, point3X, point3Y)
   }
 
-  return [draw, height, baseWidth, setPoints]
+  return { draw, height, baseWidth, setPoints }
 }
 
 export default Triangle

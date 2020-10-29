@@ -1,28 +1,26 @@
+import P5 from '../p5/P5'
 import RightTriangle from './rightTriangle'
 import Arrow from './arrow'
 
-export const OutArrow = ({ p5, initialX, initialY, finalX, finalY }) => {
-  // eslint-disable-next-line
-  const [arrowDraw, color, strokeWeight, _, endVector] = Arrow({
-    p5,
-    initialX,
-    initialY,
-    finalX,
-    finalY,
-  })
+export const OutArrow = ({ initialNode, finalNode }) => {
+  const p5 = P5.getInstance()
+  const arrow = Arrow({ initialNode, finalNode })
 
-  const [triangleDraw] = RightTriangle({
-    p5,
-    pointerX: 0,
-    pointerY: 0,
-  })
+  const triangle = RightTriangle()
 
   const draw = () => {
+    const { color, strokeWeight } = arrow
     p5.push()
-    arrowDraw()
+    const { endVector } = arrow.draw()
+    triangle.setPointerX(0)
+    triangle.setPointerY(0)
+
+    const magnitud = endVector.mag()
+    endVector.setMag(magnitud - finalNode.getRadius())
+
     p5.translate(endVector.x, endVector.y)
     p5.rotate(endVector.heading())
-    triangleDraw({ color, strokeWeight })
+    triangle.draw({ color, strokeWeight })
     p5.pop()
   }
 

@@ -1,85 +1,106 @@
-import { ClickeableNode, RegularNode, TertiaryNode } from './nodes'
-import { InArrow, InOutArrow, OutArrow } from './arrows'
+export const graphSketch = ({ initialCanvasWidth, initialCanvasHeight }) => {
+  let scale = 1.5
+  let graph
 
-export const graphSketch = () => {
+  let canvasWidth = initialCanvasWidth
+  let canvasHeight = initialCanvasHeight
+  let fixXPosition = 0
+  let fixYPosition = 0
 
-  let data = []
-  let onClickFunction
-
-  const setData = (_data) => {
-    data = _data
+  const setGraph = (_graph) => {
+    fixXPosition = 0
+    fixYPosition = 0
+    graph = _graph
   }
 
-  const setOnClickFunction = (_onClickFunction) => {
-    onClickFunction = _onClickFunction
+  const setCanvasDimensions = (width, height) => {
+    canvasWidth = width
+    canvasHeight = height
   }
-  
-  const draw = (p5) => {
-    const node1 = ClickeableNode({
-      p5,
-      xCoordinate: 100,
-      yCoordinate: 100,
-      label: 'estimulo',
-      onClick: () => onClickFunction('abeja'),
-    })
-    const node2 = RegularNode({
-      p5,
-      xCoordinate: 200,
-      yCoordinate: 100,
-      label: 'relacionada',
-    })
-    const node3 = TertiaryNode({
-      p5,
-      xCoordinate: 300,
-      yCoordinate: 100,
-      label: 'tercer nivel',
-    })
-    const inArrow = InArrow({
-      p5,
-      initialX: 100,
-      initialY: 300,
-      finalX: 300,
-      finalY: 200,
-    })
-    const outArrow = OutArrow({
-      p5,
-      initialX: 100,
-      initialY: 350,
-      finalX: 300,
-      finalY: 320,
-    })
-    const inOutArrow = InOutArrow({
-      p5,
-      initialX: 200,
-      initialY: 400,
-      finalX: 200,
-      finalY: 300,
-    })
 
+  const sketch = (p5) => {
+    // eslint-disable-next-line
     p5.setup = () => {
-      p5.createCanvas(
-        (window.innerWidth / 100) * 90,
-        (window.innerHeight / 100) * 90,
-      )
+      p5.createCanvas(canvasWidth, canvasHeight)
     }
 
+    // eslint-disable-next-line
     p5.draw = () => {
       p5.background(255)
-      p5.cursor('default')
 
-      node1.draw()
-      node2.draw()
-      node3.draw()
+      if (graph) {
+        p5.cursor('grab')
+        const centerX = canvasWidth / 2
+        const centerY = canvasHeight / 2
 
-      inArrow.draw()
-      outArrow.draw()
-      inOutArrow.draw()
+        const translateX = (centerX + fixXPosition) / scale
+        const translateY = (centerY + fixYPosition) / scale
+
+        movedCanvas()
+
+        p5.scale(scale)
+        p5.translate(translateX, translateY)
+
+        graph.draw({ scale, centerX: translateX, centerY: translateY })
+      }
     }
 
+    const movedCanvas = () => {
+      if (p5.mouseIsPressed && mouseIsInCanvas()) {
+        fixXPosition += p5.movedX
+        fixYPosition += p5.movedY
+      }
+    }
+
+    // eslint-disable-next-line
+    p5.mouseWheel = (event) => {
+      if (graph && mouseIsInCanvas()) {
+        scale += event.delta / 500
+
+        if (scale < 0.5) {
+          scale = 0.5
+        }
+
+        if (scale > 5) {
+          scale = 5
+        }
+      }
+    }
+
+    // eslint-disable-next-line
     p5.mouseClicked = () => {
-      node1.mouseClicked()
+      if (graph) {
+        graph.clickListener()
+      }
+    }
+
+    const mouseIsInCanvas = () => {
+      if (mouseXInCanvas() && mouseYInCanvas()) {
+        return true
+      }
+      return false
+    }
+
+    const mouseXInCanvas = () => {
+      if (p5.mouseX >= 0) {
+        if (p5.mouseX <= canvasWidth) {
+          return true
+        }
+      }
+
+      return false
+    }
+
+    const mouseYInCanvas = () => {
+      if (p5.mouseY >= 0) {
+        if (p5.mouseY <= canvasHeight) {
+          return true
+        }
+      }
+
+      return false
     }
   }
 
-  return { draw, setData, setOnClickFunction }
+  return { sketch, setGraph, setCanvasDimensions }
 }
