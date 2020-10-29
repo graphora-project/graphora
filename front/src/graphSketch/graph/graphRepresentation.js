@@ -34,8 +34,8 @@ const GraphRepresentation = () => {
         }
       }
       return {
-        initialNode: 0,
-        finalNode: 0,
+        initialNodeIndex: 0,
+        finalNodeIndex: 0,
         type: 'self-in',
       }
     })

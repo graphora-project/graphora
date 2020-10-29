@@ -1,6 +1,6 @@
 import { StimulusNode, AssociateNode, MainNode } from '../nodes'
 import { P5Graph } from './graph'
-import { InArrow, OutArrow, InOutArrow } from '../arrows'
+import { InArrow, OutArrow, InOutArrow, SelfInArrow } from '../arrows'
 import { CollisionsManager } from '../collisionsManager'
 import RandomLayout from '../layout/randomLayout'
 
@@ -15,6 +15,7 @@ export const GraphBuilder = () => {
     in: InArrow,
     out: OutArrow,
     'in-out': InOutArrow,
+    'self-in': SelfInArrow,
   }
 
   const build = ({ graphRepresentation, onNodeClickedFunction }) => {
