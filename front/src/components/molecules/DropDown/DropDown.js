@@ -6,7 +6,7 @@ import { ReactComponent as Dots } from '../../../icons/three-dots.svg'
 import { PaginatedMenu } from './PaginatedMenu'
 
 export const DropDown = ({ subMenuDropDown, subMenuWords }) => {
-  const { goBackinNHistory } = useContext(GraphoraContext)
+  const { goBackInHistory } = useContext(GraphoraContext)
   const ITEM_HEIGHT = subMenuDropDown.length + subMenuWords.length
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
@@ -30,7 +30,7 @@ export const DropDown = ({ subMenuDropDown, subMenuWords }) => {
         dropdownData={subMenuDropDown}
         itemHeight={ITEM_HEIGHT}
         showedPerPage={4}
-        historyContext={goBackinNHistory}
+        historyContext={goBackInHistory}
         anchorData={anchorEl}
       />
     </>

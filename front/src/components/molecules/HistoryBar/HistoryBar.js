@@ -4,7 +4,7 @@ import { GraphoraContext } from '../../GraphoraContext'
 import { DropDown, DropDownPag } from '../DropDown'
 
 export const HistoryBar = () => {
-  const { history, goBackinNHistory } = useContext(GraphoraContext)
+  const { history, goBackInHistory } = useContext(GraphoraContext)
   const { length } = history
   let dropDownData
 
@@ -36,7 +36,7 @@ export const HistoryBar = () => {
         {history.map((word, index) => (
           <Button
             key={{ index }}
-            onClick={() => goBackinNHistory(length - index)}
+            onClick={() => goBackInHistory(length - index)}
             style={{ textTransform: 'capitalize' }}
           >
             {word}
@@ -59,7 +59,7 @@ export const HistoryBar = () => {
               <Button
                 key={word[0]}
                 onClick={() => {
-                  goBackinNHistory(length - word[0])
+                  goBackInHistory(length - word[0])
                 }}
                 style={{ textTransform: 'capitalize' }}
               >
