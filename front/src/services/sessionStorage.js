@@ -1,12 +1,34 @@
 export const SessionStorage = () => {
-  const putItem = (key, data) => {
-    sessionStorage.setItem(key, JSON.stringify(data))
+  const setItem = (storageKey, dataToStore) => {
+    sessionStorage.setItem(storageKey, JSON.stringify(dataToStore))
   }
 
-  const getItem = (key) => sessionStorage.getItem(key)
+  const getItem = (storageKey) => {
+    const dataFromStorage = sessionStorage.getItem(storageKey)
+
+    if (!dataFromStorage) {
+      return undefined
+    }
+    return JSON.parse(dataFromStorage)
+  }
+
+  const fetchFromSessionStorage = async (
+    storageKey,
+    fetchFunctionParams,
+    fetchFunction,
+  ) => {
+    const dataFromStorage = getItem(storageKey)
+
+    if (!dataFromStorage) {
+      const dataFromFetch = await fetchFunction(fetchFunctionParams)
+      return dataFromFetch
+    }
+    return dataFromStorage
+  }
 
   return {
-    putItem,
+    setItem,
     getItem,
+    fetchFromSessionStorage,
   }
 }
