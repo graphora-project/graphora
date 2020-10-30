@@ -1,84 +1,35 @@
 import React, { createContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { GraphoraService } from '../../services'
+import { GraphoraService, SessionStorage } from '../../services'
+import { useSearchHistory, useStateWithSessionStorage } from '../../hooks'
 
 export const GraphoraContext = createContext()
 
-const useSessionStorage = (initialState) => {
-  const [value, setValue] = useState(initialState)
+const storageService = SessionStorage()
+const graphoraService = GraphoraService()
 
-  const setter = (key, data) => {
-    const dataFromStorage = sessionStorage.getItem(key)
-
-    if (dataFromStorage) {
-      setValue(JSON.parse(dataFromStorage))
-    } else {
-      sessionStorage.setItem(key, JSON.stringify(data))
-      setValue(data)
-    }
-  }
-
-  return [value, setter]
-}
-
-const fetchFromSessionStorage = async (key, keyApi, fetchFunction) => {
-  const dataFromStorage = sessionStorage.getItem(key)
-
-  if (!dataFromStorage) {
-    const data = await fetchFunction(keyApi)
-    return data
-  }
-  return JSON.parse(dataFromStorage)
-}
-
-const useSearchHistory = () => {
-  const [history, setHistory] = useState([])
-
-  const addToHistory = (word) => {
-    setHistory(history.concat([word]))
-  }
-
-  const goBackinHistory = () => {
-    if (history.length > 0) {
-      setHistory(history.filter((element, index) => index < history.length - 1))
-    }
-  }
-
-  const goBackinNHistory = (n) => {
-    if (history.length > 0) {
-      setHistory(
-        history.filter((element, index) => index <= history.length - n),
-      )
-    }
-  }
-
-  return [history, addToHistory, goBackinHistory, goBackinNHistory]
-}
+const defaultHistoryValue = undefined
 
 export const GraphoraProvider = ({ children }) => {
-  const [relatedWords, setRelatedWords] = useSessionStorage([])
-  const [relatedWordsTableData, setRelatedWordsTableData] = useSessionStorage(
-    [],
-  )
-  const [currentWord, setCurrentWord] = useState(undefined)
+  const [relatedWords, setRelatedWords] = useStateWithSessionStorage([])
   const [
-    history,
-    addToHistory,
-    goBackinHistory,
-    goBackinNHistory,
-  ] = useSearchHistory()
-  const graphoraService = GraphoraService()
+    relatedWordsTableData,
+    setRelatedWordsTableData,
+  ] = useStateWithSessionStorage([])
+  const [currentWord, setCurrentWord] = useState(defaultHistoryValue)
+  const [history, addToHistory, goBackInHistory] = useSearchHistory([])
 
   useEffect(() => {
     if (history.length > 0) {
-      setCurrentWord(history[history.length - 1])
+      const lastElementInHistory = history[history.length - 1]
+      setCurrentWord(lastElementInHistory)
     } else {
-      setCurrentWord(undefined)
+      setCurrentWord(defaultHistoryValue)
     }
   }, [history])
 
   const fetchWordData = async (word) => {
-    const data = await fetchFromSessionStorage(
+    const data = await storageService.fetchFromSessionStorage(
       word,
       word,
       graphoraService.fetchRelatedWords,
@@ -87,7 +38,7 @@ export const GraphoraProvider = ({ children }) => {
   }
 
   const fetchTableData = async (word) => {
-    const data = await fetchFromSessionStorage(
+    const data = await storageService.fetchFromSessionStorage(
       `${word}-table`,
       word,
       graphoraService.fetchRelatedTable,
@@ -113,8 +64,7 @@ export const GraphoraProvider = ({ children }) => {
     relatedWordsTableData,
     searchWord,
     history,
-    goBackinHistory,
-    goBackinNHistory,
+    goBackInHistory,
   }
 
   return (
