@@ -126,8 +126,15 @@ export const Tables = () => {
   }
 
   return (
-    <TableContainer component={Paper} style={({ width: '240px' }, { height: '137px' })}>
-      <Table className={classes.table} aria-label="custom pagination table" size="small">
+    <TableContainer
+      component={Paper}
+      style={({ width: '240px' }, { height: '137px' })}
+    >
+      <Table
+        className={classes.table}
+        aria-label="custom pagination table"
+        size="small"
+      >
         <TableBody>
           {(rowsPerPage > 0
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
