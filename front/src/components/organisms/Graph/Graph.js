@@ -28,8 +28,9 @@ export const Graph = () => {
       initialGraphCanvasWidth: graphWidth,
       initialGraphCanvasHeight: graphHeight,
     })
-    graphVisualizer.setOnNodeClickedFunction((label) => {
-      searchWord(label)
+
+    graphVisualizer.setOnNodeClickedFunction((nodeLabel) => {
+      searchWord(nodeLabel)
     })
 
     const resizeGraphCanvas = () => {

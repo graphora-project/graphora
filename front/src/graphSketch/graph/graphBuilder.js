@@ -54,7 +54,9 @@ export const GraphBuilder = () => {
       })
 
       if (newNode.isClickeable) {
-        newNode.setOnClickFunction(onNodeClickedFunction)
+        newNode.setOnClickFunction((nodeLabel) =>
+          onNodeClickedFunction(nodeLabel),
+        )
       }
 
       nodes.push(newNode)
