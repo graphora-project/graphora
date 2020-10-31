@@ -21,16 +21,21 @@ export const Graph = () => {
   const { currentWord, relatedWords, searchWord } = useContext(GraphoraContext)
   const ref = useRef()
 
+  // here instead of inside the useEffect because in the useEffect, the context is outdated.
+  // this causes that calling this funcion will "erase" the search history
+  // this problem its solved outside of the useEffect.
+  if (graphVisualizer) {
+    graphVisualizer.setOnNodeClickedFunction((nodeLabel) =>
+      searchWord(nodeLabel),
+    )
+  }
+
   useEffect(() => {
     const { graphWidth, graphHeight } = calculateGraphDimensions()
     graphVisualizer = GraphVisualizer({
       containerReference: ref.current,
       initialGraphCanvasWidth: graphWidth,
       initialGraphCanvasHeight: graphHeight,
-    })
-
-    graphVisualizer.setOnNodeClickedFunction((nodeLabel) => {
-      searchWord(nodeLabel)
     })
 
     const resizeGraphCanvas = () => {
