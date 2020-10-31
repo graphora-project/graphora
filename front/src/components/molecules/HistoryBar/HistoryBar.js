@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Breadcrumbs, Button } from '@material-ui/core'
 import { GraphoraContext } from '../../GraphoraContext'
-import { DropDown, DropDownPag } from '../DropDown'
+import { DropDown } from '../DropDown'
 
 export const HistoryBar = () => {
   const { history, goBackInHistory } = useContext(GraphoraContext)
@@ -68,9 +68,6 @@ export const HistoryBar = () => {
             ))}
           </Breadcrumbs>
         </div>
-      </div>
-      <div>
-        <DropDownPag subMenuDropDown={dropDownData.subMenuDropDown} />
       </div>
     </div>
   )

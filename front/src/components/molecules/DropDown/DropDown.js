@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Menu, MenuItem, Button } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 import PropTypes from 'prop-types'
 import { GraphoraContext } from '../../GraphoraContext'
 import { ReactComponent as Dots } from '../../../icons/three-dots.svg'
