@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Menu, MenuItem, Button } from '@material-ui/core'
+import { Menu, MenuItem } from '@material-ui/core'
 import { When } from '../../utils/When'
 
 export const PaginatedMenu = ({

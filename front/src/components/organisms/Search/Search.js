@@ -1,20 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React from 'react'
 import { SearchBar } from '../../molecules/SearchBar'
-import { GraphoraContext } from '../../GraphoraContext'
-
-const useSearchWordBar = () => {
-  const [inputValue, setInputValue] = useState('')
-  const { searchWord } = useContext(GraphoraContext)
-
-  const handleSearch = (event) => {
-    event.preventDefault()
-    searchWord(inputValue)
-  }
-
-  const handleChange = (event) => setInputValue(event.target.value)
-
-  return [inputValue, handleSearch, handleChange]
-}
+import useSearchWordBar from '../../../hooks/useSearchWordBar'
 
 export const Search = () => {
   const [inputValue, handleSearch, handleChange] = useSearchWordBar()
