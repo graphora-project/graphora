@@ -51,9 +51,9 @@ export const TableInOut = ({ direction }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {relatedWordsTableData.map((result, index) =>
+          {relatedWordsTableData.map((result) =>
             result.direction === direction ? (
-              <TableRow key={index}>
+              <TableRow key={result.name}>
                 <TableCell className={classes.tablecell} align="center">
                   {result.name}
                 </TableCell>

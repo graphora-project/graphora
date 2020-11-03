@@ -9,6 +9,7 @@ import {
   makeStyles,
 } from '@material-ui/core'
 import { GraphoraContext } from '../../GraphoraContext'
+import { calculateMin, calculateMax, calculateProm } from '../../../utils'
 
 const useStyle = makeStyles({
   tablecontainer: {
@@ -31,60 +32,6 @@ const useStyle = makeStyles({
     borderLeft: '1.5px solid #1D1D1D',
   },
 })
-
-const calculateMin = (data, type) => {
-  if (type === 'frecuency') {
-    const frecuency = []
-    data.map((dataFrecuency) => frecuency.push(dataFrecuency.frecuency))
-    const frecuencyMin = Math.min(...frecuency)
-    return frecuencyMin
-    // eslint-disable-next-line no-else-return
-  } else {
-    const association = []
-    data.map((dataAssociation) =>
-      association.push(parseFloat(dataAssociation.association)),
-    )
-    const associationMin = Math.min(...association)
-    return associationMin
-  }
-}
-
-const calculateMax = (data, type) => {
-  if (type === 'frecuency') {
-    const frecuency = []
-    data.map((dataFrecuency) => frecuency.push(dataFrecuency.frecuency))
-    const frecuencyMax = Math.max(...frecuency)
-    return frecuencyMax
-    // eslint-disable-next-line no-else-return
-  } else {
-    const association = []
-    // eslint-disable-next-line array-callback-return
-    data.map((dataAssociation) => {
-      association.push(parseFloat(dataAssociation.association))
-    })
-    const associationMax = Math.max(...association)
-    return associationMax
-  }
-}
-
-const calculateProm = (data, type) => {
-  if (type === 'frecuency') {
-    let frecuency = null
-    // eslint-disable-next-line array-callback-return
-    data.map((dataFrecuency) => {
-      frecuency += parseFloat(dataFrecuency.frecuency)
-    })
-    return (frecuency / data.length).toFixed(5)
-    // eslint-disable-next-line no-else-return
-  } else {
-    let association = null
-    // eslint-disable-next-line array-callback-return
-    data.map((dataAssociation) => {
-      association += parseFloat(dataAssociation.association)
-    })
-    return (association / data.length).toFixed(5)
-  }
-}
 
 export const TableMinMaxProm = () => {
   const { relatedWordsTableData } = useContext(GraphoraContext)
