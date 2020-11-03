@@ -1,13 +1,10 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { Button } from '@material-ui/core'
 import PropTypes from 'prop-types'
-import { GraphoraContext } from '../../GraphoraContext'
 import { ReactComponent as Dots } from '../../../icons/three-dots.svg'
 import { PaginatedMenu } from './PaginatedMenu'
 
-export const DropDown = ({ subMenuDropDown, subMenuWords }) => {
-  const { goBackInHistory } = useContext(GraphoraContext)
-  const ITEM_HEIGHT = subMenuDropDown.length + subMenuWords.length
+export const DropDown = ({ items }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
 
@@ -27,10 +24,8 @@ export const DropDown = ({ subMenuDropDown, subMenuWords }) => {
       <PaginatedMenu
         open={open}
         handleClose={handleDropdownClose}
-        dropdownData={subMenuDropDown}
-        itemHeight={ITEM_HEIGHT}
+        dropdownData={items}
         showedPerPage={4}
-        historyContext={goBackInHistory}
         anchorData={anchorEl}
       />
     </>
@@ -38,6 +33,5 @@ export const DropDown = ({ subMenuDropDown, subMenuWords }) => {
 }
 
 DropDown.propTypes = {
-  subMenuDropDown: PropTypes.array.isRequired,
-  subMenuWords: PropTypes.array.isRequired,
+  items: PropTypes.array.isRequired,
 }

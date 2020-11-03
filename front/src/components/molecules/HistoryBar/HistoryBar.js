@@ -1,73 +1,76 @@
-import React, { useContext } from 'react'
-import { Breadcrumbs, Button } from '@material-ui/core'
+import React, { useContext, useState, useEffect } from 'react'
 import { GraphoraContext } from '../../GraphoraContext'
 import { DropDown } from '../DropDown'
+import { Breadcrumb } from '../Breadcrumb'
+import { When } from '../../utils/When'
 
-export const HistoryBar = () => {
+const useHistoryBar = () => {
   const { history, goBackInHistory } = useContext(GraphoraContext)
-  const { length } = history
-  let dropDownData
+  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [collapsedData, setCollapsedData] = useState([])
+  const [unCollapsedData, setUnCollapsedData] = useState([])
 
-  if (length > 3 /* 2 */) {
-    const correctPosition = length - 2
-    // [[subMenuDropDown],[subMenuWords]] -> [a,b,c,d,e,f,g,h,i,j] -> 10 - 2 = {8} [[a,b,c,d,e,f,g,h],i,j]
-    const subMenuDropDown = []
-    const subMenuWords = []
+  useEffect(() => {
+    /*
+    if (history.length <= 3) {
+      const newUncollapsedData = history.map((word, index) => {
+        const timesToGoBack = history.length - (index + 1)
+        return {
+          label: word,
+          onClickFunction: () => goBackInHistory(timesToGoBack),
+        }
+      })
+      setUnCollapsedData(newUncollapsedData)
+      setCollapsedData([])
+    } else { */
+
+    const newUncollapsedData = []
+    const newCollapsedData = []
+    const indexToSlice = history.length - 2
 
     for (let i = 0; i < history.length; i += 1) {
-      if (i < correctPosition) {
-        subMenuDropDown.push([i, history[i]])
+      const word = history[i]
+      const timesToGoBack = history.length - (i + 1)
+
+      if (i < indexToSlice) {
+        newCollapsedData.push({
+          label: word,
+          onClickFunction: () => goBackInHistory(timesToGoBack),
+        })
       } else {
-        subMenuWords.push([i, history[i]])
+        newUncollapsedData.push({
+          label: word,
+          onClickFunction: () => goBackInHistory(timesToGoBack),
+        })
       }
     }
+    setCollapsedData(newCollapsedData)
+    setUnCollapsedData(newUncollapsedData)
+  }, [history])
 
-    dropDownData = {
-      correctPosition,
-      subMenuDropDown,
-      subMenuWords,
+  useEffect(() => {
+    if (collapsedData.length > 0) {
+      setIsCollapsed(true)
+    } else {
+      setIsCollapsed(false)
     }
-  }
+  }, [unCollapsedData, collapsedData])
 
-  // style={{ display: 'inline-block' }}
-  return length < 4 ? ( // n + 1 -> 2 + 1 = 3 tons 10 < 2
+  return [isCollapsed, unCollapsedData, collapsedData]
+}
+
+export const HistoryBar = () => {
+  const [isCollapsed, unCollapsedData, collapsedData] = useHistoryBar()
+
+  return (
     <div>
-      <Breadcrumbs separator="›">
-        {history.map((word, index) => (
-          <Button
-            key={{ index }}
-            onClick={() => goBackInHistory(length - index)}
-            style={{ textTransform: 'capitalize' }}
-          >
-            {word}
-          </Button>
-        ))}
-      </Breadcrumbs>
-    </div>
-  ) : (
-    <div>
-      <div style={{ display: 'inline-block' }}>
-        <div style={{ display: 'inline-block' }}>
-          <DropDown
-            subMenuDropDown={dropDownData.subMenuDropDown}
-            subMenuWords={dropDownData.subMenuWords}
-          />
-        </div>
-        <div style={{ display: 'inline-block' }}>
-          <Breadcrumbs separator="›" maxItems={10}>
-            {dropDownData.subMenuWords.map((word) => (
-              <Button
-                key={word[0]}
-                onClick={() => {
-                  goBackInHistory(length - word[0])
-                }}
-                style={{ textTransform: 'capitalize' }}
-              >
-                {word[1]}
-              </Button>
-            ))}
-          </Breadcrumbs>
-        </div>
+      <div>
+        <When predicate={isCollapsed}>
+          <DropDown items={collapsedData} />
+        </When>
+      </div>
+      <div>
+        <Breadcrumb items={unCollapsedData} />
       </div>
     </div>
   )

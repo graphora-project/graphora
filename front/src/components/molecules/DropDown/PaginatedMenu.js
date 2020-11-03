@@ -60,14 +60,14 @@ export const PaginatedMenu = ({
               return (
                 <div>
                   <MenuItem
-                    key={word[0]}
+                    key={word.label}
                     onClick={() => {
-                      historyContext(itemHeight - word[0])
+                      word.onClickFunction()
                       handleClose()
                     }}
                     style={{ textTransform: 'capitalize' }}
                   >
-                    {word[1]}
+                    {word.label}
                   </MenuItem>
                   <When predicate={index + 1 === arr.length}>
                     <MenuItem>
