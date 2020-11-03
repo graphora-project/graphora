@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button } from '@material-ui/core'
 import PropTypes from 'prop-types'
 import { ReactComponent as Dots } from '../../../icons/three-dots.svg'
-import { PaginatedMenu } from './PaginatedMenu'
+import { PaginatedMenu } from '../PaginatedMenu'
 
 export const DropDown = ({ items }) => {
   const [anchorEl, setAnchorEl] = useState(null)
