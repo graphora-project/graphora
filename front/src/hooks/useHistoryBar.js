@@ -30,6 +30,7 @@ const useHistoryBar = () => {
     }
     setCollapsedData(newCollapsedData)
     setUnCollapsedData(newUncollapsedData)
+    // eslint-disable-next-line
   }, [history])
 
   useEffect(() => {
