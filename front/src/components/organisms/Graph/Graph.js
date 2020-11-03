@@ -1,21 +1,9 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import { GraphoraContext } from '../../GraphoraContext'
-import { HistoryBar } from '../../molecules/HistoryBar'
-import { TableInOut } from '../../molecules/TableInOut'
-import { TableMinMaxProm } from '../../molecules/TableMinMaxProm'
 import { GraphVisualizer } from '../../../graphSketch'
+import { calculateGraphDimensions } from '../../../utils'
 
 let graphVisualizer
-
-const calculateGraphDimensions = () => {
-  const graphWidth = (window.innerWidth / 100) * 90
-  const graphHeight = (window.innerHeight / 100) * 90
-
-  return {
-    graphWidth,
-    graphHeight,
-  }
-}
 
 export const Graph = () => {
   const { currentWord, relatedWords, searchWord } = useContext(GraphoraContext)
@@ -57,16 +45,5 @@ export const Graph = () => {
     }
   }, [relatedWords, currentWord])
 
-  return currentWord ? (
-    <>
-      <HistoryBar />
-      <TableInOut direction="Out" />
-      <TableInOut direction="In" />
-      <TableMinMaxProm />
-      <h1>Results for: {currentWord}</h1>
-      <div ref={ref} />
-    </>
-  ) : (
-    <h4>Results will appear here.</h4>
-  )
+  return <div ref={ref} />
 }
