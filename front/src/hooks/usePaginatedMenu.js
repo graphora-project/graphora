@@ -1,33 +1,49 @@
 import { useState, useEffect } from 'react'
 
 const usePaginatedMenu = (data, showedPerPage) => {
-  const [currentPage, setCurrentPage] = useState(0)
-  const [dataInPage, setDataInPage] = useState({
+  const [currentPageIndex, setCurrentPageIndex] = useState(0)
+  const [pageIndexRange, setPageIndexRange] = useState({
     firstIndex: 0,
     lastIndex: 1,
   })
+  const [currentPageData, setCurrentPageData] = useState([])
+
+  useEffect(() => {
+    const newCurrentPageData = data.slice(
+      pageIndexRange.firstIndex,
+      pageIndexRange.lastIndex,
+    )
+    setCurrentPageData(newCurrentPageData)
+    // eslint-disable-next-line
+  }, [pageIndexRange])
 
   useEffect(() => {
     handlePageChange()
     // eslint-disable-next-line
-  }, [data, currentPage])
+  }, [data, currentPageIndex])
 
   const changeToNext = () => {
-    setCurrentPage((previousState) => previousState + 1)
+    setCurrentPageIndex((previousPageIndex) => previousPageIndex + 1)
   }
 
   const changeToLast = () => {
-    setCurrentPage((previousState) => previousState - 1)
+    setCurrentPageIndex((previousPageIndex) => previousPageIndex - 1)
   }
 
   const handlePageChange = () => {
-    setDataInPage(() => ({
-      firstIndex: showedPerPage * currentPage,
-      lastIndex: showedPerPage * currentPage + showedPerPage,
+    setPageIndexRange(() => ({
+      firstIndex: showedPerPage * currentPageIndex,
+      lastIndex: showedPerPage * currentPageIndex + showedPerPage,
     }))
   }
 
-  return [currentPage, dataInPage, changeToNext, changeToLast]
+  return [
+    currentPageIndex,
+    currentPageData,
+    changeToNext,
+    changeToLast,
+    setCurrentPageIndex,
+  ]
 }
 
 export default usePaginatedMenu

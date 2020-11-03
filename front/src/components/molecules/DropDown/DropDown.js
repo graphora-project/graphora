@@ -22,11 +22,11 @@ export const DropDown = ({ items }) => {
         <Dots width="10" height="27" />
       </Button>
       <PaginatedMenu
-        open={open}
+        isOpen={open}
         handleClose={handleDropdownClose}
-        dropdownData={items}
+        data={items}
         showedPerPage={4}
-        anchorData={anchorEl}
+        anchorEl={anchorEl}
       />
     </>
   )
