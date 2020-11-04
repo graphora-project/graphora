@@ -6,36 +6,14 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  makeStyles,
 } from '@material-ui/core'
 import { GraphoraContext } from '../../GraphoraContext'
 import { calculateMin, calculateMax, calculateProm } from '../../../utils'
-
-const useStyle = makeStyles({
-  tablecontainer: {
-    width: '100%',
-  },
-  table: {
-    border: '1.5px solid #1D1D1D',
-  },
-  tablehead: {
-    backgroundColor: '#C7D8F0',
-    border: '1.5px solid #1D1D1D',
-  },
-  tablebody: {
-    border: '1.5px solid #1D1D1D',
-  },
-  tablecell: {
-    borderTop: 'none',
-    borderRight: '1.5px solid #1D1D1D',
-    borderBottom: 'none',
-    borderLeft: '1.5px solid #1D1D1D',
-  },
-})
+import tableStyles from './tableStyles'
 
 export const TableMinMaxProm = () => {
   const { relatedWordsTableData } = useContext(GraphoraContext)
-  const classes = useStyle()
+  const classes = tableStyles()
 
   return (
     <TableContainer>

@@ -7,7 +7,7 @@ let graphVisualizer
 
 export const Graph = () => {
   const { currentWord, relatedWords, searchWord } = useContext(GraphoraContext)
-  const ref = useRef()
+  const graphCanvasReference = useRef()
 
   // here instead of inside the useEffect because in the useEffect, the context is outdated.
   // this causes that calling this funcion will "erase" the search history
@@ -21,7 +21,7 @@ export const Graph = () => {
   useEffect(() => {
     const { graphWidth, graphHeight } = calculateGraphDimensions()
     graphVisualizer = GraphVisualizer({
-      containerReference: ref.current,
+      containerReference: graphCanvasReference.current,
       initialGraphCanvasWidth: graphWidth,
       initialGraphCanvasHeight: graphHeight,
     })
@@ -45,5 +45,5 @@ export const Graph = () => {
     }
   }, [relatedWords, currentWord])
 
-  return <div ref={ref} />
+  return <div ref={graphCanvasReference} />
 }
