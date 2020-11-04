@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 import { GraphoraContext } from '../../GraphoraContext'
 import tableStyles from './tableStyles'
 
-const columnsInfo = ['frecuency', 'time', 'association']
+const columnFields = ['name', 'frecuency', 'time', 'association']
 
 export const TableInOut = ({ direction }) => {
   const { relatedWordsTableData } = useContext(GraphoraContext)
@@ -34,7 +34,7 @@ export const TableInOut = ({ direction }) => {
           {relatedWordsTableData.map((result) =>
             result.direction === direction ? (
               <TableRow key={result.name}>
-                {columnsInfo.map((field) => (
+                {columnFields.map((field) => (
                   <TableCell className={classes.tablecell} align="center">
                     {result[field]}
                   </TableCell>
