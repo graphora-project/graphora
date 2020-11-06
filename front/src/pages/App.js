@@ -11,11 +11,24 @@ const appStyles = makeStyles({
   appContainer: {
     width: '100vw',
     height: '100vh',
+  },
+  contentContainerWithSidebarOpen: {
     display: 'grid',
     gridTemplateColumns: 'auto auto',
   },
+  contentContainerWithSidebarClose: {
+    display: 'grid',
+    gridTemplateColumns: '0% 100%',
+  },
+  sidebarContainer: {
+    width: '100%',
+  },
+  drawer: {},
+  drawerPaper: {
+    width: '100%',
+    maxWidth: '400px',
+  },
   resultsContainer: {},
-  searchContainer: {},
   graphContainer: {
     width: '100%',
   },
@@ -25,24 +38,37 @@ const App = () => {
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false)
   const classes = appStyles()
 
+  const contentContainer = sidebarIsOpen
+    ? classes.contentContainerWithSidebarOpen
+    : classes.contentContainerWithSidebarClose
   const toggleSideBar = () => setSidebarIsOpen(!sidebarIsOpen)
 
   return (
     <GraphoraProvider>
       <div className={classes.appContainer}>
-        <div>
-          <Drawer variant="persistent" anchor="left" open={sidebarIsOpen}>
-            <Search />
-            <div className={classes.resultsContainer}>
-              <ResultsTables />
-            </div>
-          </Drawer>
-        </div>
-        <div className={classes.graphContainer}>
-          <button onClick={toggleSideBar} type="button">
-            toggle sidebar
-          </button>
-          <HistoryBar />
+        <div className={contentContainer}>
+          <div className={classes.sidebarContainer}>
+            <Drawer
+              variant="persistent"
+              anchor="left"
+              open={sidebarIsOpen}
+              className={classes.drawer}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+            >
+              <Search />
+              <div className={classes.resultsContainer}>
+                <ResultsTables />
+              </div>
+            </Drawer>
+          </div>
+          <div className={classes.graphContainer}>
+            <button onClick={toggleSideBar} type="button">
+              toggle sidebar
+            </button>
+            <HistoryBar />
+          </div>
         </div>
       </div>
     </GraphoraProvider>

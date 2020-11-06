@@ -16,7 +16,7 @@ export const TableMinMaxProm = () => {
   const classes = tableStyles()
 
   return (
-    <TableContainer>
+    <TableContainer className={classes.tablecontainer}>
       <Table className={classes.table}>
         <TableHead className={classes.tablehead}>
           <TableRow>
