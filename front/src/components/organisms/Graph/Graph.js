@@ -1,13 +1,22 @@
 import React, { useContext, useEffect, useRef } from 'react'
+import { makeStyles } from '@material-ui/core'
+import { withSize } from 'react-sizeme'
 import { GraphoraContext } from '../../GraphoraContext'
 import { GraphVisualizer } from '../../../graphSketch'
-import { calculateGraphDimensions } from '../../../utils'
 
 let graphVisualizer
 
-export const Graph = () => {
+const graphSyles = makeStyles({
+  graphContainer: {
+    width: '100%',
+    height: '100%',
+  },
+})
+
+const ResizibleGraph = ({ size }) => {
   const { currentWord, relatedWords, searchWord } = useContext(GraphoraContext)
   const graphCanvasReference = useRef()
+  const classes = graphSyles()
 
   // here instead of inside the useEffect because in the useEffect, the context is outdated.
   // this causes that calling this funcion will "erase" the search history
@@ -19,23 +28,11 @@ export const Graph = () => {
   }
 
   useEffect(() => {
-    const { graphWidth, graphHeight } = calculateGraphDimensions()
     graphVisualizer = GraphVisualizer({
       containerReference: graphCanvasReference.current,
-      initialGraphCanvasWidth: graphWidth,
-      initialGraphCanvasHeight: graphHeight,
+      initialGraphCanvasWidth: size.width,
+      initialGraphCanvasHeight: size.height,
     })
-
-    const resizeGraphCanvas = () => {
-      // eslint-disable-next-line
-      const { graphWidth, graphHeight } = calculateGraphDimensions()
-      graphVisualizer.resizeAndRedrawGraphCanvas(graphWidth, graphHeight)
-    }
-    window.addEventListener('resize', resizeGraphCanvas)
-
-    return () => {
-      window.removeEventListener('resize', resizeGraphCanvas)
-    }
     // eslint-disable-next-line
   }, [])
 
@@ -45,5 +42,12 @@ export const Graph = () => {
     }
   }, [relatedWords, currentWord])
 
-  return <div ref={graphCanvasReference} />
+  useEffect(() => {
+    // console.log(size)
+    graphVisualizer.resizeAndRedrawGraphCanvas(size.width, size.height)
+  }, [size])
+
+  return <div ref={graphCanvasReference} className={classes.graphContainer} />
 }
+
+export const Graph = withSize({ monitorHeight: true })(ResizibleGraph)
