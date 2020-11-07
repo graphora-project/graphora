@@ -75,5 +75,5 @@ export const GraphoraProvider = ({ children }) => {
 }
 
 GraphoraProvider.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.any.isRequired,
 }
