@@ -10,7 +10,7 @@ export const Search = () => {
       handleSearch={handleSearch}
       handleChange={handleChange}
       value={inputValue}
-      placeholder="type a word"
+      placeholder="ingrese una palabra"
     />
   )
 }
