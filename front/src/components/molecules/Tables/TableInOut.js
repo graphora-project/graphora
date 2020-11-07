@@ -18,7 +18,7 @@ export const TableInOut = ({ direction }) => {
   const classes = tableStyles()
 
   return (
-    <TableContainer className={classes.tablecontainer}>
+    <TableContainer>
       <Table className={classes.table}>
         <TableHead className={classes.tablehead}>
           <TableRow>
@@ -35,7 +35,11 @@ export const TableInOut = ({ direction }) => {
             result.direction === direction ? (
               <TableRow key={result.name}>
                 {columnFields.map((field) => (
-                  <TableCell className={classes.tablecell} align="center">
+                  <TableCell
+                    key={result[field]}
+                    className={classes.tablecell}
+                    align="center"
+                  >
                     {result[field]}
                   </TableCell>
                 ))}

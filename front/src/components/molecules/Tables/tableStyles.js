@@ -1,9 +1,6 @@
 import { makeStyles } from '@material-ui/core'
 
 const tableStyles = makeStyles({
-  tablecontainer: {
-    width: '100%',
-  },
   table: {
     border: '1.5px solid #1D1D1D',
   },
