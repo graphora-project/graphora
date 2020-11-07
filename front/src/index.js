@@ -4,12 +4,13 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { CssBaseline } from '@material-ui/core'
 
-import App from './pages/App'
+import App from './pages/App/App'
 import Contact from './pages/Contact'
 import Learn from './pages/Learn'
 import Landing from './pages/Landing'
 
 import { defaultTheme } from './themes'
+import { GraphoraProvider } from './components/GraphoraContext'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -24,7 +25,9 @@ ReactDOM.render(
             <Learn />
           </Route>
           <Route exact path="/app">
-            <App />
+            <GraphoraProvider>
+              <App />
+            </GraphoraProvider>
           </Route>
           <Route exact path="/">
             <Landing />
