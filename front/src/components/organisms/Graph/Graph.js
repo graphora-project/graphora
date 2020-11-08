@@ -1,22 +1,13 @@
 import React, { useContext, useEffect, useRef } from 'react'
-import { makeStyles } from '@material-ui/core'
-import { withSize } from 'react-sizeme'
+import PropTypes from 'prop-types'
 import { GraphoraContext } from '../../GraphoraContext'
 import { GraphVisualizer } from '../../../graphSketch'
 
 let graphVisualizer
 
-const graphSyles = makeStyles({
-  graphContainer: {
-    width: '100%',
-    height: '100%',
-  },
-})
-
-const ResizibleGraph = ({ size }) => {
+export const Graph = ({ width, height }) => {
   const { currentWord, relatedWords, searchWord } = useContext(GraphoraContext)
   const graphCanvasReference = useRef()
-  const classes = graphSyles()
 
   // here instead of inside the useEffect because in the useEffect, the context is outdated.
   // this causes that calling this funcion will "erase" the search history
@@ -30,8 +21,8 @@ const ResizibleGraph = ({ size }) => {
   useEffect(() => {
     graphVisualizer = GraphVisualizer({
       containerReference: graphCanvasReference.current,
-      initialGraphCanvasWidth: size.width,
-      initialGraphCanvasHeight: size.height,
+      initialGraphCanvasWidth: width,
+      initialGraphCanvasHeight: height,
     })
     // eslint-disable-next-line
   }, [])
@@ -43,11 +34,13 @@ const ResizibleGraph = ({ size }) => {
   }, [relatedWords, currentWord])
 
   useEffect(() => {
-    // console.log(size)
-    graphVisualizer.resizeAndRedrawGraphCanvas(size.width, size.height)
-  }, [size])
+    graphVisualizer.resizeAndRedrawGraphCanvas(width, height)
+  }, [width, height])
 
-  return <div ref={graphCanvasReference} className={classes.graphContainer} />
+  return <div ref={graphCanvasReference} />
 }
 
-export const Graph = withSize({ monitorHeight: true })(ResizibleGraph)
+Graph.propTypes = {
+  width: PropTypes.number,
+  height: PropTypes.number,
+}
