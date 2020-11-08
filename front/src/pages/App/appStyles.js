@@ -42,6 +42,17 @@ const appStyles = makeStyles({
     flexDirection: 'column',
     justifyContent: 'flex-end',
   },
+  sidebarIsOpenStyles: {
+    display: 'grid',
+    gridTemplateColumns: '35% 65%',
+    height: '100%',
+    overflow: 'hidden',
+  },
+  sidebarIsCloseStyles: {
+    display: 'grid',
+    gridTemplateColumns: '0% 100%',
+    height: '100%',
+  },
 })
 
 export default appStyles
