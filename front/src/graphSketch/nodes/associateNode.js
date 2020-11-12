@@ -2,7 +2,7 @@ import Node from './node'
 
 export const AssociateNode = ({ xCoordinate, yCoordinate, label }) => {
   const color = '#FC7A1E'
-  const radius = 10
+  const radius = 15
 
   const baseNode = Node({
     xCoordinate,
