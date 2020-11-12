@@ -1,88 +1,89 @@
-import React, { useContext, useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
-import Link from '@material-ui/core/Link'
-import { Search } from '../../components/organisms/Search'
-import { Graph } from '../../components/organisms/Graph'
-import { TableInOut, TableMinMaxProm } from '../../components/molecules/Tables'
-import { HistoryBar } from '../../components/molecules/HistoryBar'
+import Button from '@material-ui/core/Button'
+import { When } from 'react-if'
 import { GraphoraContext } from '../../components/GraphoraContext'
-import { Appbar } from '../../components/organisms/Appbar'
-import { When } from '../../components/utils/When'
+import { SearchAndResults } from '../../components/organisms/SearchAndResults'
+import { Graph } from '../../components/organisms/Graph'
+import { HistoryBar } from '../../components/molecules/HistoryBar'
 import { PersistentSidebar } from '../../components/organisms/PersistentSidebar/PersistentSidebar'
 import { DivWithDimensions } from '../../components/molecules/DivWithDimensions'
-import { ReactComponent as CSVFileIcon } from '../../icons/csvfile.svg'
-import { ReactComponent as InfoIcon } from '../../icons/info.svg'
+import { ReactComponent as GoBackButton } from '../../icons/go-back.svg'
+import { ReactComponent as UnCollapseButton } from '../../icons/uncolapse.svg'
+import { ReactComponent as CollapseButton } from '../../icons/colapse.svg'
+import { usePersistentSidebar } from '../../hooks'
 import appStyles from './appStyles'
 
-const usePersistentSidebar = (initialIsOpen) => {
-  const [isOpen, setIsOpen] = useState(initialIsOpen)
-
-  const toggleIsOpen = () => setIsOpen(!isOpen)
-
-  return [isOpen, toggleIsOpen]
-}
+const desktopBreakPoint = 1300
 
 const App = () => {
+  const { history, goBackInHistory } = useContext(GraphoraContext)
   const [graphDimension, setGraphDimensions] = useState({ width: 0, heihgt: 0 })
-  const [sidebarIsOpen, toggleSidebarIsOpen] = usePersistentSidebar(false)
-  const { currentWord } = useContext(GraphoraContext)
+  const [
+    sidebarIsOpen,
+    toggleSidebarIsOpen,
+    setSidebarIsOpen,
+  ] = usePersistentSidebar(true)
   const classes = appStyles()
-  const thereAreResults = Boolean(currentWord)
 
-  const sidebarGraphStyles = sidebarIsOpen
+  let collapseBarContainerStyles = classes.collapseBarContainer
+  let sidebarGraphStyles = sidebarIsOpen
     ? classes.sidebarIsOpenStyles
     : classes.sidebarIsCloseStyles
+
+  if (window.innerWidth < desktopBreakPoint) {
+    sidebarGraphStyles = classes.mobileLayout
+    collapseBarContainerStyles = classes.collapseBarContainerMobile
+  }
+
+  useEffect(() => {
+    if (window.innerWidth < desktopBreakPoint) {
+      setSidebarIsOpen(true)
+    }
+    // eslint-disable-next-line
+  }, [window.innerWidth])
+
   return (
     <div className={classes.appContainer}>
-      <Appbar />
       <div className={sidebarGraphStyles}>
         <PersistentSidebar isOpen={sidebarIsOpen}>
-          <Search />
-          <When predicate={thereAreResults}>
-            <div className={classes.resultsContainer}>
-              <div className={classes.resultsHeader}>
-                <Typography className={classes.currentWord} variant="h6">
-                  {currentWord}
-                </Typography>
-                <div className={classes.resultsTools}>
-                  <IconButton>
-                    <CSVFileIcon />
-                  </IconButton>
-                  <IconButton>
-                    <InfoIcon />
-                  </IconButton>
-                </div>
-              </div>
-              <div className={classes.tablesContainer}>
-                <TableInOut direction="Out" />
-                <TableInOut direction="In" />
-                <TableMinMaxProm />
-              </div>
-            </div>
-          </When>
-          <When predicate={!thereAreResults}>
-            <div className={classes.helpLinkContainer}>
-              <Typography>
-                ¿Necesitas ayuda?&nbsp;
-                <Link href="#" underline="always" color="inherit">
-                  mira nuestros ejemplos.
-                </Link>
-              </Typography>
-            </div>
-          </When>
+          <div className={collapseBarContainerStyles}>
+            <IconButton onClick={toggleSidebarIsOpen}>
+              <CollapseButton />
+            </IconButton>
+          </div>
+          <SearchAndResults />
         </PersistentSidebar>
-        <div>
-          <button type="button" onClick={toggleSidebarIsOpen}>
-            toggle sidebar
-          </button>
-          <HistoryBar />
+        <div className={classes.graphContainer}>
+          <div className={classes.topBarContainer}>
+            <When condition={!sidebarIsOpen}>
+              <Button
+                variant="contained"
+                onClick={toggleSidebarIsOpen}
+                className={classes.unCollapseButton}
+              >
+                <UnCollapseButton />
+              </Button>
+            </When>
+            <IconButton onClick={() => goBackInHistory(1)}>
+              <GoBackButton />
+            </IconButton>
+            <div className={classes.historyBarContainer}>
+              <HistoryBar />
+            </div>
+          </div>
           <DivWithDimensions onResize={setGraphDimensions}>
             <Graph
               width={graphDimension.width}
               height={graphDimension.height}
             />
           </DivWithDimensions>
+          <div className={classes.bottomBarContainer}>
+            <When condition={history.length}>
+              <Typography>level: {history.length - 1}</Typography>
+            </When>
+          </div>
         </div>
       </div>
     </div>

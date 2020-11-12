@@ -1,46 +1,11 @@
 import { makeStyles } from '@material-ui/core'
 
-const appStyles = makeStyles({
+const appStyles = makeStyles((theme) => ({
   appContainer: {
     display: 'flex',
     flexDirection: 'column',
     height: '100vh',
     overflowY: 'hidden',
-  },
-  resultsContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '30px',
-    overflowY: 'scroll',
-    padding: '30px',
-    paddingTop: '50px',
-  },
-  tablesContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '50px',
-  },
-  resultsHeader: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  currentWord: {
-    textAlign: 'center',
-    fontSize: '1rem',
-  },
-  resultsTools: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  helpLinkContainer: {
-    alignSelf: 'center',
-    paddingBottom: '75px',
-    paddingRight: '30px',
-    paddingLeft: '30px',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
   },
   sidebarIsOpenStyles: {
     display: 'grid',
@@ -53,6 +18,56 @@ const appStyles = makeStyles({
     gridTemplateColumns: '0% 100%',
     height: '100%',
   },
-})
+  collapseBarContainer: {
+    backgroundColor: theme.palette.blue.mediumDarkLiberty,
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    border: '1px solid black',
+    borderBottomWidth: '0px',
+  },
+  topBarContainer: {
+    width: '100%',
+    display: 'flex',
+    marginTop: '10px',
+  },
+  historyBarContainer: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  graphContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  bottomBarContainer: {
+    padding: '10px',
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  unCollapseButton: {
+    backgroundColor: theme.palette.blue.mediumDarkLiberty,
+    borderRadius: '10px',
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    borderColor: theme.palette.blue.liberty,
+  },
+  mobileLayout: {
+    display: 'grid',
+    gridTemplateColumns: '100% 0%',
+    height: '100%',
+    overflowX: 'hidden',
+  },
+  collapseBarContainerMobile: {
+    backgroundColor: theme.palette.blue.mediumDarkLiberty,
+    border: '1px solid black',
+    borderBottomWidth: '0px',
+    minHeight: '40px',
+    '& > button': {
+      display: 'none',
+    },
+  },
+}))
 
 export default appStyles
