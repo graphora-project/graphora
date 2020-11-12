@@ -10,4 +10,16 @@ export const defaultTheme = createMuiTheme({
       },
     },
   },
+  palette: {
+    background: {
+      default: 'fff',
+    },
+    blue: {
+      liberty: '#485696',
+      lightLiberty: '#ECEFFF',
+      softLiberty: '#C7D8F0',
+      mediumDarkLiberty: '#5666AE',
+      darkLiberty: '#273161',
+    },
+  },
 })
