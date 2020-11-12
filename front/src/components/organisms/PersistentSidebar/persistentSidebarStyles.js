@@ -6,7 +6,7 @@ const persistentSidebarStyles = makeStyles({
     height: '100%',
   },
   root: {
-    overflow: 'hidden',
+    overflowY: 'hidden',
   },
 })
 
