@@ -5,6 +5,7 @@ import { withSize } from 'react-sizeme'
 const Div = ({ size, onResize, children }) => {
   useEffect(() => {
     onResize(size)
+    // eslint-disable-next-line
   }, [size.width, size.height])
 
   return (
