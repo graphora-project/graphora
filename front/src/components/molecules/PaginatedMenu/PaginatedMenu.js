@@ -1,14 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, MenuItem } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Menu, MenuItem, Button } from '@material-ui/core'
 import usePaginatedMenu from '../../../hooks/usePaginatedMenu'
-
-const useStyles = makeStyles({
-  textInButton: {
-    textTransform: 'capitalize',
-  },
-})
+import paginatedMenuStyles from './paginatedMenuStyles'
 
 export const PaginatedMenu = ({
   showedPerPage,
@@ -35,7 +29,7 @@ export const PaginatedMenu = ({
   const forwardButtonIsDisabled = () =>
     currentPageIndex >= Math.ceil(data.length / showedPerPage) - 1
 
-  const classes = useStyles()
+  const classes = paginatedMenuStyles()
 
   return (
     <Menu
@@ -44,6 +38,7 @@ export const PaginatedMenu = ({
       keepMounted
       open={isOpen}
       onClose={handleClose}
+      classes={{ paper: classes.menu }}
     >
       {currentPageData.map((word) => (
         <MenuItem
@@ -54,20 +49,22 @@ export const PaginatedMenu = ({
           {word.label}
         </MenuItem>
       ))}
-      <button
+      <Button
         type="button"
         disabled={backButtonIsDisabled()}
         onClick={changeToLast}
+        className={classes.textInButton}
       >
-        back
-      </button>
-      <button
+        {'<'}
+      </Button>
+      <Button
         type="button"
         disabled={forwardButtonIsDisabled()}
         onClick={changeToNext}
+        className={classes.textInButton}
       >
-        forward
-      </button>
+        {'>'}
+      </Button>
     </Menu>
   )
 }
