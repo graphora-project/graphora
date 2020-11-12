@@ -1,16 +1,19 @@
 import React from 'react'
+import { When } from 'react-if'
 import { DropDown } from '../DropDown'
 import { Breadcrumb } from '../Breadcrumb'
-import { When } from '../../utils/When'
 import useHistoryBar from '../../../hooks/useHistoryBar'
+import historyBarStyles from './historyBarStyles'
 
 export const HistoryBar = () => {
   const [isCollapsed, unCollapsedData, collapsedData] = useHistoryBar()
 
+  const classes = historyBarStyles()
+
   return (
-    <div>
+    <div className={classes.barContainer}>
       <div>
-        <When predicate={isCollapsed}>
+        <When condition={isCollapsed}>
           <DropDown items={collapsedData} />
         </When>
       </div>
