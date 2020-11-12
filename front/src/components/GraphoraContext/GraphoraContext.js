@@ -8,7 +8,7 @@ export const GraphoraContext = createContext()
 const storageService = SessionStorage()
 const graphoraService = GraphoraService()
 
-const defaultHistoryValue = undefined
+const defaultCurrentWordValue = undefined
 
 export const GraphoraProvider = ({ children }) => {
   const [relatedWords, setRelatedWords] = useStateWithSessionStorage([])
@@ -16,15 +16,20 @@ export const GraphoraProvider = ({ children }) => {
     relatedWordsTableData,
     setRelatedWordsTableData,
   ] = useStateWithSessionStorage([])
-  const [currentWord, setCurrentWord] = useState(defaultHistoryValue)
-  const [history, addToHistory, goBackInHistory] = useSearchHistory([])
+  const [currentWord, setCurrentWord] = useState(defaultCurrentWordValue)
+  const [
+    history,
+    addToHistory,
+    goBackInHistory,
+    clearSearchHistory,
+  ] = useSearchHistory([])
 
   useEffect(() => {
     if (history.length > 0) {
       const lastElementInHistory = history[history.length - 1]
       setCurrentWord(lastElementInHistory)
     } else {
-      setCurrentWord(defaultHistoryValue)
+      setCurrentWord(defaultCurrentWordValue)
     }
   }, [history])
 
@@ -65,6 +70,7 @@ export const GraphoraProvider = ({ children }) => {
     searchWord,
     history,
     goBackInHistory,
+    clearSearchHistory,
   }
 
   return (

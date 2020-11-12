@@ -3,11 +3,15 @@ import { useState } from 'react'
 export const useSearchHistory = (initialHistoryState) => {
   const [history, setHistory] = useState(initialHistoryState)
 
+  const clearSearchHistory = () => {
+    setHistory([])
+  }
+
   const addToHistory = (word) => {
     setHistory(history.concat([word]))
   }
 
-  const goBackInHistory = (timesToGoBack = 1) => {
+  const goBackInHistory = (timesToGoBack) => {
     if (history.length < timesToGoBack) {
       return
     }
@@ -17,5 +21,5 @@ export const useSearchHistory = (initialHistoryState) => {
     setHistory(newHistory)
   }
 
-  return [history, addToHistory, goBackInHistory]
+  return [history, addToHistory, goBackInHistory, clearSearchHistory]
 }
