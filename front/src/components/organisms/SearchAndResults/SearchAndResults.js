@@ -6,8 +6,9 @@ import { If, Then, Else } from 'react-if'
 import { GraphoraContext } from '../../GraphoraContext'
 import { SearchBar } from '../../molecules/SearchBar'
 import { TableInOut, TableMinMaxProm } from '../../molecules/Tables'
+import { Csv } from '../../molecules/CSV'
 import useSearchWordBar from '../../../hooks/useSearchWordBar'
-import { ReactComponent as CSVFileIcon } from '../../../icons/csvfile.svg'
+// import { ReactComponent as CSVFileIcon } from '../../../icons/csvfile.svg'
 import { ReactComponent as InfoIcon } from '../../../icons/info.svg'
 import searchAndResultsStyles from './searchAndResultsStyles'
 
@@ -34,7 +35,7 @@ export const SearchAndResults = () => {
               </Typography>
               <div className={classes.resultsTools}>
                 <IconButton>
-                  <CSVFileIcon />
+                <Csv />
                 </IconButton>
                 <IconButton>
                   <InfoIcon />
