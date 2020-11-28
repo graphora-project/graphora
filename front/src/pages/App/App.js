@@ -66,9 +66,11 @@ const App = () => {
                 <UnCollapseButton />
               </Button>
             </When>
-            <IconButton onClick={() => goBackInHistory(1)}>
-              <GoBackButton />
-            </IconButton>
+            <When condition={history.length > 1}>
+              <IconButton onClick={() => goBackInHistory(1)}>
+                <GoBackButton />
+              </IconButton>
+            </When>
             <div className={classes.historyBarContainer}>
               <HistoryBar />
             </div>

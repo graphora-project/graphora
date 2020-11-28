@@ -8,7 +8,6 @@ import { SearchBar } from '../../molecules/SearchBar'
 import { TableInOut, TableMinMaxProm } from '../../molecules/Tables'
 import { Csv } from '../../molecules/CSV'
 import useSearchWordBar from '../../../hooks/useSearchWordBar'
-// import { ReactComponent as CSVFileIcon } from '../../../icons/csvfile.svg'
 import { ReactComponent as InfoIcon } from '../../../icons/info.svg'
 import searchAndResultsStyles from './searchAndResultsStyles'
 
@@ -53,7 +52,7 @@ export const SearchAndResults = () => {
           <div className={classes.helpLinkContainer}>
             <Typography>
               ¿Necesitas ayuda?&nbsp;
-              <Link href="#" underline="always" color="inherit">
+              <Link href="/app" underline="always" color="inherit">
                 mira nuestros ejemplos.
               </Link>
             </Typography>
