@@ -35,7 +35,7 @@ export const SearchAndResults = () => {
               </Typography>
               <div className={classes.resultsTools}>
                 <IconButton>
-                <Csv />
+                  <Csv />
                 </IconButton>
                 <IconButton>
                   <InfoIcon />
