@@ -29,7 +29,7 @@ const searchAndResultsStyles = makeStyles({
     justifyContent: 'space-between',
   },
   helpLinkContainer: {
-    alignSelf: 'center',
+    textAlign: 'center',
     paddingBottom: '75px',
     paddingRight: '30px',
     paddingLeft: '30px',
